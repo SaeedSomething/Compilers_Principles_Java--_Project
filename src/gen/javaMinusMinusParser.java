@@ -5,6 +5,8 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
+
+import javax.swing.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -401,138 +403,7 @@ public class javaMinusMinusParser extends Parser {
 	}
 
 	public final ClassDeclarationContext classDeclaration() throws RecognitionException {
-		ClassDeclarationContext _localctx = new ClassDeclarationContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_classDeclaration);
-		int _la;
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(99);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==T__10) {
-				{
-				setState(98);
-				match(T__10);
-				}
-			}
-
-			setState(101);
-			match(T__2);
-			setState(102);
-			match(Identifier);
-			setState(114);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__11:
-				{
-				setState(103);
-				match(T__11);
-				setState(104);
-				match(Identifier);
-				}
-				break;
-			case T__12:
-				{
-				setState(105);
-				match(T__12);
-				setState(106);
-				match(Identifier);
-				setState(111);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				while (_la==T__13) {
-					{
-					{
-					setState(107);
-					match(T__13);
-					setState(108);
-					match(Identifier);
-					}
-					}
-					setState(113);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				}
-				break;
-			case T__3:
-				break;
-			default:
-				break;
-			}
-			setState(116);
-			match(T__3);
-			setState(120);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(117);
-					fieldDeclaration();
-					}
-					} 
-				}
-				setState(122);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
-			}
-			setState(124);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
-			case 1:
-				{
-				setState(123);
-				constructorDeclaration();
-				}
-				break;
-			}
-			setState(129);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(126);
-					methodDeclaration();
-					}
-					} 
-				}
-				setState(131);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
-			}
-			setState(135);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 591904L) != 0)) {
-				{
-				{
-				setState(132);
-				abstractMethodDeclaration();
-				}
-				}
-				setState(137);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			setState(138);
-			match(T__9);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
+		return null;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
