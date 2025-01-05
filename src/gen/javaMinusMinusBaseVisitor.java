@@ -1,4 +1,4 @@
-// Generated from E:/Uni/Compiler/grammar/javaMinusMinus.g4 by ANTLR 4.13.2
+package gen;// Generated from D:/Projects/Compilers_Principles_Java--_Project/grammar/javaMinusMinus.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
