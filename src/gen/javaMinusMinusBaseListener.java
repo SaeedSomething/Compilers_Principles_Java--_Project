@@ -1,5 +1,4 @@
-package gen;
-// Generated from d:/Uni/term 9/Compilers/Project/javaMinusMinus.g4 by ANTLR 4.13.1
+package gen;// Generated from D:/Projects/Compilers_Principles_Java--_Project/grammar/javaMinusMinus.g4 by ANTLR 4.13.2
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

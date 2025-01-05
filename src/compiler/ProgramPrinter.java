@@ -10,6 +10,14 @@ import gen.javaMinusMinusParser;
 
 public class ProgramPrinter implements javaMinusMinusListener {
 
+    private int indent = 0;
+
+    private void PrintIndents() {
+        for (int i = 0; i < indent; i++) {
+            System.out.print("    ");
+        }
+    }
+
     @Override
     public void enterIfElseStatement(javaMinusMinusParser.IfElseStatementContext ctx) {
     }
@@ -44,6 +52,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMethodBody(javaMinusMinusParser.MethodBodyContext ctx) {
+        PrintIndents();
+        System.out.println("METHOD " + ctx.);
     }
 
     @Override
@@ -108,6 +118,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMainClass(javaMinusMinusParser.MainClassContext ctx) {
+        System.out.println("CLASS Main");
+        indent++;
     }
 
     @Override
@@ -356,6 +368,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMainClass(javaMinusMinusParser.MainClassContext ctx) {
+        indent--;
     }
 
     @Override
