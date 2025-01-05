@@ -9,7 +9,7 @@ importClass
 ;
 
 mainClass
-:   'class' Identifier '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' Identifier ')' '{' statement* '}' '}'
+:   'class' className=Identifier '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' Identifier ')' '{' statement* '}' '}'
 ;
 
 classDeclaration
@@ -85,7 +85,7 @@ statement
   #ifElseStatement
 |   'while' LP expression RP statement
   #whileStatement
-|   'for' LP localDeclaration? expression ';' expression RP statement
+|   'for' LP localDeclaration? conditionExp=expression ';' incrementExp=expression RP statement
   #forStatement
 |   'print' LP expressionOrString RP ';'
   #printStatement

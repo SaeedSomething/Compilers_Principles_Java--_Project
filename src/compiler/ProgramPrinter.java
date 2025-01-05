@@ -11,6 +11,7 @@ import gen.javaMinusMinusParser;
 public class ProgramPrinter implements javaMinusMinusListener {
 
     private int indent = 0;
+    private int forDeclaresCount = 0;
 
     private void PrintIndents() {
         for (int i = 0; i < indent; i++) {
@@ -53,7 +54,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterMethodBody(javaMinusMinusParser.MethodBodyContext ctx) {
         PrintIndents();
-        System.out.println("METHOD " + ctx.);
+        System.out.println("METHOD " + ctx.getText());
     }
 
     @Override
@@ -98,14 +99,26 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitForStatement(javaMinusMinusParser.ForStatementContext ctx) {
+        indent-=2;
     }
 
     @Override
     public void exitVariableAssignmentStatement(javaMinusMinusParser.VariableAssignmentStatementContext ctx) {
+        PrintIndents();
+        System.out.println("ASSIGN " + ctx.Identifier().getText() + " = " + ctx.expression().getText());
     }
 
     @Override
     public void enterPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
+        PrintIndents();
+
+        System.out.print("PRINT ");
+
+        if (ctx.expressionOrString().getText().contains(".")){
+            System.out.print("CALL ");
+        }
+
+        System.out.println(ctx.expressionOrString().getText());
     }
 
     @Override
@@ -114,11 +127,15 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitAbstractMethodDeclaration(javaMinusMinusParser.AbstractMethodDeclarationContext ctx) {
+        indent--;
     }
 
     @Override
     public void enterMainClass(javaMinusMinusParser.MainClassContext ctx) {
-        System.out.println("CLASS Main");
+        System.out.println("CLASS " + ctx.className.getText());
+        indent++;
+        PrintIndents();
+        System.out.println("METHOD main");
         indent++;
     }
 
@@ -176,6 +193,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterAbstractMethodDeclaration(javaMinusMinusParser.AbstractMethodDeclarationContext ctx) {
+        PrintIndents();
+        System.out.println("ABSTRACT METHOD " + ctx.Identifier().getText());
+        indent++;
     }
 
     @Override
@@ -272,6 +292,15 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterLocalDeclaration(javaMinusMinusParser.LocalDeclarationContext ctx) {
+
+        if (forDeclaresCount > 0) {
+            forDeclaresCount--;
+            return;
+        }
+
+        PrintIndents();
+        System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier() + " = " + ctx.expression().getStart().getText() +
+                " " + ctx.expression().getText().replace(ctx.expression().getStart().getText(), ""));
     }
 
     @Override
@@ -360,6 +389,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMethodBody(javaMinusMinusParser.MethodBodyContext ctx) {
+        indent--;
     }
 
     @Override
@@ -425,6 +455,24 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterForStatement(javaMinusMinusParser.ForStatementContext ctx) {
+        PrintIndents();
+        System.out.println("FOR");
+        indent++;
+
+        forDeclaresCount++;
+
+        PrintIndents();
+        System.out.println("DECLARE " + ctx.localDeclaration().type().getText() + " " + ctx.localDeclaration().Identifier() + " = " + ctx.localDeclaration().expression().getText());
+
+        PrintIndents();
+        System.out.println("CONDITION " + ctx.conditionExp.getText());
+
+        PrintIndents();
+        System.out.println("INCREMENT " + ctx.incrementExp.getText());
+
+        PrintIndents();
+        System.out.println("BODY");
+        indent++;
     }
 
     @Override
