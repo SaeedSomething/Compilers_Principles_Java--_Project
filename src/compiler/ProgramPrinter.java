@@ -1,12 +1,17 @@
 package compiler;
 
+import java.lang.reflect.Modifier;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import gen.javaMinusMinusBaseListener;
+import gen.javaMinusMinusBaseVisitor;
 import gen.javaMinusMinusListener;
 import gen.javaMinusMinusParser;
+import gen.javaMinusMinusVisitor;
 
 public class ProgramPrinter implements javaMinusMinusListener {
 
@@ -15,7 +20,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     private void PrintIndents() {
         for (int i = 0; i < indent; i++) {
-            System.out.print("    ");
+            // System.out.print(indent);
+            System.out.print("  ");
         }
     }
 
@@ -37,6 +43,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterInterfaceFieldDeclaration(javaMinusMinusParser.InterfaceFieldDeclarationContext ctx) {
+        PrintIndents();
     }
 
     @Override
@@ -54,7 +61,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterMethodBody(javaMinusMinusParser.MethodBodyContext ctx) {
         PrintIndents();
-        System.out.println("METHOD " + ctx.getText());
+
+        System.out.println("BODY ");
+        indent++;
+
+        // ctx.RETURN()
+
     }
 
     @Override
@@ -75,6 +87,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitConstructorDeclaration(javaMinusMinusParser.ConstructorDeclarationContext ctx) {
+        indent--;
+        System.out.println();
     }
 
     @Override
@@ -87,19 +101,25 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterExpressionOrString(javaMinusMinusParser.ExpressionOrStringContext ctx) {
+
     }
 
     @Override
     public void enterConstructorDeclaration(javaMinusMinusParser.ConstructorDeclarationContext ctx) {
+        PrintIndents();
+        System.out.println("CONSTRUCTOR " + ctx.Identifier().getText());
+        indent++;
     }
 
     @Override
     public void exitPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
+        indent--;
+        System.out.println();
     }
 
     @Override
     public void exitForStatement(javaMinusMinusParser.ForStatementContext ctx) {
-        indent-=2;
+        indent -= 2;
     }
 
     @Override
@@ -114,7 +134,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         System.out.print("PRINT ");
 
-        if (ctx.expressionOrString().getText().contains(".")){
+        if (ctx.expressionOrString().getText().contains(".")) {
             System.out.print("CALL ");
         }
 
@@ -123,11 +143,16 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterParameter(javaMinusMinusParser.ParameterContext ctx) {
+
+        PrintIndents();
+        System.out.println("PARAMETER " + ctx.type().getText() + " " + ctx.Identifier().getText());
+
     }
 
     @Override
     public void exitAbstractMethodDeclaration(javaMinusMinusParser.AbstractMethodDeclarationContext ctx) {
         indent--;
+        System.out.println();
     }
 
     @Override
@@ -141,6 +166,22 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterInterfaceMethodDeclaration(javaMinusMinusParser.InterfaceMethodDeclarationContext ctx) {
+
+        PrintIndents();
+        System.out.println("INTERFACE METHOD " + ctx.Identifier().getText());
+        indent++;
+
+        // check for @Overriden method
+        if (ctx.getChild(0).getText().equals("@Override")) {
+            PrintIndents();
+            System.out.println("OVERRIDE");
+        }
+        // checking return type shuold be indented
+        if (ctx.type() != null) {
+
+            PrintIndents();
+            System.out.println("RETURN " + ctx.type().getText());
+        }
     }
 
     @Override
@@ -196,6 +237,17 @@ public class ProgramPrinter implements javaMinusMinusListener {
         PrintIndents();
         System.out.println("ABSTRACT METHOD " + ctx.Identifier().getText());
         indent++;
+        // check for @Overriden method
+        if (ctx.getChild(0).getText().equals("@Override")) {
+            PrintIndents();
+            System.out.println("OVERRIDE");
+        }
+        // checking return type shuold be indented
+        if (ctx.type() != null) {
+
+            PrintIndents();
+            System.out.println("RETURN " + ctx.type().getText());
+        }
     }
 
     @Override
@@ -236,6 +288,21 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
+        PrintIndents();
+        System.out.println("METHOD " + ctx.Identifier().getText());
+        indent++;
+        // check for @Overriden method
+        if (ctx.getChild(0).getText().equals("@Override")) {
+            PrintIndents();
+            System.out.println("OVERRIDE");
+        }
+        // checking return type shuold be indented
+        if (ctx.type() != null) {
+
+            PrintIndents();
+            System.out.println("RETURN " + ctx.type().getText());
+        }
+
     }
 
     @Override
@@ -299,7 +366,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
         }
 
         PrintIndents();
-        System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier() + " = " + ctx.expression().getStart().getText() +
+        System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier() + " = "
+                + ctx.expression().getStart().getText() +
                 " " + ctx.expression().getText().replace(ctx.expression().getStart().getText(), ""));
     }
 
@@ -317,6 +385,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterFieldDeclaration(javaMinusMinusParser.FieldDeclarationContext ctx) {
+        // field declaration calls variable declaration directly
+        // so no need to print anything here
     }
 
     @Override
@@ -333,6 +403,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitInterfaceMethodDeclaration(javaMinusMinusParser.InterfaceMethodDeclarationContext ctx) {
+
+        indent--;
+        System.out.println();
     }
 
     @Override
@@ -349,6 +422,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
+        indent--;
+        System.out.println();
     }
 
     @Override
@@ -365,6 +440,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitClassDeclaration(javaMinusMinusParser.ClassDeclarationContext ctx) {
+        indent--;
+        System.out.println();
     }
 
     @Override
@@ -389,7 +466,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMethodBody(javaMinusMinusParser.MethodBodyContext ctx) {
+
         indent--;
+        System.out.println();
     }
 
     @Override
@@ -399,6 +478,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void exitMainClass(javaMinusMinusParser.MainClassContext ctx) {
         indent--;
+        System.out.println();
     }
 
     @Override
@@ -415,6 +495,33 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterVarDeclaration(javaMinusMinusParser.VarDeclarationContext ctx) {
+
+        PrintIndents();
+        System.out.print("FIELD ");
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+            if (ctx.getChild(i).getText().contains("public")) {
+                System.out.print("PUBLIC ");
+            }
+
+            else if (ctx.getChild(i).getText().contains("private")) {
+                System.out.print("PRIVATE ");
+            } else if (ctx.getChild(i).getText().contains("protected")) {
+                System.out.print("PROTECTED ");
+            }
+
+            else {
+
+                System.out.print(ctx.getChild(i).getText() + " ");
+            }
+        }
+
+        // System.out.print(ctx.getChild(i).getText() + " ");
+        // break;
+        // default:
+        // break;
+        // }
+        System.out.println();
+
     }
 
     @Override
@@ -462,7 +569,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
         forDeclaresCount++;
 
         PrintIndents();
-        System.out.println("DECLARE " + ctx.localDeclaration().type().getText() + " " + ctx.localDeclaration().Identifier() + " = " + ctx.localDeclaration().expression().getText());
+        System.out.println("DECLARE " + ctx.localDeclaration().type().getText() + " "
+                + ctx.localDeclaration().Identifier() + " = " + ctx.localDeclaration().expression().getText());
 
         PrintIndents();
         System.out.println("CONDITION " + ctx.conditionExp.getText());
@@ -477,6 +585,41 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterClassDeclaration(javaMinusMinusParser.ClassDeclarationContext ctx) {
+        PrintIndents();
+
+        for (int i = 0; i < ctx.getChildCount(); i++) {
+
+            // get all the detail of the class
+            switch (ctx.getChild(i).getText()) {
+
+                case "abstract":
+                    System.out.print("ABSTRACT ");
+                    break;
+                case "class":
+                    System.out.print("CLASS ");
+                    break;
+                case "extends":
+                    System.out.print("EXTENDS ");
+                    break;
+
+                case "implements":
+                    System.out.print("IMPLEMENTS ");
+                    break;
+
+                case "{":
+                    System.out.println();
+                    // break out of the for loop when we reach the class body
+                    i = ctx.getChildCount();
+                    // indent++;
+                    break;
+                default:
+                    System.out.print(ctx.getChild(i) + " ");
+                    break;
+            }
+
+        }
+        indent++;
+
     }
 
     @Override

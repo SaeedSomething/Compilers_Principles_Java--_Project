@@ -26,7 +26,7 @@ public class Compiler {
         ParseTree tree = parser.program();
         ParseTreeWalker walker = new ParseTreeWalker();
         javaMinusMinusListener listener = new ProgramPrinter();
-
+        System.out.println("Compiling...");
         walker.walk(listener, tree);
     }
 }
