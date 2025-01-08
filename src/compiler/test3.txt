@@ -1,0 +1,9 @@
+abstract class Animal{
+    public abstract void sound();
+}
+class og extends Animal {
+    @override 
+    public void sound(){
+        print("woof");
+    }
+}

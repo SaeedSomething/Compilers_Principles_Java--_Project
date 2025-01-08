@@ -1,0 +1,12 @@
+ABSTRACT CLASS Animal
+    ABSTRACT METHOD sound
+        ACCESS_MODIFIER public
+        RETURN_TYPE void
+
+CLASS Dog EXTENDS Animal
+    METHOD sound
+        OVERRIDE true
+        ACCESS_MODIFIER public
+        RETURN_TYPE void
+        BODY
+            PRINT "woof"

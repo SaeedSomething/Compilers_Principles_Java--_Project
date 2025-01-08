@@ -1,11 +1,13 @@
 package compiler;
 
 import java.lang.reflect.Modifier;
+import java.util.Stack;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
 
 import gen.javaMinusMinusBaseListener;
 import gen.javaMinusMinusBaseVisitor;
@@ -14,9 +16,11 @@ import gen.javaMinusMinusParser;
 import gen.javaMinusMinusVisitor;
 
 public class ProgramPrinter implements javaMinusMinusListener {
-
+    private boolean importSeemn = false;
     private int indent = 0;
     private int forDeclaresCount = 0;
+    // private Stack elseStack = new Stack<int>()
+    private int elseCount = 0;
 
     private void PrintIndents() {
         for (int i = 0; i < indent; i++) {
@@ -27,6 +31,17 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterIfElseStatement(javaMinusMinusParser.IfElseStatementContext ctx) {
+        PrintIndents();
+        System.out.println("IF");
+        indent++;
+        PrintIndents();
+
+        System.out.println("CONDITION " + ctx.getChild(2).getText());
+        PrintIndents();
+
+        System.out.println("BODY");
+        indent++;
+
     }
 
     @Override
@@ -64,8 +79,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         System.out.println("BODY ");
         indent++;
+        if (ctx.RETURN() != null) {
+            PrintIndents();
 
-        // ctx.RETURN()
+            System.out.println("RETURN " + ctx.getChild(ctx.getChildCount() - 2).getText());
+        }
 
     }
 
@@ -130,6 +148,20 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
+
+        if (ctx.parent.parent != null &&
+                ctx.parent.parent.getText().contains("else") &&
+                ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 1) != null
+                &&
+                ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 1).equals(ctx.parent)) {
+            PrintIndents();
+            System.out.println("ELSE");
+            indent++;
+            PrintIndents();
+            System.out.println("BODY");
+            indent++;
+        }
+
         PrintIndents();
 
         System.out.print("PRINT ");
@@ -319,6 +351,17 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterImportClass(javaMinusMinusParser.ImportClassContext ctx) {
+        PrintIndents();
+
+        System.out.println("IMPORT ");
+
+        indent++;
+
+        for (int i = 1; i < ctx.getChildCount() - 1; i++) {
+            PrintIndents();
+            System.out.println("- " + ctx.getChild(i).getText());
+        }
+
     }
 
     @Override
@@ -335,6 +378,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitIfElseStatement(javaMinusMinusParser.IfElseStatementContext ctx) {
+
     }
 
     @Override
@@ -640,6 +684,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterIdentifierExpression(javaMinusMinusParser.IdentifierExpressionContext ctx) {
+        // testing whats a identifier exp
+        System.out.println("IDENTIFIER EXPRESSSION");
     }
 
     @Override

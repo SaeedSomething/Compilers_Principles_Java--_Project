@@ -1,0 +1,10 @@
+CLASS Main
+    METHOD main
+    DECLARE  int x =0
+    FOR
+        DECLARE int i =0
+        CONDITION i < 5
+        INCREMENT i + 1
+        BODY
+            ASSIGN x = x + i
+        PRINT x
