@@ -21,11 +21,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
     private int forDeclaresCount = 0;
     // private Stack elseStack = new Stack<int>()
     private int elseCount = 0;
+    private boolean elseBlockSeen = false;
 
     private void PrintIndents() {
         for (int i = 0; i < indent; i++) {
             // System.out.print(indent);
-            System.out.print("  ");
+            System.out.print("-");
         }
     }
 
@@ -46,6 +47,35 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterNestedStatement(javaMinusMinusParser.NestedStatementContext ctx) {
+
+        // System.out.println(ctx.parent.parent.getText().contains("else") + "??"
+        // + ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 2).getText()
+        // + "??");
+        if (ctx.parent.getChild(ctx.parent.getChildCount() - 2) != null) {
+
+            // System.out.println(ctx.parent.getChild(ctx.parent.parent.getChildCount() -
+            // 2).getText());
+        }
+        if (ctx.parent != null && ctx.parent.getChild(ctx.parent.getChildCount() - 2) != null &&
+                ctx.parent.getChild(ctx.parent.getChildCount() - 2).getText().contains("else") &&
+                ctx.parent.getChild(ctx.parent.getChildCount() - 1) != null
+                &&
+                ctx.parent.getChild(ctx.parent.getChildCount() - 1).equals(ctx)) {
+
+            // only if we have an else block , then the exit function should reduce the
+            // indent
+            elseBlockSeen = true;
+
+            // else should be aligned with the BODY of the if statement
+            indent--;
+
+            PrintIndents();
+            System.out.println("ELSE");
+            indent++;
+            PrintIndents();
+            System.out.println("BODY");
+            indent++;
+        }
     }
 
     @Override
@@ -63,6 +93,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitImportClass(javaMinusMinusParser.ImportClassContext ctx) {
+        // IMPORT and LIBRARY each have an indent
+        indent -= 2;
+        System.out.println();
     }
 
     @Override
@@ -131,8 +164,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
-        indent--;
-        System.out.println();
+        // indent--;
+        // System.out.println();
     }
 
     @Override
@@ -148,19 +181,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
-
-        if (ctx.parent.parent != null &&
-                ctx.parent.parent.getText().contains("else") &&
-                ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 1) != null
-                &&
-                ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 1).equals(ctx.parent)) {
-            PrintIndents();
-            System.out.println("ELSE");
-            indent++;
-            PrintIndents();
-            System.out.println("BODY");
-            indent++;
-        }
 
         PrintIndents();
 
@@ -189,11 +209,19 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMainClass(javaMinusMinusParser.MainClassContext ctx) {
+        PrintIndents();
         System.out.println("CLASS " + ctx.className.getText());
         indent++;
         PrintIndents();
         System.out.println("METHOD main");
         indent++;
+
+        // if the behaviour of the main method needed clarifiacation , un-
+        // PrintIndents();
+        // System.out.println("RETURN_TYPE void");
+        // PrintIndents();
+        // System.out.println("ACCESS_MODIFIER public");
+
     }
 
     @Override
@@ -258,6 +286,10 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitNestedStatement(javaMinusMinusParser.NestedStatementContext ctx) {
+        if (elseBlockSeen) {
+            indent -= 2;
+            elseBlockSeen = false;
+        }
     }
 
     @Override
@@ -274,12 +306,13 @@ public class ProgramPrinter implements javaMinusMinusListener {
             PrintIndents();
             System.out.println("OVERRIDE");
         }
-        // checking return type shuold be indented
-        if (ctx.type() != null) {
+        // checking return type shuold be indented and if null it means return type is
+        // void
+        PrintIndents();
 
-            PrintIndents();
-            System.out.println("RETURN " + ctx.type().getText());
-        }
+        String returnType = ctx.type() != null ? ctx.type().getText() : "void";
+        System.out.println("RETURN_TYPE " + returnType);
+
     }
 
     @Override
@@ -300,6 +333,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterType(javaMinusMinusParser.TypeContext ctx) {
+        // PrintIndents();
+        // System.out.println("TYPE " + ctx.getText());
     }
 
     @Override
@@ -328,12 +363,13 @@ public class ProgramPrinter implements javaMinusMinusListener {
             PrintIndents();
             System.out.println("OVERRIDE");
         }
-        // checking return type shuold be indented
-        if (ctx.type() != null) {
 
-            PrintIndents();
-            System.out.println("RETURN " + ctx.type().getText());
-        }
+        // checking return type shuold be indented
+        PrintIndents();
+
+        // when return type is void the ctx.type() is null
+        String returnType = ctx.type() != null ? ctx.type().getText() : "void";
+        System.out.println("RETURN_TYPE " + returnType);
 
     }
 
@@ -351,16 +387,24 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterImportClass(javaMinusMinusParser.ImportClassContext ctx) {
-        PrintIndents();
-
-        System.out.println("IMPORT ");
-
-        indent++;
-
-        for (int i = 1; i < ctx.getChildCount() - 1; i++) {
+        if (!importSeemn) {
+            importSeemn = true;
             PrintIndents();
-            System.out.println("- " + ctx.getChild(i).getText());
+
+            System.out.println("IMPORT ");
+
+            indent++;
+            PrintIndents();
+            System.out.println("LIBRARY ");
+
+            indent++;
+        } else {
+            // exitImport clears the 2 indents for IMPORT and LIBRARY after each call
+            indent += 2;
         }
+
+        PrintIndents();
+        System.out.println("- " + ctx.getChild(1).getText());
 
     }
 
@@ -417,6 +461,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterAccessModifier(javaMinusMinusParser.AccessModifierContext ctx) {
+        PrintIndents();
+        System.out.println("ACCESS_MODIFIER " + ctx.getText());
+
     }
 
     @Override
@@ -521,7 +568,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMainClass(javaMinusMinusParser.MainClassContext ctx) {
-        indent--;
+        indent -= 2;
         System.out.println();
     }
 
@@ -542,22 +589,19 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         PrintIndents();
         System.out.print("FIELD ");
-        for (int i = 0; i < ctx.getChildCount(); i++) {
-            if (ctx.getChild(i).getText().contains("public")) {
+        if (ctx.accessModifier() != null) {
+            if (ctx.accessModifier().getText().equals("public")) {
                 System.out.print("PUBLIC ");
-            }
-
-            else if (ctx.getChild(i).getText().contains("private")) {
+            } else if (ctx.accessModifier().getText().equals("private")) {
                 System.out.print("PRIVATE ");
-            } else if (ctx.getChild(i).getText().contains("protected")) {
+            } else if (ctx.accessModifier().getText().equals("protected")) {
                 System.out.print("PROTECTED ");
             }
-
-            else {
-
-                System.out.print(ctx.getChild(i).getText() + " ");
-            }
         }
+        if (ctx.type() != null) {
+            System.out.print(ctx.type().getText() + " ");
+        }
+        System.out.println(ctx.Identifier().getText());
 
         // System.out.print(ctx.getChild(i).getText() + " ");
         // break;

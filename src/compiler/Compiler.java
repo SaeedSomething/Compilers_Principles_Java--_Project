@@ -17,7 +17,8 @@ import compiler.ProgramPrinter;
 public class Compiler {
 
     public static void main(String[] args) throws Exception {
-        CharStream stream = CharStreams.fromFileName("src/compiler/test1.txt");
+        int i = 1;
+        CharStream stream = CharStreams.fromFileName("src/compiler/test" + i + ".txt");
 
         javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);
         TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -26,7 +27,8 @@ public class Compiler {
         ParseTree tree = parser.program();
         ParseTreeWalker walker = new ParseTreeWalker();
         javaMinusMinusListener listener = new ProgramPrinter();
-        System.out.println("Compiling...");
+        System.out.println("Compiling # " + i + "...");
         walker.walk(listener, tree);
     }
+
 }
