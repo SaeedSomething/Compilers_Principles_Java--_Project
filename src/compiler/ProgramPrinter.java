@@ -24,6 +24,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     private boolean elseBlockSeen = false;
 
     private void PrintIndents() {
+        System.out.print(indent + " ");
         for (int i = 0; i < indent; i++) {
             // System.out.print(indent);
             System.out.print("-");
@@ -48,14 +49,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterNestedStatement(javaMinusMinusParser.NestedStatementContext ctx) {
 
-        // System.out.println(ctx.parent.parent.getText().contains("else") + "??"
-        // + ctx.parent.parent.getChild(ctx.parent.parent.getChildCount() - 2).getText()
-        // + "??");
-        if (ctx.parent.getChild(ctx.parent.getChildCount() - 2) != null) {
-
-            // System.out.println(ctx.parent.getChild(ctx.parent.parent.getChildCount() -
-            // 2).getText());
-        }
         if (ctx.parent != null && ctx.parent.getChild(ctx.parent.getChildCount() - 2) != null &&
                 ctx.parent.getChild(ctx.parent.getChildCount() - 2).getText().contains("else") &&
                 ctx.parent.getChild(ctx.parent.getChildCount() - 1) != null
@@ -76,6 +69,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
             System.out.println("BODY");
             indent++;
         }
+
     }
 
     @Override
@@ -89,6 +83,15 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterInterfaceFieldDeclaration(javaMinusMinusParser.InterfaceFieldDeclarationContext ctx) {
         PrintIndents();
+
+        // same as DECLARE in classes
+        System.out.print("INTERFACE DECLARE ");
+
+        if (ctx.type() != null) {
+            System.out.print(ctx.type().getText() + " ");
+        }
+        System.out.println(ctx.Identifier().getText() + " = " + ctx.expression().getText());
+
     }
 
     @Override
@@ -113,9 +116,16 @@ public class ProgramPrinter implements javaMinusMinusListener {
         System.out.println("BODY ");
         indent++;
         if (ctx.RETURN() != null) {
+
             PrintIndents();
 
-            System.out.println("RETURN " + ctx.getChild(ctx.getChildCount() - 2).getText());
+            // return is always followed by an expression
+
+            System.out.print("RETURN ");
+            if (ctx.expression().getText().contains(".")) {
+                System.out.print("CALL ");
+            }
+            System.out.println(ctx.expression().getText());
         }
 
     }
@@ -152,7 +162,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterExpressionOrString(javaMinusMinusParser.ExpressionOrStringContext ctx) {
-
+        // System.out.println(ctx.getText());
     }
 
     @Override
@@ -165,7 +175,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void exitPrintStatement(javaMinusMinusParser.PrintStatementContext ctx) {
         // indent--;
-        // System.out.println();
+        System.out.println();
     }
 
     @Override
@@ -186,11 +196,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         System.out.print("PRINT ");
 
+        // //trying to use the enterCallExpression method to print the expression
         if (ctx.expressionOrString().getText().contains(".")) {
             System.out.print("CALL ");
         }
-
         System.out.println(ctx.expressionOrString().getText());
+
     }
 
     @Override
@@ -231,17 +242,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
         System.out.println("INTERFACE METHOD " + ctx.Identifier().getText());
         indent++;
 
-        // check for @Overriden method
-        if (ctx.getChild(0).getText().equals("@Override")) {
-            PrintIndents();
-            System.out.println("OVERRIDE");
-        }
         // checking return type shuold be indented
-        if (ctx.type() != null) {
 
-            PrintIndents();
-            System.out.println("RETURN " + ctx.type().getText());
-        }
+        String returnType = ctx.type() != null ? ctx.type().getText() : "void";
+        PrintIndents();
+        System.out.println("RETURN " + returnType);
     }
 
     @Override
@@ -287,13 +292,16 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void exitNestedStatement(javaMinusMinusParser.NestedStatementContext ctx) {
         if (elseBlockSeen) {
-            indent -= 2;
+            indent -= 1;
             elseBlockSeen = false;
         }
     }
 
     @Override
     public void exitInterfaceDeclaration(javaMinusMinusParser.InterfaceDeclarationContext ctx) {
+        indent--;
+        System.out.println();
+
     }
 
     @Override
@@ -333,8 +341,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterType(javaMinusMinusParser.TypeContext ctx) {
-        // PrintIndents();
-        // System.out.println("TYPE " + ctx.getText());
+
     }
 
     @Override
@@ -347,6 +354,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterInterfaceDeclaration(javaMinusMinusParser.InterfaceDeclarationContext ctx) {
+        PrintIndents();
+        System.out.println("INTERFACE " + ctx.Identifier().getText());
+        indent++;
     }
 
     @Override
@@ -375,6 +385,14 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMethodCallExpression(javaMinusMinusParser.MethodCallExpressionContext ctx) {
+        // seems you can call a function in another method body with this grammer , so
+        // no need
+        // if ((ctx.parent instanceof javaMinusMinusParser.NestedStatementContext)) {
+
+        // PrintIndents();
+        // System.out.println("CALL ");
+        // }
+
     }
 
     @Override
@@ -422,7 +440,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitIfElseStatement(javaMinusMinusParser.IfElseStatementContext ctx) {
-
+        indent -= 2;
+        System.out.println();
     }
 
     @Override
@@ -482,6 +501,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterEveryRule(ParserRuleContext ctx) {
+
     }
 
     @Override
@@ -603,11 +623,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
         }
         System.out.println(ctx.Identifier().getText());
 
-        // System.out.print(ctx.getChild(i).getText() + " ");
-        // break;
-        // default:
-        // break;
-        // }
         System.out.println();
 
     }
@@ -728,8 +743,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterIdentifierExpression(javaMinusMinusParser.IdentifierExpressionContext ctx) {
-        // testing whats a identifier exp
-        System.out.println("IDENTIFIER EXPRESSSION");
+        // System.out.print(ctx.getText());
     }
 
     @Override

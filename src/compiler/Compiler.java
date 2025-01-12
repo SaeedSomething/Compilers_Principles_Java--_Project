@@ -18,17 +18,19 @@ public class Compiler {
 
     public static void main(String[] args) throws Exception {
         int i = 1;
-        CharStream stream = CharStreams.fromFileName("src/compiler/test" + i + ".txt");
+        for (i = 1; i <= 5; i++) {
+            CharStream stream = CharStreams.fromFileName("src/compiler/test" + i + ".txt");
 
-        javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);
-        TokenStream tokenStream = new CommonTokenStream(lexer);
-        javaMinusMinusParser parser = new javaMinusMinusParser(tokenStream);
-        parser.setBuildParseTree(true);
-        ParseTree tree = parser.program();
-        ParseTreeWalker walker = new ParseTreeWalker();
-        javaMinusMinusListener listener = new ProgramPrinter();
-        System.out.println("Compiling # " + i + "...");
-        walker.walk(listener, tree);
+            javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);
+            TokenStream tokenStream = new CommonTokenStream(lexer);
+            javaMinusMinusParser parser = new javaMinusMinusParser(tokenStream);
+            parser.setBuildParseTree(true);
+            ParseTree tree = parser.program();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            javaMinusMinusListener listener = new ProgramPrinter();
+            System.out.println("Compiling # " + i + "...");
+            walker.walk(listener, tree);
+        }
     }
 
 }
