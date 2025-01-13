@@ -17,9 +17,9 @@ import compiler.ProgramPrinter;
 public class Compiler {
 
     public static void main(String[] args) throws Exception {
-        int i = 1;
-        for (i = 1; i <= 5; i++) {
-            CharStream stream = CharStreams.fromFileName("src/compiler/test" + i + ".txt");
+        int i = 6;
+        for (; i <= 6; i++) {
+            CharStream stream = CharStreams.fromFileName("src/compiler/examples/test" + i + ".txt");
 
             javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);
             TokenStream tokenStream = new CommonTokenStream(lexer);
