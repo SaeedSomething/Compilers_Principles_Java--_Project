@@ -1,6 +1,6 @@
 # Identifier Values for Each Scope
 
-identifier : scope_'name'_line_col
+key : scope_'name'_line_col
 
 ## Program
 

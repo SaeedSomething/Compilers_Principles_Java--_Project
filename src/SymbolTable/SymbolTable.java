@@ -1,9 +1,11 @@
-package compiler;
+package SymbolTable;
 
 import java.util.Dictionary;
 
-public abstract class SymbolTable {
+import SymbolTable.*;
+import SymbolTable.Symbols.*;
 
+public class SymbolTable {
     String name;
     int line;
     int col;
@@ -24,25 +26,23 @@ public abstract class SymbolTable {
     }
 
     private String genKey(String name, SymbolScope scope, int line, int col) {
-        return scope + "_" + name + "_" + "_" + line + "_" + col;
+        return scope + "_" + name + "_" + line + "_" + col;
 
     }
 
-    abstract public String checkBeforeAddingToTable();
+    public void checkBeforeAddingToTable() throws Exception {
+    }
 
-    abstract public String checkAfterAddingToTable();
+    public void checkAfterAddingToTable() throws Exception {
+    }
 
-    public String addVal(String key, Symbol val) {
+    public SymbolTable addVal(String key, Symbol val) throws Exception {
 
-        String errorPrompt = null;
+        this.checkBeforeAddingToTable();
+        this.val.put(key, val);
+        this.checkAfterAddingToTable();
+        return this;
 
-        if (this.checkBeforeAddingToTable() != null) {
-            errorPrompt += "\n" + this.checkBeforeAddingToTable();
-        } else {
-            this.val.put(key, val);
-            errorPrompt = "\n" + this.checkAfterAddingToTable();
-        }
-        return errorPrompt;
     }
 
     public String toString() {
@@ -60,7 +60,8 @@ public abstract class SymbolTable {
         return val.get(key);
     }
 
-    public void setChildSymbolTable(SymbolTable child) {
+    public SymbolTable setChildSymbolTable(SymbolTable child) {
         this.children[this.children.length] = child;
+        return this;
     }
 }

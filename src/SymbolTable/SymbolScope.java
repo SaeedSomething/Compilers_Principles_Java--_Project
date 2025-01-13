@@ -1,4 +1,4 @@
-package compiler;
+package SymbolTable;
 
 public enum SymbolScope {
     PROGRAM,
