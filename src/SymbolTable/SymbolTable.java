@@ -2,7 +2,6 @@ package SymbolTable;
 
 import java.util.Dictionary;
 
-import SymbolTable.*;
 import SymbolTable.Symbols.*;
 
 public class SymbolTable {
@@ -15,6 +14,14 @@ public class SymbolTable {
     String key;
     Dictionary<String, Symbol> val;
 
+    /**
+     * 
+     * @param name
+     * @param scope
+     * @param parent
+     * @param line
+     * @param col
+     */
     public SymbolTable(String name, SymbolScope scope, SymbolTable parent, int line, int col) {
         this.name = name;
         this.scope = scope;

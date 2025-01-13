@@ -133,7 +133,8 @@ public abstract class Symbol {
      * 
      * @throws Exception the semantic/compilation error message
      */
-    abstract void checkBeforeSettingVal() throws Exception;
+    abstract void checkBeforeSettingVal() throws Exception; // TODO: turn this into a anotation to be called before and
+                                                            // after setting the value
 
     /**
      * gets called before setting the value
@@ -142,7 +143,8 @@ public abstract class Symbol {
      * 
      * @throws Exception the semantic/compilation error message
      */
-    abstract void checkAfterSettingVal() throws Exception;
+    abstract void checkAfterSettingVal() throws Exception; // TODO: turn this into a anotation to be called before and
+                                                           // after setting the value
 
     abstract public String toString();
 }
