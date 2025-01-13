@@ -1,0 +1,39 @@
+-
+SCOPE : PROGRAM_program_3_0|val : 
+-
+-
+SCOPE : CLASS_Main_3_0|val : 
+-
+-
+SCOPE : METHOD_Main_4_23|val : 
+-
+-
+SCOPE : BLOCK_for_27_51|val : 
+-
+-
+SCOPE : CLASS_[Circle, Shape]_44_0|val : 
+-
+-
+SCOPE : METHOD_area_53_4|val : 
+-
+-
+SCOPE : CLASS_[Shape]_60_0|val : 
+-
+-
+SCOPE : METHOD_area_65_4|val : 
+-
+-
+SCOPE : CLASS_[Calculator]_69_0|val : 
+-
+-
+SCOPE : METHOD_add_71_4|val : 
+-
+-
+SCOPE : METHOD_multiply_76_4|val : 
+-
+-
+SCOPE : BLOCK_if_77_15|val : 
+-
+-
+SCOPE : BLOCK_if_79_13|val : 
+-

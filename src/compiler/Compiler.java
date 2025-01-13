@@ -1,5 +1,7 @@
 package compiler;
 
+import java.io.FileWriter;
+
 import org.antlr.v4.runtime.CharStream;
 
 import org.antlr.v4.runtime.TokenStream;
@@ -15,10 +17,13 @@ import gen.javaMinusMinusBaseListener;
 import compiler.ProgramPrinter;
 
 public class Compiler {
+    public static FileWriter file = null;
 
     public static void main(String[] args) throws Exception {
         int i = 6;
         for (; i <= 6; i++) {
+
+            file = new FileWriter("src/compiler/examples/test" + i + ".symbolTable.txt");
             CharStream stream = CharStreams.fromFileName("src/compiler/examples/test" + i + ".txt");
 
             javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);
@@ -30,6 +35,7 @@ public class Compiler {
             javaMinusMinusListener listener = new ProgramPrinter();
             System.out.println("Compiling # " + i + "...");
             walker.walk(listener, tree);
+            file.close();
         }
     }
 

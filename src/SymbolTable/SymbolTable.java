@@ -1,18 +1,25 @@
 package SymbolTable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import SymbolTable.Symbols.*;
 
 public class SymbolTable {
-    String name;
-    int line;
-    int col;
-    SymbolScope scope;
-    SymbolTable[] children;
-    SymbolTable parent;
-    String key;
-    Dictionary<String, Symbol> val;
+    protected String name;
+    protected int line;
+    protected int col;
+    protected SymbolScope scope;
+    protected ArrayList<SymbolTable> children = new ArrayList<SymbolTable>();
+    protected SymbolTable parent;
+    protected String key;
+    protected Map<String, Symbol> val = new HashMap<String, Symbol>();
+
+    
 
     /**
      * 
@@ -54,10 +61,9 @@ public class SymbolTable {
 
     public String toString() {
         String str = "-" + "\n";
-        str += "Symbol : " + key + "|" + "val : ";
-        while (val.keys().asIterator().hasNext()) {
-            key = val.keys().asIterator().next();
-            str += "\n" + key + " : " + val.get(key).toString() + "|";
+        str += "SCOPE : " + key + "|" + "val : ";
+        for (Map.Entry<String, Symbol> entry : val.entrySet()) {
+            str += "\n" + entry.getKey() + " : " + entry.getValue().toString() + "|";
         }
         str += "\n" + "-";
         return str;
@@ -68,7 +74,23 @@ public class SymbolTable {
     }
 
     public SymbolTable setChildSymbolTable(SymbolTable child) {
-        this.children[this.children.length] = child;
+        this.children.add(child);
         return this;
+    }
+
+    public ArrayList<SymbolTable> getChildren() {
+        return children;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public SymbolTable getParent() {
+        return parent;
+    }
+
+    public SymbolScope getScope() {
+        return scope;
     }
 }
