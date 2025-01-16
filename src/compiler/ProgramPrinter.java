@@ -61,7 +61,16 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 || ctx.parent instanceof javaMinusMinusParser.WhileStatementContext
                 || ctx.parent instanceof javaMinusMinusParser.ForStatementContext) {
 
-            SymbolTable newScope = new SymbolTable(ctx.parent.getChild(0).toString(), SymbolScope.BLOCK, currentScope,
+            // if its the else part of an if statement , then the scope should be else block
+            // , else it should be the name of the statement type
+
+            String name = ctx.parent.getChild(0).getText();
+            if ((ctx.parent.getChild(0).getText().equals("if")
+                    && ctx.parent.getChild(ctx.parent.getChildCount() - 1).equals(ctx))) {
+                name = "else";
+            }
+
+            SymbolTable newScope = new SymbolTable(name, SymbolScope.BLOCK, currentScope,
                     ctx.start.getLine(),
                     ctx.start.getCharPositionInLine());
             currentScope.setChildSymbolTable(newScope);
