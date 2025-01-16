@@ -19,8 +19,6 @@ public class SymbolTable {
     protected String key;
     protected Map<String, Symbol> val = new HashMap<String, Symbol>();
 
-    
-
     /**
      * 
      * @param name
@@ -48,6 +46,11 @@ public class SymbolTable {
     }
 
     public void checkAfterAddingToTable() throws Exception {
+        for (String key : this.val.keySet()) {
+            if (this.val.get(key) == null) {
+                throw new Exception("SymbolTable: " + this.key + " has a null value for key: " + key);
+            }
+        }
     }
 
     public SymbolTable addVal(String key, Symbol val) throws Exception {
@@ -62,14 +65,22 @@ public class SymbolTable {
     public String toString() {
         String str = "-" + "\n";
         str += "SCOPE : " + key + "|" + "val : ";
-        for (Map.Entry<String, Symbol> entry : val.entrySet()) {
-            str += "\n" + entry.getKey() + " : " + entry.getValue().toString() + "|";
-        }
+
         str += "\n" + "-";
         return str;
     }
 
     public Symbol getSymbolFromTable(String key) {
+        return val.get(key);
+    }
+
+    /**
+     * same as getSymbolFromTable
+     * 
+     * @param key
+     * @return
+     */
+    public Symbol getVal(String key) {
         return val.get(key);
     }
 
@@ -92,5 +103,14 @@ public class SymbolTable {
 
     public SymbolScope getScope() {
         return scope;
+    }
+
+    public String getAllSymbols() {
+        String str = "\n";
+        for (Map.Entry<String, Symbol> entry : val.entrySet()) {
+            str += entry.getKey() + " : " + entry.getValue().toString() + "|\n";
+        }
+        str += "\n";
+        return str;
     }
 }

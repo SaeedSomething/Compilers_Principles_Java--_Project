@@ -111,10 +111,12 @@ public class MethodSymbol extends Symbol {
 
     }
 
-    public void checkBeforeSettingVal() {
+    public void checkBeforeSettingVal() throws Exception {
+
     }
 
     public void checkAfterSettingVal() {
+
     }
 
     public String toString() {

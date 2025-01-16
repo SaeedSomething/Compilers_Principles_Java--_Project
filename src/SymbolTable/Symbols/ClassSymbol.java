@@ -9,11 +9,12 @@ public class ClassSymbol extends Symbol {
     protected boolean isMain = false;
     protected boolean isImported = false;
     protected String parentClass = "Object";
-    protected SymbolTable classScope;
+    // protected SymbolTable classScope;
 
     public ClassSymbol(String name, SymbolTable scope, int line, int col) {
         super(name, scope, line, col);
-        this.classScope = new SymbolTable(this.name, SymbolScope.CLASS, scope, this.line, this.col);
+        // this.classScope = new SymbolTable(this.name, SymbolScope.CLASS, scope,
+        // this.line, this.col);
     }
 
     public ClassSymbol(String name, SymbolTable scope) {
@@ -41,9 +42,9 @@ public class ClassSymbol extends Symbol {
         return parentClass;
     }
 
-    public SymbolTable getClassScope() {
-        return classScope;
-    }
+    // public SymbolTable getClassScope() {
+    // return classScope;
+    // }
 
     public ClassSymbol setAbstract(boolean isAbstract) throws Exception {
         this.checkBeforeSettingVal();
@@ -80,12 +81,12 @@ public class ClassSymbol extends Symbol {
         return this;
     }
 
-    public ClassSymbol setClassScope(SymbolTable classScope) throws Exception {
-        this.checkBeforeSettingVal();
-        this.classScope = classScope;
-        this.checkAfterSettingVal();
-        return this;
-    }
+    // public ClassSymbol setClassScope(SymbolTable classScope) throws Exception {
+    // this.checkBeforeSettingVal();
+    // this.classScope = classScope;
+    // this.checkAfterSettingVal();
+    // return this;
+    // }
 
     public void checkBeforeSettingVal() {
     }
@@ -93,19 +94,20 @@ public class ClassSymbol extends Symbol {
     public void checkAfterSettingVal() {
     }
 
+
     public String toString() {
-        return "ClassSymbol{" +
-                "name='" + name + '\'' +
-                ", isAbstract=" + isAbstract +
-                ", isInterface=" + isInterface +
-                ", isMain=" + isMain +
-                ", isImported=" + isImported +
-                ", parentClass='" + parentClass + '\'' +
-                ", classScope=" + classScope +
-                ", line=" + line +
-                ", col=" + col +
-                ", scope=" + scope +
-                '}';
+        return "\n" + "ClassSymbol{" +
+                "\n" + "name='" + name + '\'' +
+                "\n" + ", isAbstract=" + isAbstract +
+                "\n" + ", isInterface=" + isInterface +
+                "\n" + ", isMain=" + isMain +
+                "\n" + ", isImported=" + isImported +
+                "\n" + ", parentClass='" + parentClass + '\'' +
+                // "\n" + ", classScope=" + classScope +
+                "\n" + ", line=" + line +
+                "\n" + ", col=" + col +
+                "\n" + ", scope=" + scope +
+                "\n" + '}';
     }
 
 }

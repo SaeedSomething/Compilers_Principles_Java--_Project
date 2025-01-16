@@ -15,6 +15,8 @@ import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
 
 import SymbolTable.SymbolScope;
 import SymbolTable.SymbolTable;
+import SymbolTable.Symbols.ClassSymbol;
+import SymbolTable.Symbols.MethodSymbol;
 import gen.javaMinusMinusBaseListener;
 import gen.javaMinusMinusBaseVisitor;
 import gen.javaMinusMinusListener;
@@ -131,6 +133,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterProgram(javaMinusMinusParser.ProgramContext ctx) {
+
         if (currentScope == null) {
             currentScope = new SymbolTable("program", SymbolScope.PROGRAM, null, ctx.start.getLine(),
                     ctx.start.getCharPositionInLine());
@@ -153,6 +156,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 try {
 
                     compiler.Compiler.file.write(scope.toString() + "\n");
+                    compiler.Compiler.file.write("  " + scope.getAllSymbols() + "\n");
+
                 } catch (Exception e) {
                     // TODO: handle exception
                     e.printStackTrace();
@@ -250,6 +255,17 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterConstructorDeclaration(javaMinusMinusParser.ConstructorDeclarationContext ctx) {
+
+        try {
+
+            MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine()).setConstructor(true);
+            currentScope.addVal(methodSymbol.getName(), methodSymbol);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
         SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.METHOD, currentScope,
                 ctx.start.getLine(), ctx.start.getCharPositionInLine());
 
@@ -309,13 +325,38 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterMainClass(javaMinusMinusParser.MainClassContext ctx) {
 
+        // first we add the classSymbol to the program scope
+        ClassSymbol classSymbol = null;
+        try {
+
+            classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine()).setMain(true);
+            currentScope.addVal(classSymbol.getName(), classSymbol);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
+        // then we make a table for the class level scpoe
         SymbolTable newScope = new SymbolTable(ctx.className.getText(), SymbolScope.CLASS, currentScope,
                 ctx.start.getLine(), ctx.start.getCharPositionInLine());
         currentScope.setChildSymbolTable(newScope);
         currentScope = newScope;
+
         PrintIndents();
         System.out.println("CLASS " + ctx.className.getText());
         indent++;
+
+        // each class has its methods as its symbol
+
+        try {
+            MethodSymbol methodSymbol = new MethodSymbol("main", currentScope, ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine()).setMain(true);
+            currentScope.addVal(methodSymbol.getName(), methodSymbol);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // since the main method isnot called like any other , we should manually create
         // and go into its scope and set the line and col manully too
         newScope = new SymbolTable(ctx.className.getText(), SymbolScope.METHOD, currentScope,
@@ -326,7 +367,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
         System.out.println("METHOD main");
         indent++;
 
-        // if the behaviour of the main method needed clarifiacation , un-
+        // if the behaviour of the main method needed clarifiacation , un-comment below
         // PrintIndents();
         // System.out.println("RETURN_TYPE void");
         // PrintIndents();
@@ -488,6 +529,16 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
+
+        MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+                ctx.start.getCharPositionInLine());
+
+        try {
+            currentScope.addVal(methodSymbol.getName(), methodSymbol);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.METHOD, currentScope,
                 ctx.start.getLine(), ctx.start.getCharPositionInLine());
         currentScope.setChildSymbolTable(newScope);
@@ -500,6 +551,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
         if (ctx.getChild(0).getText().equals("@Override")) {
             PrintIndents();
             System.out.println("OVERRIDE");
+            try {
+                methodSymbol.setOverrides(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // checking return type shuold be indented
@@ -507,6 +563,13 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         // when return type is void the ctx.type() is null
         String returnType = ctx.type() != null ? ctx.type().getText() : "void";
+        if (!returnType.equals("void")) {
+            try {
+                methodSymbol.setReturnType(returnType);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println("RETURN_TYPE " + returnType);
 
     }
@@ -551,6 +614,15 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         PrintIndents();
         System.out.println("- " + ctx.getChild(1).getText());
+
+        ClassSymbol classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+                ctx.start.getCharPositionInLine());
+        try {
+            currentScope.addVal(classSymbol.getName(), classSymbol);
+            classSymbol.setImported(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -822,10 +894,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterClassDeclaration(javaMinusMinusParser.ClassDeclarationContext ctx) {
 
-        SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.CLASS, currentScope,
-                ctx.start.getLine(), ctx.start.getCharPositionInLine());
-        currentScope.setChildSymbolTable(newScope);
-        currentScope = newScope;
+        ClassSymbol classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+                ctx.start.getCharPositionInLine());
 
         PrintIndents();
 
@@ -836,16 +906,38 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
                 case "abstract":
                     System.out.print("ABSTRACT ");
+                    try {
+
+                        classSymbol.setAbstract(true);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
                     break;
                 case "class":
                     System.out.print("CLASS ");
                     break;
                 case "extends":
                     System.out.print("EXTENDS ");
+                    try {
+                        classSymbol.setParentClass(ctx.getChild(i + 1).getText());
+
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
                     break;
 
                 case "implements":
                     System.out.print("IMPLEMENTS ");
+                    try {
+                        classSymbol.setParentClass(ctx.getChild(i + 1).getText());
+
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
+
                     break;
 
                 case "{":
@@ -860,6 +952,18 @@ public class ProgramPrinter implements javaMinusMinusListener {
             }
 
         }
+        try {
+            currentScope.addVal(classSymbol.getName(), classSymbol);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.CLASS, currentScope,
+                ctx.start.getLine(), ctx.start.getCharPositionInLine());
+        currentScope.setChildSymbolTable(newScope);
+        currentScope = newScope;
+
         indent++;
 
     }
