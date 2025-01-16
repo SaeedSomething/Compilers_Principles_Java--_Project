@@ -8,6 +8,7 @@ public class ClassSymbol extends Symbol {
     protected boolean isInterface = false;
     protected boolean isMain = false;
     protected boolean isImported = false;
+    protected String accessModifier = "public";
     protected String parentClass = "Object";
     // protected SymbolTable classScope;
 
@@ -36,6 +37,10 @@ public class ClassSymbol extends Symbol {
 
     public boolean isImported() {
         return isImported;
+    }
+
+    public String getAccessModifier() {
+        return accessModifier;
     }
 
     public String getParentClass() {
@@ -81,6 +86,12 @@ public class ClassSymbol extends Symbol {
         return this;
     }
 
+    public ClassSymbol setAccessModifier(String accessModifier) throws Exception {
+        this.checkBeforeSettingVal();
+        this.accessModifier = accessModifier;
+        this.checkAfterSettingVal();
+        return this;
+    }
     // public ClassSymbol setClassScope(SymbolTable classScope) throws Exception {
     // this.checkBeforeSettingVal();
     // this.classScope = classScope;
@@ -94,20 +105,21 @@ public class ClassSymbol extends Symbol {
     public void checkAfterSettingVal() {
     }
 
-
     public String toString() {
-        return "\n" + "ClassSymbol{" +
-                "\n" + "name='" + name + '\'' +
-                "\n" + ", isAbstract=" + isAbstract +
-                "\n" + ", isInterface=" + isInterface +
-                "\n" + ", isMain=" + isMain +
-                "\n" + ", isImported=" + isImported +
-                "\n" + ", parentClass='" + parentClass + '\'' +
-                // "\n" + ", classScope=" + classScope +
-                "\n" + ", line=" + line +
-                "\n" + ", col=" + col +
-                "\n" + ", scope=" + scope +
-                "\n" + '}';
+        return this.ln +
+                "ClassSymbol{" +
+                "name='" + name + '\'' +
+                ", isAbstract=" + isAbstract +
+                ", isInterface=" + isInterface +
+                ", isMain=" + isMain +
+                ", isImported=" + isImported +
+                ", parentClass='" + parentClass + '\'' +
+                // " + ", classScope=" + classScope +
+                ", line=" + line +
+                ", col=" + col +
+                ", scope=" + scope.getName() +
+                '}' +
+                this.ln;
     }
 
 }

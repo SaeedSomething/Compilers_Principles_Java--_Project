@@ -15,6 +15,7 @@ public class LocalVarSymbol extends Symbol {
         this.checkAfterSettingVal();
         return this;
     }
+
     public LocalVarSymbol setType(String type) {
         this.checkBeforeSettingVal();
         this.type = type;
@@ -28,7 +29,6 @@ public class LocalVarSymbol extends Symbol {
         this.checkAfterSettingVal();
         return this;
     }
-
 
     public String getType() {
         return type;
@@ -59,13 +59,15 @@ public class LocalVarSymbol extends Symbol {
     }
 
     public String toString() {
-        return "LocalVarSymbol{" +
+        return this.ln +
+                "LocalVarSymbol{" +
                 "name='" + name + '\'' +
                 ", line=" + line +
                 ", col=" + col +
                 ", type=" + type +
                 ", isInitlialized=" + isInitlialized +
                 ", value='" + value + '\'' +
-                '}';
+                '}' +
+                this.ln;
     }
 }

@@ -8,7 +8,7 @@ import SymbolTable.SymbolTable;
  * Symbol class is the parent class for all the symbols in the symbol table.
  */
 public abstract class Symbol {
-
+    public String ln = "\n---------------------------------------------------\n";
     protected String name;
     protected int line;
     protected int col;

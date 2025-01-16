@@ -1,149 +1,149 @@
--
+
+********************************
 SCOPE : PROGRAM_program_3_0|val : 
--
+********************************
+
   
-[Main, args] : 
-ClassSymbol{
-name='[Main, args]'
-, isAbstract=false
-, isInterface=false
-, isMain=true
-, isImported=false
-, parentClass='Object'
-, line=3
-, col=0
-, scope=-
-SCOPE : PROGRAM_program_3_0|val : 
--
-}|
-[Shape] : 
-ClassSymbol{
-name='[Shape]'
-, isAbstract=true
-, isInterface=false
-, isMain=false
-, isImported=false
-, parentClass='Object'
-, line=60
-, col=0
-, scope=-
-SCOPE : PROGRAM_program_3_0|val : 
--
-}|
-[Calculator] : 
-ClassSymbol{
-name='[Calculator]'
-, isAbstract=false
-, isInterface=false
-, isMain=false
-, isImported=false
-, parentClass='Object'
-, line=69
-, col=0
-, scope=-
-SCOPE : PROGRAM_program_3_0|val : 
--
-}|
-[Circle, Shape] : 
-ClassSymbol{
-name='[Circle, Shape]'
-, isAbstract=false
-, isInterface=false
-, isMain=false
-, isImported=false
-, parentClass='Shape'
-, line=44
-, col=0
-, scope=-
-SCOPE : PROGRAM_program_3_0|val : 
--
-}|
+Circle : 
+---------------------------------------------------
+ClassSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Shape', line=44, col=0, scope=program}
+---------------------------------------------------
+|
+Shape : 
+---------------------------------------------------
+ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=60, col=0, scope=program}
+---------------------------------------------------
+|
+Calculator : 
+---------------------------------------------------
+ClassSymbol{name='Calculator', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=69, col=0, scope=program}
+---------------------------------------------------
+|
+Main : 
+---------------------------------------------------
+ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=3, col=0, scope=program}
+---------------------------------------------------
+|
 
 
--
+
+********************************
 SCOPE : CLASS_Main_3_0|val : 
--
+********************************
+
   
-main : MethodSymbol{name='main', isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='void', methodScope=null, line=3, col=0, scope=-
-SCOPE : CLASS_Main_3_0|val : 
--}|
+main : 
+---------------------------------------------------
+MethodSymbol{name='main', isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='void', methodScope=null, line=3, col=0, scope=Main}
+---------------------------------------------------
+|
 
 
--
+
+********************************
 SCOPE : METHOD_Main_4_23|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : BLOCK_for_27_51|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : CLASS_[Circle, Shape]_44_0|val : 
--
+********************************
+
   
-area : MethodSymbol{name='area', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='int', paramType='void', methodScope=null, line=53, col=4, scope=-
-SCOPE : CLASS_[Circle, Shape]_44_0|val : 
--}|
-Circle : MethodSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isConstructor=true, overrides=false, returnType='void', paramType='void', methodScope=null, line=48, col=4, scope=-
-SCOPE : CLASS_[Circle, Shape]_44_0|val : 
--}|
+area : 
+---------------------------------------------------
+MethodSymbol{name='area', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='int', paramType='void', methodScope=null, line=53, col=4, scope=[Circle, Shape]}
+---------------------------------------------------
+|
+Circle : 
+---------------------------------------------------
+MethodSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isConstructor=true, overrides=false, returnType='void', paramType='voidint radius', methodScope=null, line=48, col=4, scope=[Circle, Shape]}
+---------------------------------------------------
+|
 
 
--
+
+********************************
 SCOPE : METHOD_area_53_4|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : CLASS_[Shape]_60_0|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : METHOD_area_65_4|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : CLASS_[Calculator]_69_0|val : 
--
+********************************
+
   
-add : MethodSymbol{name='add', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', methodScope=null, line=71, col=4, scope=-
-SCOPE : CLASS_[Calculator]_69_0|val : 
--}|
-multiply : MethodSymbol{name='multiply', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', methodScope=null, line=76, col=4, scope=-
-SCOPE : CLASS_[Calculator]_69_0|val : 
--}|
+add : 
+---------------------------------------------------
+MethodSymbol{name='add', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', methodScope=null, line=71, col=4, scope=[Calculator]}
+---------------------------------------------------
+|
+multiply : 
+---------------------------------------------------
+MethodSymbol{name='multiply', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', methodScope=null, line=76, col=4, scope=[Calculator]}
+---------------------------------------------------
+|
 
 
--
+
+********************************
 SCOPE : METHOD_add_71_4|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : METHOD_multiply_76_4|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : BLOCK_if_77_15|val : 
--
+********************************
+
   
 
 
--
+
+********************************
 SCOPE : BLOCK_else_79_13|val : 
--
+********************************
+
   
 
 

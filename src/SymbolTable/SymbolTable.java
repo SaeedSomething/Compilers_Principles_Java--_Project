@@ -10,6 +10,7 @@ import java.util.Map;
 import SymbolTable.Symbols.*;
 
 public class SymbolTable {
+    public String ln = "\n********************************\n";
     protected String name;
     protected int line;
     protected int col;
@@ -63,10 +64,10 @@ public class SymbolTable {
     }
 
     public String toString() {
-        String str = "-" + "\n";
+        String str = this.ln;
         str += "SCOPE : " + key + "|" + "val : ";
 
-        str += "\n" + "-";
+        str += this.ln;
         return str;
     }
 

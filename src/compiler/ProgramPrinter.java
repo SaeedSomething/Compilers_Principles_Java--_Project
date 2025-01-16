@@ -16,6 +16,7 @@ import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
 import SymbolTable.SymbolScope;
 import SymbolTable.SymbolTable;
 import SymbolTable.Symbols.ClassSymbol;
+import SymbolTable.Symbols.MethodParamSymbol;
 import SymbolTable.Symbols.MethodSymbol;
 import gen.javaMinusMinusBaseListener;
 import gen.javaMinusMinusBaseVisitor;
@@ -257,10 +258,29 @@ public class ProgramPrinter implements javaMinusMinusListener {
     public void enterConstructorDeclaration(javaMinusMinusParser.ConstructorDeclarationContext ctx) {
 
         try {
-
             MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
                     ctx.start.getCharPositionInLine()).setConstructor(true);
+
             currentScope.addVal(methodSymbol.getName(), methodSymbol);
+            if (ctx.accessModifier() != null) {
+                methodSymbol.setAccessModifier(ctx.accessModifier().getText());
+                PrintIndents();
+                System.out.println("ACCESS_MODIFIER " + ctx.accessModifier().getText());
+            }
+            if (ctx.parameterList() != null) {
+                indent++;
+
+                // TODO: either change MethodSymbol.paramType to a list of MethodParamSymbol or
+                // TODO: strings , or find a better way to store type stuff
+                for (int i = 0; i < ctx.parameterList().size(); i++) {
+                    // ctx.parameterList().get(i).
+                    methodSymbol.addParamType(ctx.parameterList().get(i).getStart().getText() + " "
+                            + ctx.parameterList().get(i).getStop().getText());
+                    // if (!ctx.parameterList().get(i).equals(",")) {
+                    // }
+                }
+                indent--;
+            }
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -270,7 +290,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 ctx.start.getLine(), ctx.start.getCharPositionInLine());
 
         currentScope = newScope;
-
         System.out.println("CONSTRUCTOR " + ctx.Identifier().getText());
         indent++;
     }
@@ -329,7 +348,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
         ClassSymbol classSymbol = null;
         try {
 
-            classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+            classSymbol = new ClassSymbol("Main", currentScope, ctx.start.getLine(),
                     ctx.start.getCharPositionInLine()).setMain(true);
             currentScope.addVal(classSymbol.getName(), classSymbol);
         } catch (Exception e) {
@@ -894,7 +913,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterClassDeclaration(javaMinusMinusParser.ClassDeclarationContext ctx) {
 
-        ClassSymbol classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope, ctx.start.getLine(),
+        ClassSymbol classSymbol = new ClassSymbol(ctx.Identifier().get(0).toString(), currentScope, ctx.start.getLine(),
                 ctx.start.getCharPositionInLine());
 
         PrintIndents();

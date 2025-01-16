@@ -38,13 +38,13 @@ public class GenericSymbol extends Symbol {
     }
 
     public String toString() {
-        String str = "-" + "\n";
+        String str = this.ln;
         str += "key : " + key + "|" + "val : ";
         while (val.keys().asIterator().hasNext()) {
             key = val.keys().asIterator().next();
             str += "\n" + key + " : " + val.get(key) + "|";
         }
-        str += "\n" + "-";
+        str += this.ln;
         return str;
     }
 }

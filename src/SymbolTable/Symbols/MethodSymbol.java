@@ -1,5 +1,7 @@
 package SymbolTable.Symbols;
 
+import java.lang.reflect.Method;
+
 import SymbolTable.SymbolTable;
 
 public class MethodSymbol extends Symbol {
@@ -9,6 +11,7 @@ public class MethodSymbol extends Symbol {
     protected boolean isConstructor = false;
     protected boolean overrides = false;
 
+    protected String accessModifier = "public";
     protected String returnType = "void";
     protected String paramType = "void";
     protected SymbolTable methodScope;
@@ -16,6 +19,17 @@ public class MethodSymbol extends Symbol {
     public MethodSymbol setAbstract(boolean isAbstract) throws Exception {
         this.checkBeforeSettingVal();
         this.isAbstract = isAbstract;
+        this.checkAfterSettingVal();
+        return this;
+    }
+
+    public String getAccessModifier() {
+        return accessModifier;
+    }
+
+    public MethodSymbol setAccessModifier(String accessModifier) throws Exception {
+        this.checkBeforeSettingVal();
+        this.accessModifier = accessModifier;
         this.checkAfterSettingVal();
         return this;
     }
@@ -51,6 +65,13 @@ public class MethodSymbol extends Symbol {
     public MethodSymbol setReturnType(String returnType) throws Exception {
         this.checkBeforeSettingVal();
         this.returnType = returnType;
+        this.checkAfterSettingVal();
+        return this;
+    }
+
+    public MethodSymbol addParamType(String paramType) throws Exception {
+        this.checkBeforeSettingVal();
+        this.paramType += paramType;
         this.checkAfterSettingVal();
         return this;
     }
@@ -120,7 +141,8 @@ public class MethodSymbol extends Symbol {
     }
 
     public String toString() {
-        return "MethodSymbol{" +
+        return this.ln +
+                "MethodSymbol{" +
                 "name='" + name + '\'' +
                 ", isAbstract=" + isAbstract +
                 ", isInterface=" + isInterface +
@@ -132,7 +154,9 @@ public class MethodSymbol extends Symbol {
                 ", methodScope=" + methodScope +
                 ", line=" + line +
                 ", col=" + col +
-                ", scope=" + scope +
-                '}';
+                ", scope=" + scope.getName() +
+                '}' +
+                this.ln;
+
     }
 }
