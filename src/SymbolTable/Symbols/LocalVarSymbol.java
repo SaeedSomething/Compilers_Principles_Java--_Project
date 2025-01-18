@@ -6,12 +6,19 @@ public class LocalVarSymbol extends Symbol {
 
     protected String type;
     protected String value;
-
-    protected boolean isInitlialized = false;
+    protected String accessModifier = "public";
+    protected boolean isInitialized = false;
 
     public LocalVarSymbol setVal(String value) {
         this.checkBeforeSettingVal();
         this.value = value;
+        this.checkAfterSettingVal();
+        return this;
+    }
+
+    public LocalVarSymbol setAccessModifier(String accessModifier) {
+        this.checkBeforeSettingVal();
+        this.accessModifier = accessModifier;
         this.checkAfterSettingVal();
         return this;
     }
@@ -23,11 +30,15 @@ public class LocalVarSymbol extends Symbol {
         return this;
     }
 
-    public LocalVarSymbol setInitlialized(boolean initlialized) {
+    public LocalVarSymbol setInitialized(boolean initialized) {
         this.checkBeforeSettingVal();
-        isInitlialized = initlialized;
+        this.isInitialized = initialized;
         this.checkAfterSettingVal();
         return this;
+    }
+
+    public String getAccessModifier() {
+        return accessModifier;
     }
 
     public String getType() {
@@ -38,8 +49,8 @@ public class LocalVarSymbol extends Symbol {
         return value;
     }
 
-    public boolean isInitlialized() {
-        return isInitlialized;
+    public boolean isInitialized() {
+        return isInitialized;
     }
 
     public LocalVarSymbol(String name, SymbolTable scope, int line, int col) {
@@ -60,14 +71,14 @@ public class LocalVarSymbol extends Symbol {
 
     public String toString() {
         return this.ln +
-                "LocalVarSymbol{" +
-                "name='" + name + '\'' +
-                ", line=" + line +
-                ", col=" + col +
-                ", type=" + type +
-                ", isInitlialized=" + isInitlialized +
-                ", value='" + value + '\'' +
-                '}' +
+                "\n" + "LocalVarSymbol{" +
+                "\n" + "name='" + name + '\'' +
+                "\n" + ", line=" + line +
+                "\n" + ", col=" + col +
+                "\n" + ", type=" + type +
+                "\n" + ", isInitialized=" + isInitialized +
+                "\n" + ", value='" + value + '\'' +
+                "\n" + '}' +
                 this.ln;
     }
 }

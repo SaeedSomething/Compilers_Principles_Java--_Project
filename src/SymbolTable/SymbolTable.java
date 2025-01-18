@@ -107,11 +107,17 @@ public class SymbolTable {
     }
 
     public String getAllSymbols() {
-        String str = "\n";
-        for (Map.Entry<String, Symbol> entry : val.entrySet()) {
-            str += entry.getKey() + " : " + entry.getValue().toString() + "|\n";
+        String str = "\n+++++++++++++++++++++++++++++++++++++++++++\n";
+        if (val.size() == 0) {
+            str += "No symbols in this table";
+        } else {
+            for (Map.Entry<String, Symbol> entry : val.entrySet()) {
+
+                str += entry.getKey() + " : " + entry.getValue().toString() + "|\n";
+
+            }
         }
-        str += "\n";
+        str += "\n+++++++++++++++++++++++++++++++++++++++++++\n";
         return str;
     }
 }

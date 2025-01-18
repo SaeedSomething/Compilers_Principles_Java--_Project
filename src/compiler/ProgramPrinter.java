@@ -16,6 +16,7 @@ import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
 import SymbolTable.SymbolScope;
 import SymbolTable.SymbolTable;
 import SymbolTable.Symbols.ClassSymbol;
+import SymbolTable.Symbols.LocalVarSymbol;
 import SymbolTable.Symbols.MethodParamSymbol;
 import SymbolTable.Symbols.MethodSymbol;
 import gen.javaMinusMinusBaseListener;
@@ -35,11 +36,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
     private boolean elseBlockSeen = false;
 
     private void PrintIndents() {
-        System.out.print(indent + " ");
+        // System.out.print(indent + " ");
         for (int i = 0; i < indent; i++) {
             // System.out.print(indent);
-            System.out.print("-");
+            System.out.print(" ");
         }
+        // System.out.print(" ");
     }
 
     @Override
@@ -113,6 +115,25 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterInterfaceFieldDeclaration(javaMinusMinusParser.InterfaceFieldDeclarationContext ctx) {
+
+        LocalVarSymbol localVarSymbol = null;
+        try {
+            localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine());
+            currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
+            if (ctx.type().LSB() != null) {
+                localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            }
+            if (ctx.EQ() != null) {
+                localVarSymbol.setVal(ctx.expression().getText());
+                localVarSymbol.setInitialized(true);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+
         PrintIndents();
 
         // same as DECLARE in classes
@@ -120,7 +141,9 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         if (ctx.type() != null) {
             System.out.print(ctx.type().getText() + " ");
+            ctx.type().localVarSymbol.setType(ctx.type().getText());
         }
+        localVarSymbol.setVal(ctx.expression().getText());
         System.out.println(ctx.Identifier().getText() + " = " + ctx.expression().getText());
 
     }
@@ -288,8 +311,10 @@ public class ProgramPrinter implements javaMinusMinusListener {
                     String name = ctx.parameterList(0).parameter(i).Identifier().getText();
                     MethodParamSymbol methodParamSymbol = new MethodParamSymbol(name, currentScope, ctx.start.getLine(),
                             ctx.start.getCharPositionInLine()).setType(type);
-
+                    // method param is a value in the method symbol
                     methodSymbol.addParamType(methodParamSymbol);
+                    // method param is a symbol for a variable int the method scope
+                    methodSymbol.getScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
 
                 }
             }
@@ -388,9 +413,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
                     ctx.start.getLine() + 1, ctx.start.getCharPositionInLine() + 23);
             currentScope.setChildSymbolTable(newScope);
             currentScope = newScope;
-            methodSymbol.addParamType(new MethodParamSymbol("args", currentScope, ctx.start.getLine(),
-                    ctx.start.getCharPositionInLine()).setType("array of String"));
             methodSymbol.setMethodScope(currentScope);
+
+            MethodParamSymbol methodParamSymbol = new MethodParamSymbol("args", currentScope, ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine()).setType("array of String");
+            methodSymbol.addParamType(methodParamSymbol);
+            currentScope.addVal(methodParamSymbol.getName(), methodParamSymbol);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -612,8 +640,10 @@ public class ProgramPrinter implements javaMinusMinusListener {
                     String name = ctx.parameterList(0).parameter(i).Identifier().getText();
                     MethodParamSymbol methodParamSymbol = new MethodParamSymbol(name, currentScope, ctx.start.getLine(),
                             ctx.start.getCharPositionInLine()).setType(type);
-
+                    // method param is a value in the method symbol
                     methodSymbol.addParamType(methodParamSymbol);
+                    // method param is a symbol for a variable int the method scope
+                    methodSymbol.getScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
 
                 }
             }
@@ -743,7 +773,23 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterLocalDeclaration(javaMinusMinusParser.LocalDeclarationContext ctx) {
-
+        LocalVarSymbol localVarSymbol = null;
+        try {
+            localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine());
+            currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
+            if (ctx.type().LSB() != null) {
+                localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            }
+            if (ctx.EQ() != null) {
+                localVarSymbol.setVal(ctx.expression().getText());
+                localVarSymbol.setInitialized(true);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
         if (forDeclaresCount > 0) {
             forDeclaresCount--;
             return;
@@ -888,10 +934,24 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterVarDeclaration(javaMinusMinusParser.VarDeclarationContext ctx) {
+        LocalVarSymbol localVarSymbol = null;
+        try {
+            localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine());
+            currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
+            if (ctx.type().LSB() != null) {
+                localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            }
 
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
         PrintIndents();
         System.out.print("FIELD ");
         if (ctx.accessModifier() != null) {
+            localVarSymbol.setAccessModifier(ctx.accessModifier().getText());
             if (ctx.accessModifier().getText().equals("public")) {
                 System.out.print("PUBLIC ");
             } else if (ctx.accessModifier().getText().equals("private")) {
@@ -947,6 +1007,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterForStatement(javaMinusMinusParser.ForStatementContext ctx) {
+
         PrintIndents();
         System.out.println("FOR");
         indent++;

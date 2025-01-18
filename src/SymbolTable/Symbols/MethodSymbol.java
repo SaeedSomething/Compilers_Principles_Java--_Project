@@ -125,7 +125,7 @@ public class MethodSymbol extends Symbol {
         return returnType;
     }
 
-    public ArrayList<MethodParamSymbol> getParamType() {
+    public ArrayList<MethodParamSymbol> getParamTypes() {
         return paramTypes;
     }
 
@@ -152,21 +152,22 @@ public class MethodSymbol extends Symbol {
     }
 
     public String toString() {
+        String paramTypesStr = paramTypes.size() > 0 ? paramTypes.toString() : "void";
         return this.ln +
-                "MethodSymbol{" +
-                "name='" + name + '\'' +
-                ", isAbstract=" + isAbstract +
-                ", isInterface=" + isInterface +
-                ", isMain=" + isMain +
-                ", isConstructor=" + isConstructor +
-                ", overrides=" + overrides +
-                ", returnType='" + returnType + '\'' +
-                ", paramType='" + paramTypes + '\'' +
-                // ", methodScope=" + methodScope +
-                ", line=" + line +
-                ", col=" + col +
-                ", scope=" + scope.getName() +
-                '}' +
+                "\n " + "MethodSymbol{" +
+                "\n " + "name='" + name + '\'' +
+                "\n " + ", isAbstract=" + isAbstract +
+                "\n " + ", isInterface=" + isInterface +
+                "\n " + ", isMain=" + isMain +
+                "\n " + ", isConstructor=" + isConstructor +
+                "\n " + ", overrides=" + overrides +
+                "\n " + ", returnType='" + returnType + '\'' +
+                "\n " + ", paramType='" + paramTypesStr + '\'' +
+                "\n " + // ", methodScope=" + methodScope +
+                "\n " + ", line=" + line +
+                "\n " + ", col=" + col +
+                "\n " + ", scope=" + scope.getName() +
+                "\n " + '}' +
                 this.ln;
 
     }

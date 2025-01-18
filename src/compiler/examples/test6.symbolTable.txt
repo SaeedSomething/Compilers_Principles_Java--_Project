@@ -4,27 +4,77 @@ SCOPE : PROGRAM_program_3_0|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
 Circle : 
 ---------------------------------------------------
-ClassSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Shape', line=44, col=0, scope=program}
+
+ClassSymbol{
+name='Circle'
+, isAbstract=false
+, isInterface=false
+, isMain=false
+, isImported=false
+, parentClass='Shape'
+
+, line=44
+, col=0
+, scope=program
+}
 ---------------------------------------------------
 |
 Shape : 
 ---------------------------------------------------
-ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=60, col=0, scope=program}
+
+ClassSymbol{
+name='Shape'
+, isAbstract=true
+, isInterface=false
+, isMain=false
+, isImported=false
+, parentClass='Object'
+
+, line=60
+, col=0
+, scope=program
+}
 ---------------------------------------------------
 |
 Calculator : 
 ---------------------------------------------------
-ClassSymbol{name='Calculator', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=69, col=0, scope=program}
+
+ClassSymbol{
+name='Calculator'
+, isAbstract=false
+, isInterface=false
+, isMain=false
+, isImported=false
+, parentClass='Object'
+
+, line=69
+, col=0
+, scope=program
+}
 ---------------------------------------------------
 |
 Main : 
 ---------------------------------------------------
-ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=3, col=0, scope=program}
+
+ClassSymbol{
+name='Main'
+, isAbstract=false
+, isInterface=false
+, isMain=true
+, isImported=false
+, parentClass='Object'
+
+, line=3
+, col=0
+, scope=program
+}
 ---------------------------------------------------
 |
 
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -32,16 +82,32 @@ SCOPE : CLASS_Main_3_0|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
 main : 
 ---------------------------------------------------
-MethodSymbol{name='main', isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[
+
+ MethodSymbol{
+ name='main'
+ , isAbstract=false
+ , isInterface=false
+ , isMain=true
+ , isConstructor=false
+ , overrides=false
+ , returnType='void'
+ , paramType='[
 ---------------------------------------------------
 MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
 ---------------------------------------------------
-]', line=3, col=0, scope=Main}
+]'
+ 
+ , line=3
+ , col=0
+ , scope=Main
+ }
 ---------------------------------------------------
 |
 
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -49,7 +115,105 @@ SCOPE : METHOD_Main_4_23|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
+args : 
+---------------------------------------------------
+MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
+---------------------------------------------------
+|
+result : 
+---------------------------------------------------
 
+LocalVarSymbol{
+name='result'
+, line=36
+, col=8
+, type=null
+, isInitialized=true
+, value='calc.multiply(10,20)'
+}
+---------------------------------------------------
+|
+numbers : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='numbers'
+, line=18
+, col=8
+, type=array of int
+, isInitialized=true
+, value='newint[5]'
+}
+---------------------------------------------------
+|
+i : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='i'
+, line=27
+, col=13
+, type=null
+, isInitialized=true
+, value='0'
+}
+---------------------------------------------------
+|
+rectangle : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='rectangle'
+, line=7
+, col=8
+, type=null
+, isInitialized=true
+, value='newRectangle(4,6)'
+}
+---------------------------------------------------
+|
+sum : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='sum'
+, line=26
+, col=8
+, type=null
+, isInitialized=true
+, value='0'
+}
+---------------------------------------------------
+|
+calc : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='calc'
+, line=35
+, col=8
+, type=null
+, isInitialized=true
+, value='newCalculator()'
+}
+---------------------------------------------------
+|
+circle : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='circle'
+, line=6
+, col=8
+, type=null
+, isInitialized=true
+, value='newCircle(5)'
+}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -57,7 +221,9 @@ SCOPE : BLOCK_for_27_51|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -65,21 +231,56 @@ SCOPE : CLASS_Circle_44_0|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
 area : 
 ---------------------------------------------------
-MethodSymbol{name='area', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='int', paramType='[]', line=53, col=4, scope=Circle}
+
+ MethodSymbol{
+ name='area'
+ , isAbstract=false
+ , isInterface=false
+ , isMain=false
+ , isConstructor=false
+ , overrides=true
+ , returnType='int'
+ , paramType='void'
+ 
+ , line=53
+ , col=4
+ , scope=Circle
+ }
 ---------------------------------------------------
 |
 Circle : 
 ---------------------------------------------------
-MethodSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isConstructor=true, overrides=false, returnType='void', paramType='[
+
+ MethodSymbol{
+ name='Circle'
+ , isAbstract=false
+ , isInterface=false
+ , isMain=false
+ , isConstructor=true
+ , overrides=false
+ , returnType='void'
+ , paramType='[
 ---------------------------------------------------
 MethodParamSymbol{name='radius', line=48, col=4, type='int'}
 ---------------------------------------------------
-]', line=48, col=4, scope=Circle}
+]'
+ 
+ , line=48
+ , col=4
+ , scope=Circle
+ }
+---------------------------------------------------
+|
+radius : 
+---------------------------------------------------
+MethodParamSymbol{name='radius', line=48, col=4, type='int'}
 ---------------------------------------------------
 |
 
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -87,7 +288,9 @@ SCOPE : METHOD_Circle_48_4|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -95,7 +298,9 @@ SCOPE : METHOD_area_53_4|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -103,7 +308,35 @@ SCOPE : CLASS_Shape_60_0|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
+x : 
+---------------------------------------------------
 
+LocalVarSymbol{
+name='x'
+, line=61
+, col=4
+, type=null
+, isInitialized=false
+, value='null'
+}
+---------------------------------------------------
+|
+y : 
+---------------------------------------------------
+
+LocalVarSymbol{
+name='y'
+, line=62
+, col=4
+, type=null
+, isInitialized=false
+, value='null'
+}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -111,7 +344,9 @@ SCOPE : METHOD_area_65_4|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -119,9 +354,19 @@ SCOPE : CLASS_Calculator_69_0|val :
 ********************************
 
   
++++++++++++++++++++++++++++++++++++++++++++
 add : 
 ---------------------------------------------------
-MethodSymbol{name='add', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[
+
+ MethodSymbol{
+ name='add'
+ , isAbstract=false
+ , isInterface=false
+ , isMain=false
+ , isConstructor=false
+ , overrides=false
+ , returnType='int'
+ , paramType='[
 ---------------------------------------------------
 MethodParamSymbol{name='a', line=71, col=4, type='int'}
 ---------------------------------------------------
@@ -129,12 +374,36 @@ MethodParamSymbol{name='a', line=71, col=4, type='int'}
 ---------------------------------------------------
 MethodParamSymbol{name='b', line=71, col=4, type='int'}
 ---------------------------------------------------
-]', line=71, col=4, scope=Calculator}
+]'
+ 
+ , line=71
+ , col=4
+ , scope=Calculator
+ }
+---------------------------------------------------
+|
+a : 
+---------------------------------------------------
+MethodParamSymbol{name='a', line=76, col=4, type='int'}
+---------------------------------------------------
+|
+b : 
+---------------------------------------------------
+MethodParamSymbol{name='b', line=76, col=4, type='int'}
 ---------------------------------------------------
 |
 multiply : 
 ---------------------------------------------------
-MethodSymbol{name='multiply', isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[
+
+ MethodSymbol{
+ name='multiply'
+ , isAbstract=false
+ , isInterface=false
+ , isMain=false
+ , isConstructor=false
+ , overrides=false
+ , returnType='int'
+ , paramType='[
 ---------------------------------------------------
 MethodParamSymbol{name='a', line=76, col=4, type='int'}
 ---------------------------------------------------
@@ -142,10 +411,16 @@ MethodParamSymbol{name='a', line=76, col=4, type='int'}
 ---------------------------------------------------
 MethodParamSymbol{name='b', line=76, col=4, type='int'}
 ---------------------------------------------------
-]', line=76, col=4, scope=Calculator}
+]'
+ 
+ , line=76
+ , col=4
+ , scope=Calculator
+ }
 ---------------------------------------------------
 |
 
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -153,7 +428,9 @@ SCOPE : METHOD_add_71_4|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -161,7 +438,9 @@ SCOPE : METHOD_multiply_76_4|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -169,7 +448,9 @@ SCOPE : BLOCK_if_77_15|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 
 
 ********************************
@@ -177,5 +458,7 @@ SCOPE : BLOCK_else_79_13|val :
 ********************************
 
   
-
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
 

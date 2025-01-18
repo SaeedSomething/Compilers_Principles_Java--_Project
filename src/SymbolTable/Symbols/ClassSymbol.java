@@ -10,7 +10,9 @@ public class ClassSymbol extends Symbol {
     protected boolean isImported = false;
     protected String accessModifier = "public";
     protected String parentClass = "Object";
+    
     protected SymbolTable classScope;
+
 
     public ClassSymbol(String name, SymbolTable scope, int line, int col) {
         super(name, scope, line, col);
@@ -118,18 +120,18 @@ public class ClassSymbol extends Symbol {
 
     public String toString() {
         return this.ln +
-                "ClassSymbol{" +
-                "name='" + name + '\'' +
-                ", isAbstract=" + isAbstract +
-                ", isInterface=" + isInterface +
-                ", isMain=" + isMain +
-                ", isImported=" + isImported +
-                ", parentClass='" + parentClass + '\'' +
-                // " + ", classScope=" + classScope +
-                ", line=" + line +
-                ", col=" + col +
-                ", scope=" + scope.getName() +
-                '}' +
+                "\n" + "ClassSymbol{" +
+                "\n" + "name='" + name + '\'' +
+                "\n" + ", isAbstract=" + isAbstract +
+                "\n" + ", isInterface=" + isInterface +
+                "\n" + ", isMain=" + isMain +
+                "\n" + ", isImported=" + isImported +
+                "\n" + ", parentClass='" + parentClass + '\'' +
+                "\n" + // " + ", classScope=" + classScope +
+                "\n" + ", line=" + line +
+                "\n" + ", col=" + col +
+                "\n" + ", scope=" + scope.getName() +
+                "\n" + '}' +
                 this.ln;
     }
 
