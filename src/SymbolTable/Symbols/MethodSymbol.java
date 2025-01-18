@@ -1,6 +1,7 @@
 package SymbolTable.Symbols;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import SymbolTable.SymbolTable;
 
@@ -13,7 +14,7 @@ public class MethodSymbol extends Symbol {
 
     protected String accessModifier = "public";
     protected String returnType = "void";
-    protected String paramType = "void";
+    protected ArrayList<MethodParamSymbol> paramTypes = new ArrayList<MethodParamSymbol>();
     protected SymbolTable methodScope;
 
     public MethodSymbol setAbstract(boolean isAbstract) throws Exception {
@@ -69,20 +70,30 @@ public class MethodSymbol extends Symbol {
         return this;
     }
 
-    public MethodSymbol addParamType(String paramType) throws Exception {
+    public MethodSymbol addParamType(MethodParamSymbol paramType) throws Exception {
         this.checkBeforeSettingVal();
-        this.paramType += paramType;
+        this.paramTypes.add(paramType);
         this.checkAfterSettingVal();
         return this;
     }
 
-    public MethodSymbol setParamType(String paramType) throws Exception {
+    public MethodSymbol setParamType(ArrayList<MethodParamSymbol> paramTypes) throws Exception {
         this.checkBeforeSettingVal();
-        this.paramType = paramType;
+        this.paramTypes = paramTypes;
         this.checkAfterSettingVal();
         return this;
     }
 
+    /**
+     * method scope refers to the scope of the method (this method thats being
+     * created)
+     * and parent (what we specify in the constructor)refers to the parent class
+     * scope ( the class that this method is declared in )
+     * 
+     * @param methodScope
+     * @return
+     * @throws Exception
+     */
     public MethodSymbol setMethodScope(SymbolTable methodScope) throws Exception {
         this.checkBeforeSettingVal();
         this.methodScope = methodScope;
@@ -114,8 +125,8 @@ public class MethodSymbol extends Symbol {
         return returnType;
     }
 
-    public String getParamType() {
-        return paramType;
+    public ArrayList<MethodParamSymbol> getParamType() {
+        return paramTypes;
     }
 
     public SymbolTable getMethodScope() {
@@ -150,8 +161,8 @@ public class MethodSymbol extends Symbol {
                 ", isConstructor=" + isConstructor +
                 ", overrides=" + overrides +
                 ", returnType='" + returnType + '\'' +
-                ", paramType='" + paramType + '\'' +
-                ", methodScope=" + methodScope +
+                ", paramType='" + paramTypes + '\'' +
+                // ", methodScope=" + methodScope +
                 ", line=" + line +
                 ", col=" + col +
                 ", scope=" + scope.getName() +

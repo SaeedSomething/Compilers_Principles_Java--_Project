@@ -10,7 +10,7 @@ public class ClassSymbol extends Symbol {
     protected boolean isImported = false;
     protected String accessModifier = "public";
     protected String parentClass = "Object";
-    // protected SymbolTable classScope;
+    protected SymbolTable classScope;
 
     public ClassSymbol(String name, SymbolTable scope, int line, int col) {
         super(name, scope, line, col);
@@ -47,9 +47,9 @@ public class ClassSymbol extends Symbol {
         return parentClass;
     }
 
-    // public SymbolTable getClassScope() {
-    // return classScope;
-    // }
+    public SymbolTable getClassScope() {
+        return classScope;
+    }
 
     public ClassSymbol setAbstract(boolean isAbstract) throws Exception {
         this.checkBeforeSettingVal();
@@ -92,12 +92,23 @@ public class ClassSymbol extends Symbol {
         this.checkAfterSettingVal();
         return this;
     }
-    // public ClassSymbol setClassScope(SymbolTable classScope) throws Exception {
-    // this.checkBeforeSettingVal();
-    // this.classScope = classScope;
-    // this.checkAfterSettingVal();
-    // return this;
-    // }
+
+    /**
+     * method scope refers to the scope of the class (this class thats being
+     * created)
+     * and parent (what we specify in the constructor)refers to the parent program
+     * scope ( the program that this method is declared in )
+     * 
+     * @param classScope
+     * @return
+     * @throws Exception
+     */
+    public ClassSymbol setClassScope(SymbolTable classScope) throws Exception {
+        this.checkBeforeSettingVal();
+        this.classScope = classScope;
+        this.checkAfterSettingVal();
+        return this;
+    }
 
     public void checkBeforeSettingVal() {
     }
