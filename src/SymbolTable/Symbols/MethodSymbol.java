@@ -154,20 +154,21 @@ public class MethodSymbol extends Symbol {
     public String toString() {
         String paramTypesStr = paramTypes.size() > 0 ? paramTypes.toString() : "void";
         return this.ln +
-                "\n " + "MethodSymbol{" +
-                "\n " + "name='" + name + '\'' +
-                "\n " + ", isAbstract=" + isAbstract +
-                "\n " + ", isInterface=" + isInterface +
-                "\n " + ", isMain=" + isMain +
-                "\n " + ", isConstructor=" + isConstructor +
-                "\n " + ", overrides=" + overrides +
-                "\n " + ", returnType='" + returnType + '\'' +
-                "\n " + ", paramType='" + paramTypesStr + '\'' +
-                "\n " + // ", methodScope=" + methodScope +
-                "\n " + ", line=" + line +
-                "\n " + ", col=" + col +
-                "\n " + ", scope=" + scope.getName() +
-                "\n " + '}' +
+                "MethodSymbol{" +
+                "name='" + name + '\'' +
+                ", access modifier= " + accessModifier+
+                ", isAbstract=" + isAbstract +
+                ", isInterface=" + isInterface +
+                ", isMain=" + isMain +
+                ", isConstructor=" + isConstructor +
+                ", overrides=" + overrides +
+                ", returnType='" + returnType + '\'' +
+                ", paramType='" + paramTypesStr + '\'' +
+                // ", methodScope=" + methodScope +
+                ", line=" + line +
+                ", col=" + col +
+                ", scope=" + scope.getName() +
+                '}' +
                 this.ln;
 
     }

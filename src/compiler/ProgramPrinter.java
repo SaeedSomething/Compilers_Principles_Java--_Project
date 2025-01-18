@@ -124,6 +124,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
             currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            } else {
+                localVarSymbol.setType(ctx.type().getText());
             }
             if (ctx.EQ() != null) {
                 localVarSymbol.setVal(ctx.expression().getText());
@@ -141,7 +143,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         if (ctx.type() != null) {
             System.out.print(ctx.type().getText() + " ");
-            ctx.type().localVarSymbol.setType(ctx.type().getText());
+            localVarSymbol.setType(ctx.type().getText());
         }
         localVarSymbol.setVal(ctx.expression().getText());
         System.out.println(ctx.Identifier().getText() + " = " + ctx.expression().getText());
@@ -314,7 +316,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                     // method param is a value in the method symbol
                     methodSymbol.addParamType(methodParamSymbol);
                     // method param is a symbol for a variable int the method scope
-                    methodSymbol.getScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
+                    methodSymbol.getMethodScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
 
                 }
             }
@@ -437,23 +439,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
     @Override
     public void enterInterfaceMethodDeclaration(javaMinusMinusParser.InterfaceMethodDeclarationContext ctx) {
 
-        try {
-
-            // making the method symbol for the interface
-            MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope,
-                    ctx.start.getLine(),
-                    ctx.start.getCharPositionInLine())
-                    .setInterface(true); // specifying its an interface
-            SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.METHOD,
-                    currentScope,
-                    ctx.start.getLine(), ctx.start.getCharPositionInLine());
-            currentScope.setChildSymbolTable(newScope);
-            currentScope = newScope;
-            methodSymbol.setMethodScope(currentScope);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-
         PrintIndents();
         System.out.println("INTERFACE METHOD " + ctx.Identifier().getText());
         indent++;
@@ -463,6 +448,47 @@ public class ProgramPrinter implements javaMinusMinusListener {
         String returnType = ctx.type() != null ? ctx.type().getText() : "void";
         PrintIndents();
         System.out.println("RETURN " + returnType);
+        try {
+
+            // making the method symbol for the interface
+            MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine())
+                    .setInterface(true).setReturnType(returnType); // specifying its an interface
+
+            currentScope.addVal(methodSymbol.getName(), methodSymbol);
+            // interface is not implemented to have a body as a scope
+            // so no table is created for the method scope
+
+            SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(),
+                    SymbolScope.METHOD,
+                    currentScope,
+                    ctx.start.getLine(), ctx.start.getCharPositionInLine());
+            currentScope.setChildSymbolTable(newScope);
+            currentScope = newScope;
+            methodSymbol.setMethodScope(currentScope);
+
+            if (ctx.parameterList() != null) {
+                for (int i = 0; i < ctx.parameterList().parameter().size(); i++) {
+                    String type = ctx.parameterList().parameter(i).type().LSB() != null
+                            ? "array of " + ctx.parameterList().parameter(i).type().getChild(0).getText()
+                            : ctx.parameterList().parameter(i).type().getChild(0).getText();
+
+                    String name = ctx.parameterList().parameter(i).Identifier().getText();
+                    MethodParamSymbol methodParamSymbol = new MethodParamSymbol(name, currentScope, ctx.start.getLine(),
+                            ctx.start.getCharPositionInLine()).setType(type);
+                    // method param is a value in the method symbol
+                    methodSymbol.addParamType(methodParamSymbol);
+                    // method param is a symbol for a variable int the method scope
+                    methodSymbol.getMethodScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
+
+                }
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
     @Override
@@ -530,19 +556,25 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterAbstractMethodDeclaration(javaMinusMinusParser.AbstractMethodDeclarationContext ctx) {
+        // checking return type shuold be indented and if null it means return type is
+        // void
+        PrintIndents();
 
+        String returnType = ctx.type() != null ? ctx.type().getText() : "void";
+        System.out.println("RETURN_TYPE " + returnType);
+        MethodSymbol methodSymbol = null;
         try {
-            MethodSymbol methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope,
+            methodSymbol = new MethodSymbol(ctx.Identifier().toString(), currentScope,
                     ctx.start.getLine(),
-                    ctx.start.getCharPositionInLine()).setAbstract(true);
-
+                    ctx.start.getCharPositionInLine()).setAbstract(true).setReturnType(returnType);
+            currentScope.addVal(methodSymbol.getName(), methodSymbol);
             SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.METHOD,
                     currentScope,
                     ctx.start.getLine(), ctx.start.getCharPositionInLine());
             currentScope.setChildSymbolTable(newScope);
             currentScope = newScope;
 
-            methodSymbol.setMethodScope(currentScope);
+            methodSymbol.setMethodScope(currentScope).setAbstract(true);
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -550,17 +582,19 @@ public class ProgramPrinter implements javaMinusMinusListener {
         PrintIndents();
         System.out.println("ABSTRACT METHOD " + ctx.Identifier().getText());
         indent++;
+
         // check for @Overriden method
         if (ctx.getChild(0).getText().equals("@Override")) {
+            try {
+                methodSymbol.setOverrides(true);
+
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
             PrintIndents();
             System.out.println("OVERRIDE");
         }
-        // checking return type shuold be indented and if null it means return type is
-        // void
-        PrintIndents();
-
-        String returnType = ctx.type() != null ? ctx.type().getText() : "void";
-        System.out.println("RETURN_TYPE " + returnType);
 
     }
 
@@ -595,12 +629,21 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterInterfaceDeclaration(javaMinusMinusParser.InterfaceDeclarationContext ctx) {
+        ClassSymbol classSymbol = null;
+        try {
+            classSymbol = new ClassSymbol(ctx.Identifier().toString(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine()).setInterface(true);
+            currentScope.addVal(classSymbol.getName(), classSymbol);
 
-        SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.CLASS, currentScope,
-                ctx.start.getLine(), ctx.start.getCharPositionInLine());
-        currentScope.setChildSymbolTable(newScope);
-        currentScope = newScope;
-
+            SymbolTable newScope = new SymbolTable(ctx.Identifier().toString(), SymbolScope.CLASS, currentScope,
+                    ctx.start.getLine(), ctx.start.getCharPositionInLine());
+            currentScope.setChildSymbolTable(newScope);
+            currentScope = newScope;
+            classSymbol.setClassScope(newScope);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         PrintIndents();
         System.out.println("INTERFACE " + ctx.Identifier().getText());
         indent++;
@@ -619,6 +662,10 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
         try {
             currentScope.addVal(methodSymbol.getName(), methodSymbol);
+            if (ctx.accessModifier() != null) {
+                methodSymbol.setAccessModifier(ctx.accessModifier().getText());
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -643,7 +690,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                     // method param is a value in the method symbol
                     methodSymbol.addParamType(methodParamSymbol);
                     // method param is a symbol for a variable int the method scope
-                    methodSymbol.getScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
+                    methodSymbol.getMethodScope().addVal(methodParamSymbol.getName(), methodParamSymbol);
 
                 }
             }
@@ -676,6 +723,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 e.printStackTrace();
             }
         }
+
         System.out.println("RETURN_TYPE " + returnType);
 
     }
@@ -781,6 +829,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
             currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            } else {
+                localVarSymbol.setType(ctx.type().getText());
             }
             if (ctx.EQ() != null) {
                 localVarSymbol.setVal(ctx.expression().getText());
@@ -837,6 +887,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitInterfaceMethodDeclaration(javaMinusMinusParser.InterfaceMethodDeclarationContext ctx) {
+        // interface is not implemented to have a body as a scope
         currentScope = currentScope.getParent();
         indent--;
         System.out.println();
@@ -942,6 +993,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
             currentScope.addVal(localVarSymbol.getName(), localVarSymbol);
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
+            } else {
+                localVarSymbol.setType(ctx.type().getText());
             }
 
         } catch (Exception e) {
@@ -1044,6 +1097,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
                 case "abstract":
                     System.out.print("ABSTRACT ");
+
                     try {
 
                         classSymbol.setAbstract(true);

@@ -25,6 +25,7 @@ class Main {
         // Sum of array elements
         int sum = 0;
         for (int i = 0; i < numbers.length ; i+1 ) {
+            int ff = i;
             sum = sum + numbers[i];
         }
         print("Sum of array elements: " );
@@ -58,7 +59,7 @@ class Circle extends Shape {
 
 // Abstract class: Shape
 abstract class Shape {
-    int x;
+    private int x;
     int y;
 
     // Abstract method for area calculation
@@ -68,16 +69,16 @@ abstract class Shape {
 // A utility class: Calculator
 class Calculator {
     // Method to add two numbers
-    public int add(int a, int b) {
+    private int add(int a, int b) {
         return a + b;
     }
 
     // Method to multiply two numbers
     public int multiply(int a, int b) {
         if(a<b){
-            a.b();
+            //a.b();
         }else{
-            b.a();
+            //b.a();
         }
         return (a * b);
     }
@@ -99,3 +100,9 @@ class Calculator {
 //         return length * width;
 //     }
 // }
+
+
+interface intf {
+    int r = 5;
+    int[] sote(int[] asd);
+}

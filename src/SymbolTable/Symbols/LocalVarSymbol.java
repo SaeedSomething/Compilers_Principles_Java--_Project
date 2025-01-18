@@ -71,14 +71,15 @@ public class LocalVarSymbol extends Symbol {
 
     public String toString() {
         return this.ln +
-                "\n" + "LocalVarSymbol{" +
-                "\n" + "name='" + name + '\'' +
-                "\n" + ", line=" + line +
-                "\n" + ", col=" + col +
-                "\n" + ", type=" + type +
-                "\n" + ", isInitialized=" + isInitialized +
-                "\n" + ", value='" + value + '\'' +
-                "\n" + '}' +
+                "LocalVarSymbol{" +
+                "name='" + name + '\'' +
+                ", line=" + line +
+                ", accessModifier=" + accessModifier +
+                ", col=" + col +
+                ", type=" + type +
+                ", isInitialized=" + isInitialized +
+                ", value='" + value + '\'' +
+                '}' +
                 this.ln;
     }
 }
