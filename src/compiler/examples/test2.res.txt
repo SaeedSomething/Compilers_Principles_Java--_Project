@@ -1,0 +1,20 @@
+CLASS Main
+    METHOD main
+        DECLARE Shape circle = new Circle(5)
+        PRINT CALL circle.area
+
+ABSTRACT CLASS Shape
+    ABSTRACT METHOD area
+        RETURN int
+    
+CLASS Circle EXTENDS Shape
+    FIELD int radius
+    CONSTRUCTOR Circle
+        PARAMETER int radius
+        BODY
+            ASSIGN
+    METHOD area
+        OVERRIDE
+        RETURN int
+        BODY
+            RETURN radius * radius * 3

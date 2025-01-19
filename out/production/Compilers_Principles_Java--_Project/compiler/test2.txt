@@ -1,0 +1,20 @@
+class Main {
+    public static void main(String[] args){
+        Shape circle = new Circle(5);
+        print(circle.area());
+    }
+}
+abstract class Shape {
+    public abstract int area();
+}
+
+class Circle extends Shape {
+    int radius;
+    public Circle (int radius){
+        radius = radius;
+    }
+
+    @Override  public int area (){
+        return radius * radius * 3;
+    }
+}

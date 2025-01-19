@@ -1,0 +1,13 @@
+IMPORT
+    LIBRARY
+        - math
+CLASS Main
+    METHOD Main
+        DECLARE int num =10
+        IF
+            CONDITION num<20
+            BODY
+                PRINT "Number is less than 20"
+            ELSE
+                BODY
+                    PRINT "Number is 20 or more"

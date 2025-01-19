@@ -144,14 +144,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterProgram(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitProgram(this);
-		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -227,14 +219,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_importClass; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterImportClass(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitImportClass(this);
-		}
 	}
 
 	public final ImportClassContext importClass() throws RecognitionException {
@@ -264,13 +248,14 @@ public class javaMinusMinusParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class MainClassContext extends ParserRuleContext {
+		public Token className;
+		public TerminalNode LP() { return getToken(javaMinusMinusParser.LP, 0); }
+		public TerminalNode LSB() { return getToken(javaMinusMinusParser.LSB, 0); }
+		public TerminalNode RSB() { return getToken(javaMinusMinusParser.RSB, 0); }
 		public List<TerminalNode> Identifier() { return getTokens(javaMinusMinusParser.Identifier); }
 		public TerminalNode Identifier(int i) {
 			return getToken(javaMinusMinusParser.Identifier, i);
 		}
-		public TerminalNode LP() { return getToken(javaMinusMinusParser.LP, 0); }
-		public TerminalNode LSB() { return getToken(javaMinusMinusParser.LSB, 0); }
-		public TerminalNode RSB() { return getToken(javaMinusMinusParser.RSB, 0); }
 		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
@@ -282,14 +267,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_mainClass; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterMainClass(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitMainClass(this);
-		}
 	}
 
 	public final MainClassContext mainClass() throws RecognitionException {
@@ -302,7 +279,7 @@ public class javaMinusMinusParser extends Parser {
 			setState(75);
 			match(T__2);
 			setState(76);
-			match(Identifier);
+			((MainClassContext)_localctx).className = match(Identifier);
 			setState(77);
 			match(T__3);
 			setState(78);
@@ -389,14 +366,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_classDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterClassDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitClassDeclaration(this);
-		}
 	}
 
 	public final ClassDeclarationContext classDeclaration() throws RecognitionException {
@@ -553,14 +522,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_interfaceDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterInterfaceDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitInterfaceDeclaration(this);
-		}
 	}
 
 	public final InterfaceDeclarationContext interfaceDeclaration() throws RecognitionException {
@@ -637,14 +598,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_interfaceMethodDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterInterfaceMethodDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitInterfaceMethodDeclaration(this);
-		}
 	}
 
 	public final InterfaceMethodDeclarationContext interfaceMethodDeclaration() throws RecognitionException {
@@ -719,14 +672,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_interfaceFieldDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterInterfaceFieldDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitInterfaceFieldDeclaration(this);
-		}
 	}
 
 	public final InterfaceFieldDeclarationContext interfaceFieldDeclaration() throws RecognitionException {
@@ -767,14 +712,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_fieldDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterFieldDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitFieldDeclaration(this);
-		}
 	}
 
 	public final FieldDeclarationContext fieldDeclaration() throws RecognitionException {
@@ -812,14 +749,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_localDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterLocalDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitLocalDeclaration(this);
-		}
 	}
 
 	public final LocalDeclarationContext localDeclaration() throws RecognitionException {
@@ -873,14 +802,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_varDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterVarDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitVarDeclaration(this);
-		}
 	}
 
 	public final VarDeclarationContext varDeclaration() throws RecognitionException {
@@ -943,14 +864,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_methodDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterMethodDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitMethodDeclaration(this);
-		}
 	}
 
 	public final MethodDeclarationContext methodDeclaration() throws RecognitionException {
@@ -1060,14 +973,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_constructorDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterConstructorDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitConstructorDeclaration(this);
-		}
 	}
 
 	public final ConstructorDeclarationContext constructorDeclaration() throws RecognitionException {
@@ -1157,14 +1062,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_abstractMethodDeclaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterAbstractMethodDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitAbstractMethodDeclaration(this);
-		}
 	}
 
 	public final AbstractMethodDeclarationContext abstractMethodDeclaration() throws RecognitionException {
@@ -1263,14 +1160,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_parameterList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterParameterList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitParameterList(this);
-		}
 	}
 
 	public final ParameterListContext parameterList() throws RecognitionException {
@@ -1321,14 +1210,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_parameter; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterParameter(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitParameter(this);
-		}
 	}
 
 	public final ParameterContext parameter() throws RecognitionException {
@@ -1376,14 +1257,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_methodBody; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterMethodBody(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitMethodBody(this);
-		}
 	}
 
 	public final MethodBodyContext methodBody() throws RecognitionException {
@@ -1458,14 +1331,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitType(this);
-		}
 	}
 
 	public final TypeContext type() throws RecognitionException {
@@ -1524,14 +1389,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_javaType; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterJavaType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitJavaType(this);
-		}
 	}
 
 	public final JavaTypeContext javaType() throws RecognitionException {
@@ -1570,14 +1427,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_accessModifier; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterAccessModifier(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitAccessModifier(this);
-		}
 	}
 
 	public final AccessModifierContext accessModifier() throws RecognitionException {
@@ -1633,14 +1482,6 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(StatementContext.class,0);
 		}
 		public WhileStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterWhileStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitWhileStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PrintStatementContext extends StatementContext {
@@ -1650,14 +1491,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
 		public PrintStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterPrintStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitPrintStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IfElseStatementContext extends StatementContext {
@@ -1673,14 +1506,6 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(StatementContext.class,i);
 		}
 		public IfElseStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterIfElseStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitIfElseStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class VariableAssignmentStatementContext extends StatementContext {
@@ -1690,40 +1515,26 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public VariableAssignmentStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterVariableAssignmentStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitVariableAssignmentStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ForStatementContext extends StatementContext {
+		public ExpressionContext conditionExp;
+		public ExpressionContext incrementExp;
 		public TerminalNode LP() { return getToken(javaMinusMinusParser.LP, 0); }
+		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
+		public StatementContext statement() {
+			return getRuleContext(StatementContext.class,0);
+		}
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
-		public StatementContext statement() {
-			return getRuleContext(StatementContext.class,0);
-		}
 		public LocalDeclarationContext localDeclaration() {
 			return getRuleContext(LocalDeclarationContext.class,0);
 		}
 		public ForStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterForStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitForStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class LocalDeclarationStatementContext extends StatementContext {
@@ -1731,14 +1542,6 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(LocalDeclarationContext.class,0);
 		}
 		public LocalDeclarationStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterLocalDeclarationStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitLocalDeclarationStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ArrayAssignmentStatementContext extends StatementContext {
@@ -1753,14 +1556,6 @@ public class javaMinusMinusParser extends Parser {
 		public TerminalNode RSB() { return getToken(javaMinusMinusParser.RSB, 0); }
 		public TerminalNode EQ() { return getToken(javaMinusMinusParser.EQ, 0); }
 		public ArrayAssignmentStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterArrayAssignmentStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitArrayAssignmentStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class NestedStatementContext extends StatementContext {
@@ -1771,14 +1566,6 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(StatementContext.class,i);
 		}
 		public NestedStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterNestedStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitNestedStatement(this);
-		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -1876,11 +1663,11 @@ public class javaMinusMinusParser extends Parser {
 					break;
 				}
 				setState(320);
-				expression(0);
+				((ForStatementContext)_localctx).conditionExp = expression(0);
 				setState(321);
 				match(T__1);
 				setState(322);
-				expression(0);
+				((ForStatementContext)_localctx).incrementExp = expression(0);
 				setState(323);
 				match(RP);
 				setState(324);
@@ -1967,14 +1754,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifBlock; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterIfBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitIfBlock(this);
-		}
 	}
 
 	public final IfBlockContext ifBlock() throws RecognitionException {
@@ -2007,14 +1786,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseBlock; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterElseBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitElseBlock(this);
-		}
 	}
 
 	public final ElseBlockContext elseBlock() throws RecognitionException {
@@ -2047,14 +1818,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whileBlock; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterWhileBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitWhileBlock(this);
-		}
 	}
 
 	public final WhileBlockContext whileBlock() throws RecognitionException {
@@ -2088,14 +1851,6 @@ public class javaMinusMinusParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expressionOrString; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterExpressionOrString(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitExpressionOrString(this);
-		}
 	}
 
 	public final ExpressionOrStringContext expressionOrString() throws RecognitionException {
@@ -2166,14 +1921,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode LT() { return getToken(javaMinusMinusParser.LT, 0); }
 		public LtExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterLtExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitLtExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ObjectInstantiationExpressionContext extends ExpressionContext {
@@ -2189,14 +1936,6 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(ExpressionContext.class,i);
 		}
 		public ObjectInstantiationExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterObjectInstantiationExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitObjectInstantiationExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ArrayInstantiationExpressionContext extends ExpressionContext {
@@ -2209,14 +1948,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode RSB() { return getToken(javaMinusMinusParser.RSB, 0); }
 		public ArrayInstantiationExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterArrayInstantiationExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitArrayInstantiationExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PowExpressionContext extends ExpressionContext {
@@ -2228,40 +1959,16 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode POWER() { return getToken(javaMinusMinusParser.POWER, 0); }
 		public PowExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterPowExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitPowExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class Set_typeContext extends ExpressionContext {
 		public TerminalNode Identifier() { return getToken(javaMinusMinusParser.Identifier, 0); }
 		public Set_typeContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterSet_type(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitSet_type(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IdentifierExpressionContext extends ExpressionContext {
 		public TerminalNode Identifier() { return getToken(javaMinusMinusParser.Identifier, 0); }
 		public IdentifierExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterIdentifierExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitIdentifierExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class MethodCallExpressionContext extends ExpressionContext {
@@ -2275,14 +1982,6 @@ public class javaMinusMinusParser extends Parser {
 		public TerminalNode LP() { return getToken(javaMinusMinusParser.LP, 0); }
 		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
 		public MethodCallExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterMethodCallExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitMethodCallExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class NotExpressionContext extends ExpressionContext {
@@ -2291,27 +1990,11 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public NotExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterNotExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitNotExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BooleanLitExpressionContext extends ExpressionContext {
 		public TerminalNode BooleanLiteral() { return getToken(javaMinusMinusParser.BooleanLiteral, 0); }
 		public BooleanLitExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterBooleanLitExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitBooleanLitExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParenExpressionContext extends ExpressionContext {
@@ -2321,27 +2004,11 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode RP() { return getToken(javaMinusMinusParser.RP, 0); }
 		public ParenExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterParenExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitParenExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IntLitExpressionContext extends ExpressionContext {
 		public TerminalNode IntegerLiteral() { return getToken(javaMinusMinusParser.IntegerLiteral, 0); }
 		public IntLitExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterIntLitExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitIntLitExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class VariableDeclarationContext extends ExpressionContext {
@@ -2349,27 +2016,11 @@ public class javaMinusMinusParser extends Parser {
 			return getRuleContext(LocalDeclarationContext.class,0);
 		}
 		public VariableDeclarationContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterVariableDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitVariableDeclaration(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class NullLitExpressionContext extends ExpressionContext {
 		public TerminalNode NullLiteral() { return getToken(javaMinusMinusParser.NullLiteral, 0); }
 		public NullLitExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterNullLitExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitNullLitExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AndExpressionContext extends ExpressionContext {
@@ -2381,14 +2032,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode AND() { return getToken(javaMinusMinusParser.AND, 0); }
 		public AndExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterAndExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitAndExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ArrayAccessExpressionContext extends ExpressionContext {
@@ -2401,14 +2044,6 @@ public class javaMinusMinusParser extends Parser {
 		public TerminalNode LSB() { return getToken(javaMinusMinusParser.LSB, 0); }
 		public TerminalNode RSB() { return getToken(javaMinusMinusParser.RSB, 0); }
 		public ArrayAccessExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterArrayAccessExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitArrayAccessExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AddExpressionContext extends ExpressionContext {
@@ -2420,26 +2055,10 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode PLUS() { return getToken(javaMinusMinusParser.PLUS, 0); }
 		public AddExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterAddExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitAddExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ThisExpressionContext extends ExpressionContext {
 		public ThisExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterThisExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitThisExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ArrayLengthExpressionContext extends ExpressionContext {
@@ -2448,14 +2067,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode DOTLENGTH() { return getToken(javaMinusMinusParser.DOTLENGTH, 0); }
 		public ArrayLengthExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterArrayLengthExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitArrayLengthExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IntArrayInstantiationExpressionContext extends ExpressionContext {
@@ -2464,14 +2075,6 @@ public class javaMinusMinusParser extends Parser {
 			return getToken(javaMinusMinusParser.IntegerLiteral, i);
 		}
 		public IntArrayInstantiationExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterIntArrayInstantiationExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitIntArrayInstantiationExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class SubExpressionContext extends ExpressionContext {
@@ -2483,14 +2086,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode MINUS() { return getToken(javaMinusMinusParser.MINUS, 0); }
 		public SubExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterSubExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitSubExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class MulExpressionContext extends ExpressionContext {
@@ -2502,14 +2097,6 @@ public class javaMinusMinusParser extends Parser {
 		}
 		public TerminalNode TIMES() { return getToken(javaMinusMinusParser.TIMES, 0); }
 		public MulExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).enterMulExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof javaMinusMinusListener ) ((javaMinusMinusListener)listener).exitMulExpression(this);
-		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
