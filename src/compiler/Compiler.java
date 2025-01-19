@@ -23,7 +23,7 @@ public class Compiler {
         int i = 6;
         for (; i <= 6; i++) {
 
-            file = new FileWriter("src/compiler/examples/test" + i + ".symbolTable.txt");
+            file = new FileWriter("src/compiler/examples/test" + i + ".symbolTable1.txt");
             CharStream stream = CharStreams.fromFileName("src/compiler/examples/test" + i + ".txt");
 
             javaMinusMinusLexer lexer = new javaMinusMinusLexer(stream);

@@ -52,6 +52,59 @@ public class SymbolTable {
                 throw new Exception("SymbolTable: " + this.key + " has a null value for key: " + key);
             }
         }
+
+        CheckDuplicateDeclarations();
+    }
+
+    private void CheckDuplicateDeclarations() throws Exception {
+
+        switch (this.scope){
+            case PROGRAM -> {
+                // check for duplicate classes with same name in the program scope
+                for (SymbolTable child : this.children) {
+                    if (child.scope == SymbolScope.CLASS) {
+                        for (SymbolTable child2 : this.children) {
+                            if (child2.scope == SymbolScope.CLASS && child != child2) {
+                                if (child.name.equals(child2.name)) {
+                                    throw new Exception("Error102: in line " + child.line + ":" + child.col + " , class "
+                                            + child.name + " has been defined already");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            case CLASS -> {
+                // check for duplicate method with same name in the class scope
+                for (SymbolTable child : this.children) {
+                    if (child.scope == SymbolScope.METHOD) {
+                        for (SymbolTable child2 : this.children) {
+                            if (child2.scope == SymbolScope.METHOD && child != child2) {
+                                if (child.name.equals(child2.name)) {
+                                    throw new Exception("Error103: in line " + child.line + ":" + child.col + " , method "
+                                            + child.name + " has been defined already");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            case BLOCK -> {
+                // check for duplicate fields with same name in the block scope
+//                for (SymbolTable child : this.children) {
+//                    if (child.scope == SymbolScope.FIELD) {
+//                        for (SymbolTable child2 : this.children) {
+//                            if (child2.scope == SymbolScope.FIELD && child != child2) {
+//                                if (child.name.equals(child2.name)) {
+//                                    throw new Exception("Error104: in line " + child.line + ":" + child.col + " , field "
+//                                            + child.name + " has been defined already");
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+            }
+        }
     }
 
     public SymbolTable addVal(String key, Symbol val) throws Exception {
