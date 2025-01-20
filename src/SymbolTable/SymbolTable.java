@@ -43,7 +43,10 @@ public class SymbolTable {
 
     }
 
-    public void checkBeforeAddingToTable() throws Exception {
+    public void checkBeforeAddingToTable(Symbol newValue) throws Exception {
+
+        CheckDuplicateDeclarations(newValue);
+
     }
 
     public void checkAfterAddingToTable() throws Exception {
@@ -52,23 +55,20 @@ public class SymbolTable {
                 throw new Exception("SymbolTable: " + this.key + " has a null value for key: " + key);
             }
         }
-
-        CheckDuplicateDeclarations();
     }
 
-    private void CheckDuplicateDeclarations() throws Exception {
+    private void CheckDuplicateDeclarations(Symbol newValue) throws Exception {
 
         switch (this.scope){
             case PROGRAM -> {
                 // check for duplicate classes with same name in the program scope
-                for (SymbolTable child : this.children) {
-                    if (child.scope == SymbolScope.CLASS) {
-                        for (SymbolTable child2 : this.children) {
-                            if (child2.scope == SymbolScope.CLASS && child != child2) {
-                                if (child.name.equals(child2.name)) {
-                                    throw new Exception("Error102: in line " + child.line + ":" + child.col + " , class "
-                                            + child.name + " has been defined already");
-                                }
+                if (newValue instanceof ClassSymbol) {
+                    for (Symbol symbol : this.val.values()) {
+                        if (symbol instanceof ClassSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                // Error102 : in line [line:column] , class [name] has been defined already
+                                throw new Exception("Error102: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", class " + newValue.getName() + " has been defined already");
                             }
                         }
                     }
@@ -76,40 +76,72 @@ public class SymbolTable {
             }
             case CLASS -> {
                 // check for duplicate method with same name in the class scope
-                for (SymbolTable child : this.children) {
-                    if (child.scope == SymbolScope.METHOD) {
-                        for (SymbolTable child2 : this.children) {
-                            if (child2.scope == SymbolScope.METHOD && child != child2) {
-                                if (child.name.equals(child2.name)) {
-                                    throw new Exception("Error103: in line " + child.line + ":" + child.col + " , method "
-                                            + child.name + " has been defined already");
-                                }
+                if (newValue instanceof MethodSymbol) {
+                    for (Symbol symbol : this.val.values()) {
+                        if (symbol instanceof MethodSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                //Error103 : in line [line:column] , method [name] has been defined already
+                                throw new Exception("Error103: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", method " + newValue.getName() + " has been defined already");
+                            }
+                        }
+                    }
+                }
+                else if (newValue instanceof LocalVarSymbol){
+                    for (Symbol symbol : this.val.values()) {
+                        if (symbol instanceof LocalVarSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                //Error104 : in line [line:column] , field [name] has been defined already
+                                throw new Exception("Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", field " + newValue.getName() + " has been defined already");
                             }
                         }
                     }
                 }
             }
+            case METHOD -> {
+                // check for duplicate local variables with same name in the method scope
+                if (newValue instanceof LocalVarSymbol) {
+                    for (Symbol symbol : this.val.values()) {
+                        if (symbol instanceof LocalVarSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                throw new Exception("Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", field " + newValue.getName() + " has been defined already");
+                            }
+                        }
+                    }
+                    for (Symbol symbol : this.parent.val.values()) {
+                        if (symbol instanceof LocalVarSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                throw new Exception("Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", field " + newValue.getName() + " has been defined already");
+                            }
+                        }
+                    }
+                }
+            }
+
             case BLOCK -> {
-                // check for duplicate fields with same name in the block scope
-//                for (SymbolTable child : this.children) {
-//                    if (child.scope == SymbolScope.FIELD) {
-//                        for (SymbolTable child2 : this.children) {
-//                            if (child2.scope == SymbolScope.FIELD && child != child2) {
-//                                if (child.name.equals(child2.name)) {
-//                                    throw new Exception("Error104: in line " + child.line + ":" + child.col + " , field "
-//                                            + child.name + " has been defined already");
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                // check for duplicate fields with same name in the block scope and all parent scopes
+                SymbolTable parent = this;
+                while (parent != null) {
+                    for (Symbol symbol : parent.val.values()) {
+                        if (symbol instanceof LocalVarSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
+                                throw new Exception("Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", field " + newValue.getName() + " has been defined already");
+                            }
+                        }
+                    }
+                    parent = parent.parent;
+                }
             }
         }
     }
 
     public SymbolTable addVal(String key, Symbol val) throws Exception {
 
-        this.checkBeforeAddingToTable();
+        this.checkBeforeAddingToTable(val);
         this.val.put(key, val);
         this.checkAfterAddingToTable();
         return this;

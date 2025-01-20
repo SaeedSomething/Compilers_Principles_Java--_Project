@@ -1,6 +1,7 @@
 
 // First Class: Main
 class Main {
+
     public static void main(String[] args) {
         // Create instances of classes
         Shape circle = new Circle(5);
@@ -36,7 +37,7 @@ class Main {
         Calculator calc = new Calculator();
         int result = calc.multiply(10, 20);
         print("Mult res: ");
-        print( result); 
+        print( result);
         // Expected output: Multiplication result: 200
     }
 }
@@ -53,6 +54,7 @@ class Circle extends Shape {
     // Overriding area method for circle
     @Override
     public int area() {
+        int radius = 3;
         return 3 ;
     }
 }
@@ -67,7 +69,7 @@ abstract class Shape {
 }
 
 // A utility class: Calculator
-class Circle {
+class Circle1 {
     // Method to add two numbers
     private int add(int a, int b) {
         return a + b;
