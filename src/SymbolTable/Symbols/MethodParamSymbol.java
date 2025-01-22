@@ -34,14 +34,13 @@ public class MethodParamSymbol extends Symbol {
 
     public String toString() {
 
-        return this.ln +
-                "MethodParamSymbol{" +
+        return "MethodParamSymbol{" +
                 "name='" + name + '\'' +
                 ", line=" + line +
                 ", col=" + col +
                 ", type='" + type + '\'' +
-                '}' +
-                this.ln;
+                '}';
+        // this.ln;
     }
 
 }

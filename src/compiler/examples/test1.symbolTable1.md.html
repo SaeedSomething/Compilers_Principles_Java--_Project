@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.9/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"","children":[{"content":"PROGRAM_program","children":[{"content":"program_Main_1_0 : ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=1, col=0, scope=program}|","children":[],"payload":{"tag":"h2","lines":"3,4"}},{"content":"program_Shape_18_0 : ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=18, col=0, scope=program}|","children":[],"payload":{"tag":"h2","lines":"4,5"}}],"payload":{"tag":"h1","lines":"0,1"}},{"content":"CLASS_Main","children":[{"content":"Main_main_1_0 : MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[MethodParamSymbol{name='args', line=1, col=0, type='array of String'}]', line=1, col=0, scope=Main}|","children":[],"payload":{"tag":"h2","lines":"11,12"}}],"payload":{"tag":"h1","lines":"8,9"}},{"content":"METHOD_Main","children":[{"content":"Main_args_1_0 : MethodParamSymbol{name='args', line=1, col=0, type='array of String'}|","children":[],"payload":{"tag":"h2","lines":"18,19"}},{"content":"Main_i_4_13 : LocalVarSymbol{name='i', line=4, accessModifier=public, col=13, type=int, isInitialized=true, value='0'}|","children":[],"payload":{"tag":"h2","lines":"19,20"}},{"content":"Main_x_3_8 : LocalVarSymbol{name='x', line=3, accessModifier=public, col=8, type=int, isInitialized=true, value='0'}|","children":[],"payload":{"tag":"h2","lines":"20,21"}}],"payload":{"tag":"h1","lines":"15,16"}},{"content":"BLOCK_for","children":[],"payload":{"tag":"h1","lines":"24,25"}},{"content":"BLOCK_if","children":[],"payload":{"tag":"h1","lines":"30,31"}},{"content":"BLOCK_else","children":[],"payload":{"tag":"h1","lines":"36,37"}},{"content":"BLOCK_else","children":[],"payload":{"tag":"h1","lines":"42,43"}},{"content":"CLASS_Shape","children":[{"content":"Shape_area_19_4 : MethodSymbol{name='area', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', line=19, col=4, scope=Shape}|","children":[],"payload":{"tag":"h2","lines":"51,52"}}],"payload":{"tag":"h1","lines":"48,49"}},{"content":"METHOD_area","children":[],"payload":{"tag":"h1","lines":"55,56"}}]},null)</script>
+</body>
+</html>

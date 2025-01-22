@@ -1,0 +1,343 @@
+
+********************************
+SCOPE : PROGRAM_program_3_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+Circle : 
+---------------------------------------------------
+ClassSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Shape', line=45, col=0, scope=program}
+---------------------------------------------------
+|
+Shape : 
+---------------------------------------------------
+ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=61, col=0, scope=program}
+---------------------------------------------------
+|
+intf : 
+---------------------------------------------------
+ClassSymbol{name='intf', isAbstract=false, isInterface=true, isMain=false, isImported=false, parentClass='Object', line=105, col=0, scope=program}
+---------------------------------------------------
+|
+Calculator : 
+---------------------------------------------------
+ClassSymbol{name='Calculator', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=70, col=0, scope=program}
+---------------------------------------------------
+|
+Main : 
+---------------------------------------------------
+ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=3, col=0, scope=program}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : CLASS_Main_3_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+main : 
+---------------------------------------------------
+MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[
+---------------------------------------------------
+MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
+---------------------------------------------------
+]', line=3, col=0, scope=Main}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_Main_4_23|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+args : 
+---------------------------------------------------
+MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
+---------------------------------------------------
+|
+result : 
+---------------------------------------------------
+LocalVarSymbol{name='result', line=37, accessModifier=public, col=8, type=int, isInitialized=true, value='calc.multiply(10,20)'}
+---------------------------------------------------
+|
+numbers : 
+---------------------------------------------------
+LocalVarSymbol{name='numbers', line=18, accessModifier=public, col=8, type=array of int, isInitialized=true, value='newint[5]'}
+---------------------------------------------------
+|
+i : 
+---------------------------------------------------
+LocalVarSymbol{name='i', line=27, accessModifier=public, col=13, type=int, isInitialized=true, value='0'}
+---------------------------------------------------
+|
+rectangle : 
+---------------------------------------------------
+LocalVarSymbol{name='rectangle', line=7, accessModifier=public, col=8, type=Shape, isInitialized=true, value='newRectangle(4,6)'}
+---------------------------------------------------
+|
+sum : 
+---------------------------------------------------
+LocalVarSymbol{name='sum', line=26, accessModifier=public, col=8, type=int, isInitialized=true, value='0'}
+---------------------------------------------------
+|
+calc : 
+---------------------------------------------------
+LocalVarSymbol{name='calc', line=36, accessModifier=public, col=8, type=Calculator, isInitialized=true, value='newCalculator()'}
+---------------------------------------------------
+|
+circle : 
+---------------------------------------------------
+LocalVarSymbol{name='circle', line=6, accessModifier=public, col=8, type=Shape, isInitialized=true, value='newCircle(5)'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : BLOCK_for_27_51|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+ff : 
+---------------------------------------------------
+LocalVarSymbol{name='ff', line=28, accessModifier=public, col=12, type=int, isInitialized=true, value='i'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : CLASS_Circle_45_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+area : 
+---------------------------------------------------
+MethodSymbol{name='area', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='int', paramType='void', line=54, col=4, scope=Circle}
+---------------------------------------------------
+|
+Circle : 
+---------------------------------------------------
+MethodSymbol{name='Circle', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=true, overrides=false, returnType='void', paramType='[
+---------------------------------------------------
+MethodParamSymbol{name='radius', line=49, col=4, type='int'}
+---------------------------------------------------
+]', line=49, col=4, scope=Circle}
+---------------------------------------------------
+|
+radius : 
+---------------------------------------------------
+LocalVarSymbol{name='radius', line=46, accessModifier=public, col=4, type=int, isInitialized=false, value='null'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_Circle_49_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+radius : 
+---------------------------------------------------
+MethodParamSymbol{name='radius', line=49, col=4, type='int'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_area_54_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : CLASS_Shape_61_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+area : 
+---------------------------------------------------
+MethodSymbol{name='area', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', line=66, col=4, scope=Shape}
+---------------------------------------------------
+|
+x : 
+---------------------------------------------------
+LocalVarSymbol{name='x', line=62, accessModifier=private, col=4, type=int, isInitialized=false, value='null'}
+---------------------------------------------------
+|
+y : 
+---------------------------------------------------
+LocalVarSymbol{name='y', line=63, accessModifier=public, col=4, type=int, isInitialized=false, value='null'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_area_66_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : CLASS_Calculator_70_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+add : 
+---------------------------------------------------
+MethodSymbol{name='add', access modifier= private, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[
+---------------------------------------------------
+MethodParamSymbol{name='a', line=72, col=4, type='int'}
+---------------------------------------------------
+, 
+---------------------------------------------------
+MethodParamSymbol{name='b', line=72, col=4, type='int'}
+---------------------------------------------------
+]', line=72, col=4, scope=Calculator}
+---------------------------------------------------
+|
+multiply : 
+---------------------------------------------------
+MethodSymbol{name='multiply', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[
+---------------------------------------------------
+MethodParamSymbol{name='a', line=77, col=4, type='int'}
+---------------------------------------------------
+, 
+---------------------------------------------------
+MethodParamSymbol{name='b', line=77, col=4, type='int'}
+---------------------------------------------------
+]', line=77, col=4, scope=Calculator}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_add_72_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+a : 
+---------------------------------------------------
+MethodParamSymbol{name='a', line=72, col=4, type='int'}
+---------------------------------------------------
+|
+b : 
+---------------------------------------------------
+MethodParamSymbol{name='b', line=72, col=4, type='int'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_multiply_77_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+a : 
+---------------------------------------------------
+MethodParamSymbol{name='a', line=77, col=4, type='int'}
+---------------------------------------------------
+|
+b : 
+---------------------------------------------------
+MethodParamSymbol{name='b', line=77, col=4, type='int'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : BLOCK_if_78_15|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : BLOCK_else_80_13|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+No symbols in this table
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : CLASS_intf_105_0|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+r : 
+---------------------------------------------------
+LocalVarSymbol{name='r', line=106, accessModifier=public, col=4, type=int, isInitialized=true, value='5'}
+---------------------------------------------------
+|
+sote : 
+---------------------------------------------------
+MethodSymbol{name='sote', access modifier= public, isAbstract=false, isInterface=true, isMain=false, isConstructor=false, overrides=false, returnType='int[]', paramType='[
+---------------------------------------------------
+MethodParamSymbol{name='asd', line=107, col=4, type='array of int'}
+---------------------------------------------------
+]', line=107, col=4, scope=intf}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+
+
+********************************
+SCOPE : METHOD_sote_107_4|val : 
+********************************
+
+  
++++++++++++++++++++++++++++++++++++++++++++
+asd : 
+---------------------------------------------------
+MethodParamSymbol{name='asd', line=107, col=4, type='array of int'}
+---------------------------------------------------
+|
+
++++++++++++++++++++++++++++++++++++++++++++
+

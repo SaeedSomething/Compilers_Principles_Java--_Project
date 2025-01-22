@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.9/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"","children":[{"content":"PROGRAM_program","children":[{"content":"program_Animal_5_0 : ClassSymbol{name='Animal', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=5, col=0, scope=program}|","children":[],"payload":{"tag":"h2","lines":"3,4"}},{"content":"program_Dog_8_0 : ClassSymbol{name='Dog', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Animal', line=8, col=0, scope=program}|","children":[],"payload":{"tag":"h2","lines":"4,5"}},{"content":"program_Main_2_0 : ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=2, col=0, scope=program}|","children":[],"payload":{"tag":"h2","lines":"5,6"}}],"payload":{"tag":"h1","lines":"0,1"}},{"content":"CLASS_Main","children":[{"content":"Main_main_2_0 : MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[MethodParamSymbol{name='args', line=2, col=0, type='array of String'}]', line=2, col=0, scope=Main}|","children":[],"payload":{"tag":"h2","lines":"12,13"}}],"payload":{"tag":"h1","lines":"9,10"}},{"content":"METHOD_Main","children":[{"content":"Main_args_2_0 : MethodParamSymbol{name='args', line=2, col=0, type='array of String'}|","children":[],"payload":{"tag":"h2","lines":"19,20"}}],"payload":{"tag":"h1","lines":"16,17"}},{"content":"CLASS_Animal","children":[{"content":"Animal_sound_6_4 : MethodSymbol{name='sound', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='void', paramType='void', line=6, col=4, scope=Animal}|","children":[],"payload":{"tag":"h2","lines":"26,27"}}],"payload":{"tag":"h1","lines":"23,24"}},{"content":"METHOD_sound","children":[],"payload":{"tag":"h1","lines":"30,31"}},{"content":"CLASS_Dog","children":[{"content":"Dog_sound_9_4 : MethodSymbol{name='sound', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='void', paramType='void', line=9, col=4, scope=Dog}|","children":[],"payload":{"tag":"h2","lines":"39,40"}}],"payload":{"tag":"h1","lines":"36,37"}},{"content":"METHOD_sound","children":[],"payload":{"tag":"h1","lines":"43,44"}}]},null)</script>
+</body>
+</html>
