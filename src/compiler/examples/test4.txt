@@ -1,0 +1,12 @@
+import math ;
+import network;
+class Main{
+    public static void main(String[] args){
+        int num = 10;
+        if(num< 20){
+            print("Number is less than 20");
+        }else {
+            print("Number is 20 or more");
+        }
+    }
+}

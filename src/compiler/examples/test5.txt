@@ -1,0 +1,32 @@
+import math ;
+import network;
+class Main{
+    public static void main(String[] args){
+        int num = 10;
+        if(num< 20){
+            print("Number is less than 20");
+        }else {
+            print("Number is 20 or more");
+        }
+    }
+}
+
+abstract class Dog{
+    public abstract void sound();
+}
+class Dog extends Animal {
+    @Override 
+    public void bark(){
+        print("woof");
+    }
+    @Override
+    public int die(){
+        bark();
+        return now();
+    }
+}
+interface Animal {
+    int len =5;
+    void bark ();
+    int die();
+}
