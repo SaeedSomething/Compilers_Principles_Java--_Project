@@ -22,12 +22,24 @@ import compiler.ProgramPrinter;
 public class Compiler {
     public static FileWriter file = null;
     static String basepath = "src/compiler/examples/";
-    static String npxPath = "C:\\Program Files\\nodejs\\npx"; // should have this installed and in env path
-    static String npmPath = "C:\\Program Files\\nodejs\\npm"; // should have this installed and in env path
+
+    static String npxPath = "C:\\Program Files\\nodejs\\npx";
+    static String npmPath = "C:\\Program Files\\nodejs\\npm";
+    /*
+     * should have nodejs and this installed and in env path
+     * if not try running
+     * windows
+     * choco install -g nodejs
+     * 
+     * linux
+     * sudo apt install nodejs
+     * sudo apt install npm
+     * 
+     */
 
     public static void main(String[] args) throws Exception {
         int i = 1;
-        // installMarkupCli();
+        installMarkupCli();
         for (; i <= 6; i++) {
             file = new FileWriter(basepath + "test" + i +
                     ".symbolTable1.md");
