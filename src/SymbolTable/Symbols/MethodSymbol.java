@@ -153,7 +153,7 @@ public class MethodSymbol extends Symbol {
 
     public String toString() {
         String paramTypesStr = paramTypes.size() > 0 ? paramTypes.toString() : "void";
-        return this.ln +
+        return 
                 "MethodSymbol{" +
                 "name='" + name + '\'' +
                 ", access modifier= " + accessModifier+
@@ -168,8 +168,8 @@ public class MethodSymbol extends Symbol {
                 ", line=" + line +
                 ", col=" + col +
                 ", scope=" + scope.getName() +
-                '}' +
-                this.ln;
+                '}' ;
+                // this.ln;
 
     }
 }

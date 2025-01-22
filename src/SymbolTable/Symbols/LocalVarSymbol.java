@@ -70,8 +70,7 @@ public class LocalVarSymbol extends Symbol {
     }
 
     public String toString() {
-        return this.ln +
-                "LocalVarSymbol{" +
+        return "LocalVarSymbol{" +
                 "name='" + name + '\'' +
                 ", line=" + line +
                 ", accessModifier=" + accessModifier +
@@ -79,7 +78,6 @@ public class LocalVarSymbol extends Symbol {
                 ", type=" + type +
                 ", isInitialized=" + isInitialized +
                 ", value='" + value + '\'' +
-                '}' +
-                this.ln;
+                '}';
     }
 }

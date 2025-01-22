@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.9/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"Identifier Values for Each Scope","children":[{"content":"Program","children":[{"content":"Classes","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"8,9"}},{"content":"\"isMain\"","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"extends (if has no parets, extends Object)","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"\"isAbstract\"","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"\"isInterface\"","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"\"isImported\"","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"symbolTable","children":[],"payload":{"tag":"li","lines":"14,16"}}],"payload":{"tag":"h3","lines":"6,7"}}],"payload":{"tag":"h2","lines":"4,5"}},{"content":"Class","children":[{"content":"LocalVars","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"type","children":[],"payload":{"tag":"li","lines":"21,22"}},{"content":"intialVal","children":[],"payload":{"tag":"li","lines":"22,24"}}],"payload":{"tag":"h3","lines":"18,19"}},{"content":"Methods","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"\"isConstructor\"","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"\"overrides\"","children":[],"payload":{"tag":"li","lines":"28,29"}},{"content":"returnType","children":[],"payload":{"tag":"li","lines":"29,30"}},{"content":"accessModifer","children":[],"payload":{"tag":"li","lines":"30,31"}},{"content":"paramType","children":[],"payload":{"tag":"li","lines":"31,32"}},{"content":"\"isAbstract\"","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"\"isInterfaceMethod\"","children":[],"payload":{"tag":"li","lines":"33,35"}}],"payload":{"tag":"h3","lines":"24,25"}}],"payload":{"tag":"h2","lines":"16,17"}},{"content":"Method","children":[{"content":"Method Params","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"type","children":[],"payload":{"tag":"li","lines":"40,41"}},{"content":"intialVal","children":[],"payload":{"tag":"li","lines":"41,43"}}],"payload":{"tag":"h3","lines":"37,38"}},{"content":"Local Vars","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"45,46"}},{"content":"type","children":[],"payload":{"tag":"li","lines":"46,47"}},{"content":"intialVal","children":[],"payload":{"tag":"li","lines":"47,49"}}],"payload":{"tag":"h3","lines":"43,44"}},{"content":"Blocks","children":[{"content":"symbolTable","children":[],"payload":{"tag":"li","lines":"51,53"}}],"payload":{"tag":"h3","lines":"49,50"}}],"payload":{"tag":"h2","lines":"35,36"}},{"content":"Block Scope","children":[{"content":"Local Vars","children":[{"content":"name","children":[],"payload":{"tag":"li","lines":"57,58"}},{"content":"type","children":[],"payload":{"tag":"li","lines":"58,59"}},{"content":"intialVal","children":[],"payload":{"tag":"li","lines":"59,60"}}],"payload":{"tag":"h3","lines":"55,56"}}],"payload":{"tag":"h2","lines":"53,54"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

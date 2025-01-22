@@ -182,7 +182,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 try {
 
                     compiler.Compiler.file.write(scope.toString() + "\n");
-                    compiler.Compiler.file.write("  " + scope.getAllSymbols() + "\n");
+                    compiler.Compiler.file.write(scope.getAllSymbols() + "\n");
 
                 } catch (Exception e) {
                     // TODO: handle exception
