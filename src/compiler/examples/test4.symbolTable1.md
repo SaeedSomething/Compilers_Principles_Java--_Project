@@ -1,107 +1,35 @@
+# PROGRAM_program
 
-********************************
-SCOPE : PROGRAM_program_1_0|val : 
-********************************
-
-  
 +++++++++++++++++++++++++++++++++++++++++++
-
-********************************
-SCOPE : PROGRAM_program_1_0|val : 
-********************************
-_network_2_0 : 
----------------------------------------------------
-ClassSymbol{name='network', isAbstract=false, isInterface=false, isMain=false, isImported=true, parentClass='Object', line=2, col=0, scope=program}
----------------------------------------------------
-|
-
-********************************
-SCOPE : PROGRAM_program_1_0|val : 
-********************************
-_math_1_0 : 
----------------------------------------------------
-ClassSymbol{name='math', isAbstract=false, isInterface=false, isMain=false, isImported=true, parentClass='Object', line=1, col=0, scope=program}
----------------------------------------------------
-|
-
-********************************
-SCOPE : PROGRAM_program_1_0|val : 
-********************************
-_Main_3_0 : 
----------------------------------------------------
-ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=3, col=0, scope=program}
----------------------------------------------------
-|
+## program_network_2_0 : ClassSymbol{name='network', isAbstract=false, isInterface=false, isMain=false, isImported=true, parentClass='Object', line=2, col=0, scope=program}|
+## program_math_1_0 : ClassSymbol{name='math', isAbstract=false, isInterface=false, isMain=false, isImported=true, parentClass='Object', line=1, col=0, scope=program}|
+## program_Main_3_0 : ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=3, col=0, scope=program}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
+# CLASS_Main
 
-********************************
-SCOPE : CLASS_Main_3_0|val : 
-********************************
-
-  
 +++++++++++++++++++++++++++++++++++++++++++
-
-********************************
-SCOPE : CLASS_Main_3_0|val : 
-********************************
-_main_3_0 : 
----------------------------------------------------
-MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[
----------------------------------------------------
-MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
----------------------------------------------------
-]', line=3, col=0, scope=Main}
----------------------------------------------------
-|
+## Main_main_3_0 : MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[MethodParamSymbol{name='args', line=3, col=0, type='array of String'}]', line=3, col=0, scope=Main}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
+# METHOD_Main
 
-********************************
-SCOPE : METHOD_Main_4_23|val : 
-********************************
-
-  
 +++++++++++++++++++++++++++++++++++++++++++
-
-********************************
-SCOPE : METHOD_Main_4_23|val : 
-********************************
-_args_3_0 : 
----------------------------------------------------
-MethodParamSymbol{name='args', line=3, col=0, type='array of String'}
----------------------------------------------------
-|
-
-********************************
-SCOPE : METHOD_Main_4_23|val : 
-********************************
-_num_5_8 : 
----------------------------------------------------
-LocalVarSymbol{name='num', line=5, accessModifier=public, col=8, type=int, isInitialized=true, value='10'}
----------------------------------------------------
-|
+## Main_num_5_8 : LocalVarSymbol{name='num', line=5, accessModifier=public, col=8, type=int, isInitialized=true, value='10'}|
+## Main_args_3_0 : MethodParamSymbol{name='args', line=3, col=0, type='array of String'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
+# BLOCK_if
 
-********************************
-SCOPE : BLOCK_if_6_19|val : 
-********************************
-
-  
 +++++++++++++++++++++++++++++++++++++++++++
 No symbols in this table
 +++++++++++++++++++++++++++++++++++++++++++
 
+# BLOCK_else
 
-********************************
-SCOPE : BLOCK_else_8_14|val : 
-********************************
-
-  
 +++++++++++++++++++++++++++++++++++++++++++
 No symbols in this table
 +++++++++++++++++++++++++++++++++++++++++++

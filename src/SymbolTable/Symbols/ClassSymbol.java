@@ -118,8 +118,7 @@ public class ClassSymbol extends Symbol {
     }
 
     public String toString() {
-        return this.ln +
-                "ClassSymbol{" +
+        return "ClassSymbol{" +
                 "name='" + name + '\'' +
                 ", isAbstract=" + isAbstract +
                 ", isInterface=" + isInterface +
@@ -130,8 +129,7 @@ public class ClassSymbol extends Symbol {
                 ", line=" + line +
                 ", col=" + col +
                 ", scope=" + scope.getName() +
-                '}' +
-                this.ln;
+                '}';
     }
 
 }

@@ -21,7 +21,7 @@ public abstract class Symbol {
         this.scope = scope;
         this.key = genKey(name, scope, line, col);
     }
-    
+
     public Symbol(String name, SymbolTable scope, int line, int col) {
         this.name = name;
         this.scope = scope;
@@ -57,7 +57,7 @@ public abstract class Symbol {
      * all setters should check the neccessary conditions before setting the value
      * and throw an exception if the conditions are not met.
      */
-    
+
     protected Symbol setKey(String key) throws Exception {
 
         this.checkBeforeSettingVal();
@@ -123,7 +123,7 @@ public abstract class Symbol {
      * key generation signature for the symbol
      */
     private String genKey(String name, SymbolTable scope, int line, int col) {
-        return scope + "_" + name + "_" + line + "_" + col;
+        return scope.getName() + "_" + name + "_" + line + "_" + col;
 
     }
 
