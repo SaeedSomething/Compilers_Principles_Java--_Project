@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.9/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.9/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"","children":[{"content":"_Shape_7_0 :","children":[],"payload":{"tag":"h2","lines":"11,13"}},{"content":"ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=7, col=0, scope=program}","children":[],"payload":{"tag":"h2","lines":"13,15"}},{"content":"_Main_1_0 :","children":[],"payload":{"tag":"h2","lines":"20,22"}},{"content":"ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=1, col=0, scope=program}","children":[],"payload":{"tag":"h2","lines":"22,24"}},{"content":"_Circle_11_0 :","children":[],"payload":{"tag":"h2","lines":"29,31"}},{"content":"ClassSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Shape', line=11, col=0, scope=program}","children":[],"payload":{"tag":"h2","lines":"31,33"}},{"content":"_main_1_0 :","children":[],"payload":{"tag":"h2","lines":"48,50"}},{"content":"MethodSymbol{name='main', access modifier= public, isAbstract=false, isInterface=false, isMain=true, isConstructor=false, overrides=false, returnType='void', paramType='[","children":[],"payload":{"tag":"h2","lines":"50,52"}},{"content":"MethodParamSymbol{name='args', line=1, col=0, type='array of String'}","children":[],"payload":{"tag":"h2","lines":"52,54"}},{"content":"]', line=1, col=0, scope=Main}","children":[],"payload":{"tag":"h2","lines":"54,56"}},{"content":"_circle_3_8 :","children":[],"payload":{"tag":"h2","lines":"71,73"}},{"content":"LocalVarSymbol{name='circle', line=3, accessModifier=public, col=8, type=Shape, isInitialized=true, value='newCircle(5)'}","children":[],"payload":{"tag":"h2","lines":"73,75"}},{"content":"_args_1_0 :","children":[],"payload":{"tag":"h2","lines":"80,82"}},{"content":"MethodParamSymbol{name='args', line=1, col=0, type='array of String'}","children":[],"payload":{"tag":"h2","lines":"82,84"}},{"content":"_area_8_4 :","children":[],"payload":{"tag":"h2","lines":"99,101"}},{"content":"MethodSymbol{name='area', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', line=8, col=4, scope=Shape}","children":[],"payload":{"tag":"h2","lines":"101,103"}},{"content":"_radius_12_4 :","children":[],"payload":{"tag":"h2","lines":"128,130"}},{"content":"LocalVarSymbol{name='radius', line=12, accessModifier=public, col=4, type=int, isInitialized=false, value='null'}","children":[],"payload":{"tag":"h2","lines":"130,132"}},{"content":"_Circle_13_4 :","children":[],"payload":{"tag":"h2","lines":"137,139"}},{"content":"MethodSymbol{name='Circle', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=true, overrides=false, returnType='void', paramType='[","children":[],"payload":{"tag":"h2","lines":"139,141"}},{"content":"MethodParamSymbol{name='radius', line=13, col=4, type='int'}","children":[],"payload":{"tag":"h2","lines":"141,143"}},{"content":"]', line=13, col=4, scope=Circle}","children":[],"payload":{"tag":"h2","lines":"143,145"}},{"content":"_area_17_4 :","children":[],"payload":{"tag":"h2","lines":"150,152"}},{"content":"MethodSymbol{name='area', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=true, returnType='int', paramType='void', line=17, col=4, scope=Circle}","children":[],"payload":{"tag":"h2","lines":"152,154"}},{"content":"_radius_13_4 :","children":[],"payload":{"tag":"h2","lines":"169,171"}},{"content":"MethodParamSymbol{name='radius', line=13, col=4, type='int'}","children":[],"payload":{"tag":"h2","lines":"171,173"}}]},null)</script>
+</body>
+</html>
