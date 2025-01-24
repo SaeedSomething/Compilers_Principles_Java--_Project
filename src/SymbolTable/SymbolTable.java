@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Exceptions.DuplicateDeclarationException;
+import Exceptions.NullValueException;
+import Exceptions.UndefinedVariableException;
 import SymbolTable.Symbols.*;
 
 public class SymbolTable {
@@ -43,21 +46,38 @@ public class SymbolTable {
 
     }
 
-    public void checkBeforeAddingToTable(Symbol newValue) throws Exception {
+    public SymbolTable addVal(String key, Symbol val) {
 
-        CheckDuplicateDeclarations(newValue);
-
+        try {
+            this.checkBeforeAddingToTable(val);
+        } catch (DuplicateDeclarationException e){
+            if (!(val instanceof LocalVarSymbol) || ((LocalVarSymbol) val).isReturnVar()){
+                System.out.println(e.getMessage());
+                val.setName(val.getName() + "_" + val.getLine() + "_" + val.getCol());
+            }
+        }
+        this.val.put(key, val);
+        this.checkAfterAddingToTable(val);
+        return this;
     }
 
-    public void checkAfterAddingToTable() throws Exception {
+    public void checkBeforeAddingToTable(Symbol newValue) {
+        if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).isReturnVar()){
+            return;
+        }
+        CheckDuplicateDeclarations(newValue);
+        CheckUndefinedVariable(newValue);
+    }
+
+    public void checkAfterAddingToTable(Symbol newValue) throws NullValueException {
         for (String key : this.val.keySet()) {
             if (this.val.get(key) == null) {
-                throw new Exception("SymbolTable: " + this.key + " has a null value for key: " + key);
+                throw new NullValueException("SymbolTable: " + this.key + " has a null value for key: " + key);
             }
         }
     }
 
-    private void CheckDuplicateDeclarations(Symbol newValue) throws Exception {
+    private void CheckDuplicateDeclarations(Symbol newValue) throws DuplicateDeclarationException {
 
         switch (this.scope) {
             case PROGRAM -> {
@@ -67,7 +87,7 @@ public class SymbolTable {
                         if (symbol instanceof ClassSymbol) {
                             if (symbol.getName().equals(newValue.getName())) {
                                 // Error102 : in line [line:column] , class [name] has been defined already
-                                throw new Exception(
+                                throw new DuplicateDeclarationException(
                                         "Error102: in line " + newValue.getLine() + ":" + newValue.getCol() +
                                                 ", class " + newValue.getName() + " has been defined already");
                             }
@@ -82,77 +102,64 @@ public class SymbolTable {
                         if (symbol instanceof MethodSymbol) {
                             if (symbol.getName().equals(newValue.getName())) {
                                 // Error103 : in line [line:column] , method [name] has been defined already
-                                throw new Exception(
+                                throw new DuplicateDeclarationException(
                                         "Error103: in line " + newValue.getLine() + ":" + newValue.getCol() +
                                                 ", method " + newValue.getName() + " has been defined already");
                             }
                         }
                     }
-                } else if (newValue instanceof LocalVarSymbol) {
-                    for (Symbol symbol : this.val.values()) {
-                        if (symbol instanceof LocalVarSymbol) {
-                            if (symbol.getName().equals(newValue.getName())) {
-                                // Error104 : in line [line:column] , field [name] has been defined already
-                                throw new Exception(
-                                        "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                                ", field " + newValue.getName() + " has been defined already");
-                            }
-                        }
-                    }
-                }
+                } else CheckDuplicateLocalVariables(newValue);
             }
             case METHOD -> {
                 // check for duplicate local variables with same name in the method scope
-                if (newValue instanceof LocalVarSymbol) {
-                    for (Symbol symbol : this.val.values()) {
-                        if (symbol instanceof LocalVarSymbol) {
-                            if (symbol.getName().equals(newValue.getName())) {
-                                throw new Exception(
-                                        "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                                ", field " + newValue.getName() + " has been defined already");
-                            }
-                        }
-                    }
-                    for (Symbol symbol : this.parent.val.values()) {
-                        if (symbol instanceof LocalVarSymbol) {
-                            if (symbol.getName().equals(newValue.getName())) {
-                                throw new Exception(
-                                        "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                                ", field " + newValue.getName() + " has been defined already");
-                            }
-                        }
-                    }
-                }
+                CheckDuplicateLocalVariables(newValue);
             }
 
             case BLOCK -> {
-                // check for duplicate fields with same name in the block scope and all parent
-                // scopes
-                SymbolTable parent = this;
-                while (parent != null) {
-                    for (Symbol symbol : parent.val.values()) {
-                        if (symbol instanceof LocalVarSymbol) {
-                            if (symbol.getName().equals(newValue.getName())) {
-                                throw new Exception(
-                                        "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                                ", field " + newValue.getName() + " has been defined already");
-                            }
-                        }
+                // check for duplicate fields with same name in the block scope
+                CheckDuplicateLocalVariables(newValue);
+
+            }
+        }
+    }
+
+    private void CheckDuplicateLocalVariables(Symbol newValue) throws DuplicateDeclarationException {
+        if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).getType() != null) {
+            for (Symbol symbol : this.val.values()) {
+                if (symbol instanceof LocalVarSymbol) {
+                    if (symbol.getName().equals(newValue.getName())) {
+                        throw new DuplicateDeclarationException(
+                                "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", field " + newValue.getName() + " has been defined already");
                     }
-                    parent = parent.parent;
                 }
             }
         }
     }
 
-    public SymbolTable addVal(String key, Symbol val) throws Exception {
+    private void CheckUndefinedVariable(Symbol newValue) throws UndefinedVariableException{
 
-        this.checkBeforeAddingToTable(val);
-        this.val.put(key, val);
-        this.checkAfterAddingToTable();
-        return this;
-
+        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK){
+            if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).getType() == null){
+                //check if the variable has been defined in current scope or any of the parent scopes
+                SymbolTable currentTable = this;
+                while (currentTable != null){
+                    for (Symbol symbol : currentTable.val.values()){
+                        if (symbol instanceof LocalVarSymbol){
+                            if (symbol.getName().equals(newValue.getName())){
+                                return;
+                            }
+                        }
+                    }
+                    currentTable = currentTable.parent;
+                }
+                throw new UndefinedVariableException(
+                        "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                ", variable " + newValue.getName() + " has not been defined");
+            }
+        }
     }
+
 
     public String toString() {
         String str = "";
@@ -175,8 +182,21 @@ public class SymbolTable {
      * @param key
      * @return
      */
-    public Symbol getVal(String key) {
+    public Symbol getValByKey(String key) {
         return val.get(key);
+    }
+
+    public Map<String, Symbol> getVal(){
+        return val;
+    }
+
+    public Symbol getValByName(String name) {
+        for (Symbol symbol : val.values()) {
+            if (symbol.getName().equals(name)) {
+                return symbol;
+            }
+        }
+        return null;
     }
 
     public SymbolTable setChildSymbolTable(SymbolTable child) {

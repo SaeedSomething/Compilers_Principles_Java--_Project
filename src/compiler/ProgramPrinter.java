@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+import Exceptions.UndefinedVariableException;
+import SymbolTable.Symbols.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -15,10 +17,6 @@ import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
 
 import SymbolTable.SymbolScope;
 import SymbolTable.SymbolTable;
-import SymbolTable.Symbols.ClassSymbol;
-import SymbolTable.Symbols.LocalVarSymbol;
-import SymbolTable.Symbols.MethodParamSymbol;
-import SymbolTable.Symbols.MethodSymbol;
 import gen.javaMinusMinusBaseListener;
 import gen.javaMinusMinusBaseVisitor;
 import gen.javaMinusMinusListener;
@@ -121,7 +119,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
             localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
                     ctx.start.getLine(),
                     ctx.start.getCharPositionInLine());
-            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
             } else {
@@ -131,6 +128,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 localVarSymbol.setVal(ctx.expression().getText());
                 localVarSymbol.setInitialized(true);
             }
+            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -241,6 +239,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 System.out.print("CALL ");
             }
             System.out.println(ctx.expression().getText());
+
+            MethodSymbol methodSymbol = (MethodSymbol) currentScope.getParent().getValByName(currentScope.getName());
+            methodSymbol.getMethodScope().addVal(ctx.expression().getText(), new LocalVarSymbol(ctx.expression().getText(),
+                    methodSymbol.getMethodScope(), ctx.stop.getLine(), ctx.stop.getCharPositionInLine())
+                    .setReturnVar(true));
         }
 
     }
@@ -344,6 +347,25 @@ public class ProgramPrinter implements javaMinusMinusListener {
     public void exitVariableAssignmentStatement(javaMinusMinusParser.VariableAssignmentStatementContext ctx) {
         PrintIndents();
         System.out.println("ASSIGN " + ctx.Identifier().getText() + " = " + ctx.expression().getText());
+
+        LocalVarSymbol localVarSymbol = null;
+        try {
+            localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
+                    ctx.start.getLine(),
+                    ctx.start.getCharPositionInLine());
+            if (ctx.EQ() != null) {
+                localVarSymbol.setVal(ctx.expression().getText());
+                localVarSymbol.setInitialized(true);
+            }
+            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        if (forDeclaresCount > 0) {
+            forDeclaresCount--;
+            return;
+        }
     }
 
     @Override
@@ -660,6 +682,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 ctx.start.getLine(),
                 ctx.start.getCharPositionInLine());
 
+
         try {
             currentScope.addVal(methodSymbol.getKey(), methodSymbol);
             if (ctx.accessModifier() != null) {
@@ -817,6 +840,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterVariableAssignmentStatement(javaMinusMinusParser.VariableAssignmentStatementContext ctx) {
+
     }
 
     @Override
@@ -826,7 +850,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
             localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
                     ctx.start.getLine(),
                     ctx.start.getCharPositionInLine());
-            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
             } else {
@@ -836,6 +859,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 localVarSymbol.setVal(ctx.expression().getText());
                 localVarSymbol.setInitialized(true);
             }
+            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -846,9 +870,13 @@ public class ProgramPrinter implements javaMinusMinusListener {
         }
 
         PrintIndents();
-        System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier() + " = "
-                + ctx.expression().getStart().getText() +
-                " " + ctx.expression().getText().replace(ctx.expression().getStart().getText(), ""));
+        try {
+            System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier() + " = "
+                    + ctx.expression().getStart().getText() +
+                    " " + ctx.expression().getText().replace(ctx.expression().getStart().getText(), ""));
+        } catch (Exception e) {
+            System.out.println("DECLARE " + ctx.type().getText() + " " + ctx.Identifier());
+        }
     }
 
     @Override
@@ -907,9 +935,49 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
+        CheckMethodReturnVariable();
         currentScope = currentScope.getParent();
         indent--;
         System.out.println();
+    }
+
+    private void CheckMethodReturnVariable() throws UndefinedVariableException{
+        MethodSymbol methodSymbol = (MethodSymbol) currentScope.getParent().getValByName(currentScope.getName());
+
+        OuterLoop: for (Symbol returnVar : methodSymbol.getMethodScope().getVal().values()){
+            if (returnVar instanceof LocalVarSymbol && ((LocalVarSymbol) returnVar).isReturnVar()){
+                if (methodSymbol.getReturnType().equals("void")){
+                    throw new UndefinedVariableException("Error210: in line " + returnVar.getLine() + ":" +
+                            returnVar.getCol() + ", ReturnType of this method must be " +
+                            methodSymbol.getReturnType());
+                }
+                SymbolTable current = methodSymbol.getMethodScope();
+                while (current != null) {
+                    for (Symbol returnVarDefinition : current.getVal().values()) {
+                        if (returnVarDefinition instanceof LocalVarSymbol &&
+                                ((LocalVarSymbol) returnVarDefinition).getType() != null) {
+
+                            if (returnVarDefinition.getName().equals(returnVar.getName())) {
+                                if (((LocalVarSymbol) returnVarDefinition).getType().equals(
+                                        methodSymbol.getReturnType())) {
+                                    continue OuterLoop;
+                                } else {
+                                    //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
+                                    throw new UndefinedVariableException("Error210: in line " + returnVar.getLine() + ":" +
+                                            returnVar.getCol() + ", ReturnType of this method must be " +
+                                            methodSymbol.getReturnType());
+                                }
+                            }
+                        }
+                    }
+                    current = current.getParent();
+                }
+                //Error211 : in line [line:column], Return variable [returnVar] is not defined
+                throw new UndefinedVariableException("Error211: in line " + returnVar.getLine() + ":" +
+                        returnVar.getCol() + ", Return variable " + returnVar.getName() + " is not defined");
+
+            }
+        }
     }
 
     @Override
@@ -990,12 +1058,13 @@ public class ProgramPrinter implements javaMinusMinusListener {
             localVarSymbol = new LocalVarSymbol(ctx.Identifier().getText(), currentScope,
                     ctx.start.getLine(),
                     ctx.start.getCharPositionInLine());
-            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
+
             if (ctx.type().LSB() != null) {
                 localVarSymbol.setType("array of " + ctx.type().getChild(0).getText());
             } else {
                 localVarSymbol.setType(ctx.type().getText());
             }
+            currentScope.addVal(localVarSymbol.getKey(), localVarSymbol);
 
         } catch (Exception e) {
             // TODO: handle exception

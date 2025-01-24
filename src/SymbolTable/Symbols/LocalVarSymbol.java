@@ -8,6 +8,7 @@ public class LocalVarSymbol extends Symbol {
     protected String value;
     protected String accessModifier = "public";
     protected boolean isInitialized = false;
+    protected boolean isReturnVar = false;
 
     public LocalVarSymbol setVal(String value) {
         this.checkBeforeSettingVal();
@@ -37,6 +38,13 @@ public class LocalVarSymbol extends Symbol {
         return this;
     }
 
+    public LocalVarSymbol setReturnVar(boolean isReturnVar) {
+        this.checkBeforeSettingVal();
+        this.isReturnVar = isReturnVar;
+        this.checkAfterSettingVal();
+        return this;
+    }
+
     public String getAccessModifier() {
         return accessModifier;
     }
@@ -51,6 +59,10 @@ public class LocalVarSymbol extends Symbol {
 
     public boolean isInitialized() {
         return isInitialized;
+    }
+
+    public boolean isReturnVar() {
+        return isReturnVar;
     }
 
     public LocalVarSymbol(String name, SymbolTable scope, int line, int col) {

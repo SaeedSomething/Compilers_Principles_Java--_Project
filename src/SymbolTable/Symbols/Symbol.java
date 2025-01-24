@@ -58,7 +58,7 @@ public abstract class Symbol {
      * and throw an exception if the conditions are not met.
      */
 
-    protected Symbol setKey(String key) throws Exception {
+    protected Symbol setKey(String key){
 
         this.checkBeforeSettingVal();
         this.key = key;
@@ -109,7 +109,7 @@ public abstract class Symbol {
      * all setters should check the neccessary conditions before setting the value
      * and throw an exception if the conditions are not met.
      */
-    public Symbol setName(String name) throws Exception {
+    public Symbol setName(String name){
 
         this.checkBeforeSettingVal();
         this.name = name;
@@ -134,7 +134,7 @@ public abstract class Symbol {
      * 
      * @throws Exception the semantic/compilation error message
      */
-    abstract void checkBeforeSettingVal() throws Exception; // TODO: turn this into a anotation to be called before and
+    abstract void checkBeforeSettingVal(); // TODO: turn this into a anotation to be called before and
                                                             // after setting the value
 
     /**
@@ -144,7 +144,7 @@ public abstract class Symbol {
      * 
      * @throws Exception the semantic/compilation error message
      */
-    abstract void checkAfterSettingVal() throws Exception; // TODO: turn this into a anotation to be called before and
+    abstract void checkAfterSettingVal(); // TODO: turn this into a anotation to be called before and
                                                            // after setting the value
 
     abstract public String toString();

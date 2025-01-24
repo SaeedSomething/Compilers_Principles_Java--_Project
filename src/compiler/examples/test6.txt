@@ -1,10 +1,9 @@
-
 // First Class: Main
 class Main {
 
     public static void main(String[] args) {
         // Create instances of classes
-        Shape circle = new Circle(5);
+        Shape circle;
         Shape rectangle = new Rectangle(4, 6);
 
         // Print area of both shapes
@@ -26,7 +25,8 @@ class Main {
         // Sum of array elements
         int sum = 0;
         for (int i = 0; i < numbers.length ; i+1 ) {
-            int ff = i;
+            int ff;
+            ff = 5;
             sum = sum + numbers[i];
         }
         print("Sum of array elements: " );
@@ -46,16 +46,24 @@ class Main {
 class Circle extends Shape {
     int radius;
 
+
+
     // Constructor for Circle
     public Circle(int radius) {
-        radius = radius;
+        int radius = radius;
+
     }
+
 
     // Overriding area method for circle
     @Override
-    public int area() {
+    public void area() {
         int radius = 3;
-        return 3 ;
+        int gooz;
+        gooz =3;
+
+
+        return chos;
     }
 }
 

@@ -143,7 +143,7 @@ public class MethodSymbol extends Symbol {
 
     }
 
-    public void checkBeforeSettingVal() throws Exception {
+    public void checkBeforeSettingVal() {
 
     }
 

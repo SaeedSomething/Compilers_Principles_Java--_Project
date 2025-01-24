@@ -38,8 +38,8 @@ public class Compiler {
      */
 
     public static void main(String[] args) throws Exception {
-        int i = 1;
-        installMarkupCli();
+        int i = 6;
+//        installMarkupCli();
         for (; i <= 6; i++) {
             file = new FileWriter(basepath + "test" + i +
                     ".symbolTable1.md");
@@ -56,7 +56,7 @@ public class Compiler {
             System.out.println("Compiling # " + i + "...");
             walker.walk(listener, tree);
             file.close();
-            callMarkupOnFile("test" + i + ".symbolTable1.md");
+//            callMarkupOnFile("test" + i + ".symbolTable1.md");
         }
     }
 
