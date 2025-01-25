@@ -61,7 +61,6 @@ class Circle extends Shape {
         int radius = 3;
 
         chos = radidwqrus;
-
         return 3;
     }
 }
@@ -88,6 +87,7 @@ class Circle1 {
 
         int a;
         if(a<b){
+        int iy = this.add( 2 ,5 );
             // a.b();
         }else{
             // b.a();

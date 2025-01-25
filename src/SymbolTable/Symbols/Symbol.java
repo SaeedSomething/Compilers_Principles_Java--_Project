@@ -123,7 +123,8 @@ public abstract class Symbol {
      * key generation signature for the symbol
      */
     private String genKey(String name, SymbolTable scope, int line, int col) {
-        return scope.getName() + "_" + name + "_" + line + "_" + col;
+        // return scope.getName() + "_" + name + "_" + line + "_" + col;
+        return scope.getName() + "_" + name;
 
     }
 

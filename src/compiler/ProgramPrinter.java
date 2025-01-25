@@ -1,6 +1,7 @@
 package compiler;
 
 import java.lang.reflect.Modifier;
+import java.security.KeyStore.Entry;
 import java.util.*;
 
 import Exceptions.UndefinedVariableException;
@@ -18,6 +19,7 @@ import gen.javaMinusMinusBaseVisitor;
 import gen.javaMinusMinusListener;
 import gen.javaMinusMinusParser;
 import gen.javaMinusMinusVisitor;
+import gen.javaMinusMinusParser.ExpressionContext;
 import compiler.*;
 
 public class ProgramPrinter implements javaMinusMinusListener {
@@ -237,9 +239,10 @@ public class ProgramPrinter implements javaMinusMinusListener {
             System.out.println(ctx.expression().getText());
 
             MethodSymbol methodSymbol = (MethodSymbol) currentScope.getParent().getValByName(currentScope.getName());
-            methodSymbol.getMethodScope().addVal(ctx.expression().getText(), new LocalVarSymbol(ctx.expression().getText(),
-                    methodSymbol.getMethodScope(), ctx.stop.getLine(), ctx.stop.getCharPositionInLine())
-                    .setReturnVar(true));
+            methodSymbol.getMethodScope().addVal(ctx.expression().getText(),
+                    new LocalVarSymbol(ctx.expression().getText(),
+                            methodSymbol.getMethodScope(), ctx.stop.getLine(), ctx.stop.getCharPositionInLine())
+                            .setReturnVar(true));
         }
 
     }
@@ -678,7 +681,6 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 ctx.start.getLine(),
                 ctx.start.getCharPositionInLine());
 
-
         try {
             currentScope.addVal(methodSymbol.getKey(), methodSymbol);
             if (ctx.accessModifier() != null) {
@@ -749,14 +751,66 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void enterMethodCallExpression(javaMinusMinusParser.MethodCallExpressionContext ctx) {
-        // seems you can call a function in another method body with this grammer , so
-        // no need
-        // if ((ctx.parent instanceof javaMinusMinusParser.NestedStatementContext)) {
+        SymbolTable scope = currentScope;
+        MethodSymbol mSymbol = null;
+        String name = ctx.Identifier().getText();
+        ArrayList<ExpressionContext> params = new ArrayList<>(ctx.expression());
+        while (scope != null) {
+            // mSymbol = (MethodSymbol) scope.getValByKey(scope.getScope() + "_" +
+            // ctx.Identifier().getText());
 
-        // PrintIndents();
-        // System.out.println("CALL ");
-        // }
+            for (Map.Entry<String, Symbol> smbl : scope.getVal().entrySet()) {
+                String temp = smbl.getValue().getName();
+                if (smbl.getValue().getName().equals(ctx.Identifier().getText())) {
+                    mSymbol = (MethodSymbol) smbl.getValue();
+                }
 
+            }
+
+            if (mSymbol != null) {
+                break;
+            }
+            scope = scope.getParent();
+        }
+        try {
+
+            if (mSymbol == null) {
+                // throw new Exception(
+                // "Error 105: in line " + ctx.start.getLine() + ":" +
+                // ctx.start.getCharPositionInLine() +
+                // ", can not find method " + name + " in scope");
+                throw new Exception(
+                        "Error 105: in line " + ctx.start.getLine() + ":" + ctx.start.getCharPositionInLine() +
+                                ", can not find method " + name + " in scope");
+            } else {
+
+                ArrayList<MethodParamSymbol> mParamSymbol = mSymbol.getParamTypes();
+                if (mParamSymbol.size() + 1 != params.size()) {
+                    throw new Exception("Error 220: in line " + ctx.start.getLine() + ":"
+                            + ctx.start.getCharPositionInLine() +
+                            ", method params count mismatch" + name + "");
+                }
+                for (int i = 0; i < mParamSymbol.size(); i++) {
+                    MethodParamSymbol tempPrmSymbl = mParamSymbol.get(i);
+                    String tempPrmCtx = params.get(i + 1).getText();
+                    if (IsInteger(tempPrmCtx) && !(tempPrmSymbl.getType().equals("int"))) {
+                        throw new Exception("Error 220: in line " + ctx.start.getLine() + ":"
+                                + ctx.start.getCharPositionInLine() +
+                                ", method params type mismatch" + name + "");
+                    }
+                    Symbol tSmbl = scope.getValByNameGlobally(tempPrmCtx);
+                    if (tSmbl == null || ((LocalVarSymbol) tSmbl).getType() != tempPrmSymbl.getType()) {
+                        throw new Exception("Error 220: in line " + ctx.start.getLine() + ":"
+                                + ctx.start.getCharPositionInLine() +
+                                ", method params type mismatch" + name + "");
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -933,7 +987,7 @@ public class ProgramPrinter implements javaMinusMinusListener {
     public void exitMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
         try {
             CheckMethodReturnVariable();
-        }catch (UndefinedVariableException e){
+        } catch (UndefinedVariableException e) {
             System.out.println(e.getMessage());
         }
         currentScope = currentScope.getParent();
@@ -941,12 +995,12 @@ public class ProgramPrinter implements javaMinusMinusListener {
         System.out.println();
     }
 
-    private void CheckMethodReturnVariable() throws UndefinedVariableException{
+    private void CheckMethodReturnVariable() throws UndefinedVariableException {
         MethodSymbol methodSymbol = (MethodSymbol) currentScope.getParent().getValByName(currentScope.getName());
 
-        for (Symbol returnVarSymbol : methodSymbol.getMethodScope().getVal().values()){
-            if (returnVarSymbol instanceof LocalVarSymbol && ((LocalVarSymbol) returnVarSymbol).isReturnVar()){
-                if (methodSymbol.getReturnType().equals("void")){
+        for (Symbol returnVarSymbol : methodSymbol.getMethodScope().getVal().values()) {
+            if (returnVarSymbol instanceof LocalVarSymbol && ((LocalVarSymbol) returnVarSymbol).isReturnVar()) {
+                if (methodSymbol.getReturnType().equals("void")) {
                     throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
                             returnVarSymbol.getCol() + ", ReturnType of this method must be " +
                             methodSymbol.getReturnType());
@@ -957,23 +1011,25 @@ public class ProgramPrinter implements javaMinusMinusListener {
                         .filter(part -> !part.isEmpty())
                         .toArray(String[]::new);
 
-                OuterLoop: for (String returnVar: returnVarNames) {
+                OuterLoop: for (String returnVar : returnVarNames) {
                     SymbolTable current = methodSymbol.getMethodScope();
 
                     if (methodSymbol.getReturnType().equals("int") &&
-                            IsInteger(returnVar)){
+                            IsInteger(returnVar)) {
                         continue;
                     }
 
-                    for (MethodParamSymbol returnVarParameter: methodSymbol.getParamTypes()){
-                        if (returnVarParameter.getName().equals(returnVar)){
-                            if (returnVarParameter.getType().equals(methodSymbol.getReturnType())){
+                    for (MethodParamSymbol returnVarParameter : methodSymbol.getParamTypes()) {
+                        if (returnVarParameter.getName().equals(returnVar)) {
+                            if (returnVarParameter.getType().equals(methodSymbol.getReturnType())) {
                                 continue OuterLoop;
                             } else {
-                                //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
-                                throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
-                                        returnVarSymbol.getCol() + ", ReturnType of this method must be " +
-                                        methodSymbol.getReturnType());
+                                // Error210 : in line [line:column], ReturnType of this method must be
+                                // [MethodReturnType]
+                                throw new UndefinedVariableException(
+                                        "Error210: in line " + returnVarSymbol.getLine() + ":" +
+                                                returnVarSymbol.getCol() + ", ReturnType of this method must be " +
+                                                methodSymbol.getReturnType());
                             }
                         }
                     }
@@ -987,10 +1043,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
                                     if (((LocalVarSymbol) returnVarDefinition).getType().equals(
                                             methodSymbol.getReturnType())) {
                                         continue OuterLoop;
-                                    }
-                                    else {
-                                        //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
-                                        throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
+                                    } else {
+                                        // Error210 : in line [line:column], ReturnType of this method must be
+                                        // [MethodReturnType]
+                                        throw new UndefinedVariableException("Error210: in line "
+                                                + returnVarSymbol.getLine() + ":" +
                                                 returnVarSymbol.getCol() + ", ReturnType of this method must be " +
                                                 methodSymbol.getReturnType());
                                     }
@@ -999,23 +1056,24 @@ public class ProgramPrinter implements javaMinusMinusListener {
                         }
                         current = current.getParent();
                     }
-                    //Error211 : in line [line:column], Return variable [returnVar] is not defined
+                    // Error211 : in line [line:column], Return variable [returnVar] is not defined
                     throw new UndefinedVariableException("Error211: in line " + returnVarSymbol.getLine() + ":" +
-                            returnVarSymbol.getCol() + ", Return variable " + returnVarSymbol.getName() + " is not defined");
+                            returnVarSymbol.getCol() + ", Return variable " + returnVarSymbol.getName()
+                            + " is not defined");
                 }
             }
         }
     }
 
-    private boolean IsInteger(String str){
+    private boolean IsInteger(String str) {
         if (str == null || str.isEmpty()) {
             return false; // Null or empty strings can't be integers
         }
         try {
             Integer.parseInt(str); // Try parsing the string
-            return true;           // If successful, it's an integer
+            return true; // If successful, it's an integer
         } catch (NumberFormatException e) {
-            return false;          // Exception indicates it's not an integer
+            return false; // Exception indicates it's not an integer
         }
     }
 
