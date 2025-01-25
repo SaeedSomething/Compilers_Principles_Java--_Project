@@ -47,7 +47,6 @@ public class SymbolTable {
     }
 
     public SymbolTable addVal(String key, Symbol val) {
-
         try {
             this.checkBeforeAddingToTable(val);
         } catch (DuplicateDeclarationException e){
@@ -165,23 +164,75 @@ public class SymbolTable {
             if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).getType() == null){
                 //check if the variable has been defined in current scope or any of the parent scopes
                 SymbolTable currentTable = this;
-                while (currentTable != null){
+                boolean found = false;
+                OuterLoop: while (currentTable != null){
                     for (Symbol symbol : currentTable.val.values()){
                         if (symbol instanceof LocalVarSymbol){
                             if (symbol.getName().equals(newValue.getName())){
-                                return;
+                                found = true;
+                                break OuterLoop;
                             }
                         }
                     }
                     currentTable = currentTable.parent;
                 }
-                throw new UndefinedVariableException(
-                        "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                ", variable " + newValue.getName() + " has not been defined");
+                if (!found){
+                    throw new UndefinedVariableException(
+                            "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                    ", variable " + newValue.getName() + " has not been defined");
+                }
+
+                if (IsInteger(((LocalVarSymbol) newValue).getValue())){
+                    return;
+                }
+
+
+
+                String[] assignedVarNames = ((LocalVarSymbol) newValue).getValue().split("[+\\-*/%()]+");
+                for (int i = 0; i < assignedVarNames.length; i++){
+                    if (assignedVarNames[i].contains("[")){
+                        int index = assignedVarNames[i].indexOf("[");
+                        assignedVarNames[i] = assignedVarNames[i].substring(0, index);
+                    }
+
+                    currentTable = this;
+                    found = false;
+
+                    while (currentTable != null){
+                        for (Symbol symbol : currentTable.val.values()){
+                            if (symbol instanceof LocalVarSymbol){
+                                if (symbol.getName().equals(assignedVarNames[i])){
+                                    found = true;
+                                }
+                            }
+                        }
+                        currentTable = currentTable.parent;
+                    }
+                    if (!found){
+                        throw new UndefinedVariableException(
+                                "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                        ", variable " + ((LocalVarSymbol) newValue).getValue() + " has not been defined");
+                    }
+                }
             }
         }
     }
 
+    private void CheckAssignmentMismatch(Symbol newValue) {
+
+    }
+
+    private boolean IsInteger(String str){
+        if (str == null || str.isEmpty()) {
+            return false; // Null or empty strings can't be integers
+        }
+        try {
+            Integer.parseInt(str); // Try parsing the string
+            return true;           // If successful, it's an integer
+        } catch (NumberFormatException e) {
+            return false;          // Exception indicates it's not an integer
+        }
+    }
 
     public String toString() {
         String str = "";

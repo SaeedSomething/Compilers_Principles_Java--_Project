@@ -931,7 +931,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
 
     @Override
     public void exitMethodDeclaration(javaMinusMinusParser.MethodDeclarationContext ctx) {
-        CheckMethodReturnVariable();
+        try {
+            CheckMethodReturnVariable();
+        }catch (UndefinedVariableException e){
+            System.out.println(e.getMessage());
+        }
         currentScope = currentScope.getParent();
         indent--;
         System.out.println();
@@ -956,6 +960,11 @@ public class ProgramPrinter implements javaMinusMinusListener {
                 OuterLoop: for (String returnVar: returnVarNames) {
                     SymbolTable current = methodSymbol.getMethodScope();
 
+                    if (methodSymbol.getReturnType().equals("int") &&
+                            IsInteger(returnVar)){
+                        continue;
+                    }
+
                     for (MethodParamSymbol returnVarParameter: methodSymbol.getParamTypes()){
                         if (returnVarParameter.getName().equals(returnVar)){
                             if (returnVarParameter.getType().equals(methodSymbol.getReturnType())){
@@ -978,7 +987,8 @@ public class ProgramPrinter implements javaMinusMinusListener {
                                     if (((LocalVarSymbol) returnVarDefinition).getType().equals(
                                             methodSymbol.getReturnType())) {
                                         continue OuterLoop;
-                                    } else {
+                                    }
+                                    else {
                                         //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
                                         throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
                                                 returnVarSymbol.getCol() + ", ReturnType of this method must be " +
@@ -994,6 +1004,18 @@ public class ProgramPrinter implements javaMinusMinusListener {
                             returnVarSymbol.getCol() + ", Return variable " + returnVarSymbol.getName() + " is not defined");
                 }
             }
+        }
+    }
+
+    private boolean IsInteger(String str){
+        if (str == null || str.isEmpty()) {
+            return false; // Null or empty strings can't be integers
+        }
+        try {
+            Integer.parseInt(str); // Try parsing the string
+            return true;           // If successful, it's an integer
+        } catch (NumberFormatException e) {
+            return false;          // Exception indicates it's not an integer
         }
     }
 

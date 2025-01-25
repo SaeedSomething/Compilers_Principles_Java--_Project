@@ -59,11 +59,10 @@ class Circle extends Shape {
     @Override
     public int area() {
         int radius = 3;
-        int gooz;
-        gooz =3;
 
+        chos = radidwqrus;
 
-        return chos;
+        return 3;
     }
 }
 

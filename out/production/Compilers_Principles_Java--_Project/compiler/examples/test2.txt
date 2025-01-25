@@ -9,12 +9,14 @@ abstract class Shape {
 }
 
 class Circle extends Shape {
-    int radius;
+    int radius ;
     public Circle (int radius){
         radius = radius;
     }
 
-    @Override  public int area (){
-        return radius * radius * 3;
+    @Override  
+    public int area (){
+        
+        return   radius * circle.area()* 3;
     }
 }

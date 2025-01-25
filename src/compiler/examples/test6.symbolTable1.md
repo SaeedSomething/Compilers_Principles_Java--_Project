@@ -1,10 +1,10 @@
 # PROGRAM_program
 
 +++++++++++++++++++++++++++++++++++++++++++
-## program_intf_116_0 : ClassSymbol{name='intf', isAbstract=false, isInterface=true, isMain=false, isImported=false, parentClass='Object', line=116, col=0, scope=program}|
+## program_Shape_70_0 : ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=70, col=0, scope=program}|
 ## program_Circle_46_0 : ClassSymbol{name='Circle', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Shape', line=46, col=0, scope=program}|
-## program_Shape_71_0 : ClassSymbol{name='Shape', isAbstract=true, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=71, col=0, scope=program}|
-## program_Circle1_80_0 : ClassSymbol{name='Circle1', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=80, col=0, scope=program}|
+## program_Circle1_79_0 : ClassSymbol{name='Circle1', isAbstract=false, isInterface=false, isMain=false, isImported=false, parentClass='Object', line=79, col=0, scope=program}|
+## program_intf_118_0 : ClassSymbol{name='intf', isAbstract=false, isInterface=true, isMain=false, isImported=false, parentClass='Object', line=118, col=0, scope=program}|
 ## program_Main_2_0 : ClassSymbol{name='Main', isAbstract=false, isInterface=false, isMain=true, isImported=false, parentClass='Object', line=2, col=0, scope=program}|
 
 +++++++++++++++++++++++++++++++++++++++++++
@@ -35,7 +35,6 @@
 +++++++++++++++++++++++++++++++++++++++++++
 ## for_ff_29_12 : LocalVarSymbol{name='ff', line=29, accessModifier=public, col=12, type=null, isInitialized=true, value='5'}|
 ## for_ff_28_12 : LocalVarSymbol{name='ff', line=28, accessModifier=public, col=12, type=int, isInitialized=false, value='null'}|
-## for_sum_30_12 : LocalVarSymbol{name='sum', line=30, accessModifier=public, col=12, type=null, isInitialized=true, value='sum+numbers[i]'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
@@ -60,19 +59,17 @@
 # METHOD_area
 
 +++++++++++++++++++++++++++++++++++++++++++
-## area_gooz_63_8 : LocalVarSymbol{name='gooz', line=63, accessModifier=public, col=8, type=null, isInitialized=true, value='3'}|
+## area_3_65_16 : LocalVarSymbol{name='3', line=65, accessModifier=public, col=16, type=null, isInitialized=false, value='null'}|
 ## area_radius_61_8 : LocalVarSymbol{name='radius', line=61, accessModifier=public, col=8, type=int, isInitialized=true, value='3'}|
-## area_chos_66_19 : LocalVarSymbol{name='chos', line=66, accessModifier=public, col=19, type=null, isInitialized=false, value='null'}|
-## area_gooz_62_8 : LocalVarSymbol{name='gooz', line=62, accessModifier=public, col=8, type=int, isInitialized=false, value='null'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
 # CLASS_Shape
 
 +++++++++++++++++++++++++++++++++++++++++++
-## Shape_area_76_4 : MethodSymbol{name='area', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', line=76, col=4, scope=Shape}|
-## Shape_x_72_4 : LocalVarSymbol{name='x', line=72, accessModifier=private, col=4, type=int, isInitialized=false, value='null'}|
-## Shape_y_73_4 : LocalVarSymbol{name='y', line=73, accessModifier=public, col=4, type=int, isInitialized=false, value='null'}|
+## Shape_x_71_4 : LocalVarSymbol{name='x', line=71, accessModifier=private, col=4, type=int, isInitialized=false, value='null'}|
+## Shape_area_75_4 : MethodSymbol{name='area', access modifier= public, isAbstract=true, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='void', line=75, col=4, scope=Shape}|
+## Shape_y_72_4 : LocalVarSymbol{name='y', line=72, accessModifier=public, col=4, type=int, isInitialized=false, value='null'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
@@ -85,26 +82,27 @@ No symbols in this table
 # CLASS_Circle1
 
 +++++++++++++++++++++++++++++++++++++++++++
-## Circle1_add_83_4 : MethodSymbol{name='add', access modifier= private, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[MethodParamSymbol{name='a', line=83, col=4, type='int'}, MethodParamSymbol{name='b', line=83, col=4, type='int'}]', line=83, col=4, scope=Circle1}|
-## Circle1_multiply_88_4 : MethodSymbol{name='multiply', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[MethodParamSymbol{name='a', line=88, col=4, type='int'}, MethodParamSymbol{name='b', line=88, col=4, type='int'}]', line=88, col=4, scope=Circle1}|
+## Circle1_multiply_87_4 : MethodSymbol{name='multiply', access modifier= public, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[MethodParamSymbol{name='a', line=87, col=4, type='int'}, MethodParamSymbol{name='b', line=87, col=4, type='int'}]', line=87, col=4, scope=Circle1}|
+## Circle1_add_82_4 : MethodSymbol{name='add', access modifier= private, isAbstract=false, isInterface=false, isMain=false, isConstructor=false, overrides=false, returnType='int', paramType='[MethodParamSymbol{name='a', line=82, col=4, type='int'}, MethodParamSymbol{name='b', line=82, col=4, type='int'}]', line=82, col=4, scope=Circle1}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
 # METHOD_add
 
 +++++++++++++++++++++++++++++++++++++++++++
-## add_a_83_4 : MethodParamSymbol{name='a', line=83, col=4, type='int'}|
-## add_a+b_84_20 : LocalVarSymbol{name='a+b', line=84, accessModifier=public, col=20, type=null, isInitialized=false, value='null'}|
-## add_b_83_4 : MethodParamSymbol{name='b', line=83, col=4, type='int'}|
+## add_a_82_4 : MethodParamSymbol{name='a', line=82, col=4, type='int'}|
+## add_a+b_83_20 : LocalVarSymbol{name='a+b', line=83, accessModifier=public, col=20, type=null, isInitialized=false, value='null'}|
+## add_b_82_4 : MethodParamSymbol{name='b', line=82, col=4, type='int'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
 # METHOD_multiply
 
 +++++++++++++++++++++++++++++++++++++++++++
-## multiply_b_88_4 : MethodParamSymbol{name='b', line=88, col=4, type='int'}|
-## multiply_a_88_4 : MethodParamSymbol{name='a', line=88, col=4, type='int'}|
-## multiply_a*b_94_20 : LocalVarSymbol{name='a*b', line=94, accessModifier=public, col=20, type=null, isInitialized=false, value='null'}|
+## multiply_a_89_8 : LocalVarSymbol{name='a', line=89, accessModifier=public, col=8, type=int, isInitialized=false, value='null'}|
+## multiply_b_87_4 : MethodParamSymbol{name='b', line=87, col=4, type='int'}|
+## multiply_a*b_96_20 : LocalVarSymbol{name='a*b', line=96, accessModifier=public, col=20, type=null, isInitialized=false, value='null'}|
+## multiply_a_87_4 : MethodParamSymbol{name='a', line=87, col=4, type='int'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
@@ -123,15 +121,15 @@ No symbols in this table
 # CLASS_intf
 
 +++++++++++++++++++++++++++++++++++++++++++
-## intf_sote_118_4 : MethodSymbol{name='sote', access modifier= public, isAbstract=false, isInterface=true, isMain=false, isConstructor=false, overrides=false, returnType='int[]', paramType='[MethodParamSymbol{name='asd', line=118, col=4, type='array of int'}]', line=118, col=4, scope=intf}|
-## intf_r_117_4 : LocalVarSymbol{name='r', line=117, accessModifier=public, col=4, type=int, isInitialized=true, value='5'}|
+## intf_r_119_4 : LocalVarSymbol{name='r', line=119, accessModifier=public, col=4, type=int, isInitialized=true, value='5'}|
+## intf_sote_120_4 : MethodSymbol{name='sote', access modifier= public, isAbstract=false, isInterface=true, isMain=false, isConstructor=false, overrides=false, returnType='int[]', paramType='[MethodParamSymbol{name='asd', line=120, col=4, type='array of int'}]', line=120, col=4, scope=intf}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
 # METHOD_sote
 
 +++++++++++++++++++++++++++++++++++++++++++
-## sote_asd_118_4 : MethodParamSymbol{name='asd', line=118, col=4, type='array of int'}|
+## sote_asd_120_4 : MethodParamSymbol{name='asd', line=120, col=4, type='array of int'}|
 
 +++++++++++++++++++++++++++++++++++++++++++
 
