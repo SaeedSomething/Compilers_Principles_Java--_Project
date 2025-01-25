@@ -49,8 +49,8 @@ public class SymbolTable {
     public SymbolTable addVal(String key, Symbol val) {
         try {
             this.checkBeforeAddingToTable(val);
-        } catch (DuplicateDeclarationException e){
-            if (!(val instanceof LocalVarSymbol) || ((LocalVarSymbol) val).isReturnVar()){
+        } catch (DuplicateDeclarationException e) {
+            if (!(val instanceof LocalVarSymbol) || ((LocalVarSymbol) val).isReturnVar()) {
                 System.out.println(e.getMessage());
                 val.setName(val.getName() + "_" + val.getLine() + "_" + val.getCol());
             }
@@ -61,7 +61,7 @@ public class SymbolTable {
     }
 
     public void checkBeforeAddingToTable(Symbol newValue) {
-        if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).isReturnVar()){
+        if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).isReturnVar()) {
             return;
         }
         CheckDuplicateDeclarations(newValue);
@@ -107,13 +107,14 @@ public class SymbolTable {
                             }
                         }
                     }
-                } else CheckDuplicateLocalVariables(newValue);
+                } else
+                    CheckDuplicateLocalVariables(newValue);
             }
             case METHOD -> {
                 // check for duplicate local variables with same name in the method scope
                 CheckDuplicateLocalVariables(newValue);
 
-                //also check method parameters
+                // also check method parameters
 
             }
 
@@ -138,7 +139,7 @@ public class SymbolTable {
             }
         }
 
-        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK){
+        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK) {
             SymbolTable currentTable = this;
             if (this.scope != SymbolScope.METHOD) {
 
@@ -148,8 +149,8 @@ public class SymbolTable {
             }
             MethodSymbol methodTable = (MethodSymbol) currentTable.parent.getValByName(currentTable.name);
 
-            for (MethodParamSymbol parameterSymbol : methodTable.getParamTypes()){
-                if (parameterSymbol != newValue && parameterSymbol.getName().equals(newValue.getName())){
+            for (MethodParamSymbol parameterSymbol : methodTable.getParamTypes()) {
+                if (parameterSymbol != newValue && parameterSymbol.getName().equals(newValue.getName())) {
                     throw new DuplicateDeclarationException(
                             "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
                                     ", parameter " + newValue.getName() + " has been defined already");
@@ -158,17 +159,18 @@ public class SymbolTable {
         }
     }
 
-    private void CheckUndefinedVariable(Symbol newValue) throws UndefinedVariableException{
+    private void CheckUndefinedVariable(Symbol newValue) throws UndefinedVariableException {
 
-        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK){
-            if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).getType() == null){
-                //check if the variable has been defined in current scope or any of the parent scopes
+        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK) {
+            if (newValue instanceof LocalVarSymbol && ((LocalVarSymbol) newValue).getType() == null) {
+                // check if the variable has been defined in current scope or any of the parent
+                // scopes
                 SymbolTable currentTable = this;
                 boolean found = false;
-                OuterLoop: while (currentTable != null){
-                    for (Symbol symbol : currentTable.val.values()){
-                        if (symbol instanceof LocalVarSymbol){
-                            if (symbol.getName().equals(newValue.getName())){
+                OuterLoop: while (currentTable != null) {
+                    for (Symbol symbol : currentTable.val.values()) {
+                        if (symbol instanceof LocalVarSymbol) {
+                            if (symbol.getName().equals(newValue.getName())) {
                                 found = true;
                                 break OuterLoop;
                             }
@@ -176,21 +178,19 @@ public class SymbolTable {
                     }
                     currentTable = currentTable.parent;
                 }
-                if (!found){
+                if (!found) {
                     throw new UndefinedVariableException(
                             "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
                                     ", variable " + newValue.getName() + " has not been defined");
                 }
 
-                if (IsInteger(((LocalVarSymbol) newValue).getValue())){
+                if (IsInteger(((LocalVarSymbol) newValue).getValue())) {
                     return;
                 }
 
-
-
                 String[] assignedVarNames = ((LocalVarSymbol) newValue).getValue().split("[+\\-*/%()]+");
-                for (int i = 0; i < assignedVarNames.length; i++){
-                    if (assignedVarNames[i].contains("[")){
+                for (int i = 0; i < assignedVarNames.length; i++) {
+                    if (assignedVarNames[i].contains("[")) {
                         int index = assignedVarNames[i].indexOf("[");
                         assignedVarNames[i] = assignedVarNames[i].substring(0, index);
                     }
@@ -198,20 +198,21 @@ public class SymbolTable {
                     currentTable = this;
                     found = false;
 
-                    while (currentTable != null){
-                        for (Symbol symbol : currentTable.val.values()){
-                            if (symbol instanceof LocalVarSymbol){
-                                if (symbol.getName().equals(assignedVarNames[i])){
+                    while (currentTable != null) {
+                        for (Symbol symbol : currentTable.val.values()) {
+                            if (symbol instanceof LocalVarSymbol) {
+                                if (symbol.getName().equals(assignedVarNames[i])) {
                                     found = true;
                                 }
                             }
                         }
                         currentTable = currentTable.parent;
                     }
-                    if (!found){
+                    if (!found) {
                         throw new UndefinedVariableException(
                                 "Error105: in line " + newValue.getLine() + ":" + newValue.getCol() +
-                                        ", variable " + ((LocalVarSymbol) newValue).getValue() + " has not been defined");
+                                        ", variable " + ((LocalVarSymbol) newValue).getValue()
+                                        + " has not been defined");
                     }
                 }
             }
@@ -222,15 +223,15 @@ public class SymbolTable {
 
     }
 
-    private boolean IsInteger(String str){
+    private boolean IsInteger(String str) {
         if (str == null || str.isEmpty()) {
             return false; // Null or empty strings can't be integers
         }
         try {
             Integer.parseInt(str); // Try parsing the string
-            return true;           // If successful, it's an integer
+            return true; // If successful, it's an integer
         } catch (NumberFormatException e) {
-            return false;          // Exception indicates it's not an integer
+            return false; // Exception indicates it's not an integer
         }
     }
 
@@ -259,8 +260,29 @@ public class SymbolTable {
         return val.get(key);
     }
 
-    public Map<String, Symbol> getVal(){
+    public Map<String, Symbol> getVal() {
         return val;
+    }
+
+    public Symbol getValByNameGlobally(String name) {
+        Symbol mSymbol = null;
+        SymbolTable scope = this;
+        while (scope != null) {
+            // mSymbol = (MethodSymbol) scope.getValByKey(scope.getScope() + "_" +
+            // ctx.Identifier().getText());
+
+            for (Map.Entry<String, Symbol> smbl : scope.getVal().entrySet()) {
+                String temp = smbl.getValue().getName();
+                if (smbl.getValue().getName().equals(name)) {
+                    return mSymbol = smbl.getValue();
+
+                }
+
+            }
+
+            scope = scope.getParent();
+        }
+        return null;
     }
 
     public Symbol getValByName(String name) {
