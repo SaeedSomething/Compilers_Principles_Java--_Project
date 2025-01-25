@@ -1,11 +1,7 @@
 package compiler;
 
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 import Exceptions.UndefinedVariableException;
 import SymbolTable.Symbols.*;
@@ -944,38 +940,59 @@ public class ProgramPrinter implements javaMinusMinusListener {
     private void CheckMethodReturnVariable() throws UndefinedVariableException{
         MethodSymbol methodSymbol = (MethodSymbol) currentScope.getParent().getValByName(currentScope.getName());
 
-        OuterLoop: for (Symbol returnVar : methodSymbol.getMethodScope().getVal().values()){
-            if (returnVar instanceof LocalVarSymbol && ((LocalVarSymbol) returnVar).isReturnVar()){
+        for (Symbol returnVarSymbol : methodSymbol.getMethodScope().getVal().values()){
+            if (returnVarSymbol instanceof LocalVarSymbol && ((LocalVarSymbol) returnVarSymbol).isReturnVar()){
                 if (methodSymbol.getReturnType().equals("void")){
-                    throw new UndefinedVariableException("Error210: in line " + returnVar.getLine() + ":" +
-                            returnVar.getCol() + ", ReturnType of this method must be " +
+                    throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
+                            returnVarSymbol.getCol() + ", ReturnType of this method must be " +
                             methodSymbol.getReturnType());
                 }
-                SymbolTable current = methodSymbol.getMethodScope();
-                while (current != null) {
-                    for (Symbol returnVarDefinition : current.getVal().values()) {
-                        if (returnVarDefinition instanceof LocalVarSymbol &&
-                                ((LocalVarSymbol) returnVarDefinition).getType() != null) {
 
-                            if (returnVarDefinition.getName().equals(returnVar.getName())) {
-                                if (((LocalVarSymbol) returnVarDefinition).getType().equals(
-                                        methodSymbol.getReturnType())) {
-                                    continue OuterLoop;
-                                } else {
-                                    //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
-                                    throw new UndefinedVariableException("Error210: in line " + returnVar.getLine() + ":" +
-                                            returnVar.getCol() + ", ReturnType of this method must be " +
-                                            methodSymbol.getReturnType());
-                                }
+                String[] returnVarNames = returnVarSymbol.getName().split("[+\\-*/%()]+");
+                returnVarNames = Arrays.stream(returnVarNames)
+                        .filter(part -> !part.isEmpty())
+                        .toArray(String[]::new);
+
+                OuterLoop: for (String returnVar: returnVarNames) {
+                    SymbolTable current = methodSymbol.getMethodScope();
+
+                    for (MethodParamSymbol returnVarParameter: methodSymbol.getParamTypes()){
+                        if (returnVarParameter.getName().equals(returnVar)){
+                            if (returnVarParameter.getType().equals(methodSymbol.getReturnType())){
+                                continue OuterLoop;
+                            } else {
+                                //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
+                                throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
+                                        returnVarSymbol.getCol() + ", ReturnType of this method must be " +
+                                        methodSymbol.getReturnType());
                             }
                         }
                     }
-                    current = current.getParent();
-                }
-                //Error211 : in line [line:column], Return variable [returnVar] is not defined
-                throw new UndefinedVariableException("Error211: in line " + returnVar.getLine() + ":" +
-                        returnVar.getCol() + ", Return variable " + returnVar.getName() + " is not defined");
 
+                    while (current != null) {
+                        for (Symbol returnVarDefinition : current.getVal().values()) {
+                            if (returnVarDefinition instanceof LocalVarSymbol &&
+                                    ((LocalVarSymbol) returnVarDefinition).getType() != null) {
+
+                                if (returnVarDefinition.getName().equals(returnVar)) {
+                                    if (((LocalVarSymbol) returnVarDefinition).getType().equals(
+                                            methodSymbol.getReturnType())) {
+                                        continue OuterLoop;
+                                    } else {
+                                        //Error210 : in line [line:column], ReturnType of this method must be [MethodReturnType]
+                                        throw new UndefinedVariableException("Error210: in line " + returnVarSymbol.getLine() + ":" +
+                                                returnVarSymbol.getCol() + ", ReturnType of this method must be " +
+                                                methodSymbol.getReturnType());
+                                    }
+                                }
+                            }
+                        }
+                        current = current.getParent();
+                    }
+                    //Error211 : in line [line:column], Return variable [returnVar] is not defined
+                    throw new UndefinedVariableException("Error211: in line " + returnVarSymbol.getLine() + ":" +
+                            returnVarSymbol.getCol() + ", Return variable " + returnVarSymbol.getName() + " is not defined");
+                }
             }
         }
     }

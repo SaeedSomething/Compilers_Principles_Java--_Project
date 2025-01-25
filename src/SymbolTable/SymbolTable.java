@@ -113,6 +113,9 @@ public class SymbolTable {
             case METHOD -> {
                 // check for duplicate local variables with same name in the method scope
                 CheckDuplicateLocalVariables(newValue);
+
+                //also check method parameters
+
             }
 
             case BLOCK -> {
@@ -132,6 +135,25 @@ public class SymbolTable {
                                 "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
                                         ", field " + newValue.getName() + " has been defined already");
                     }
+                }
+            }
+        }
+
+        if (this.scope == SymbolScope.METHOD || this.scope == SymbolScope.BLOCK){
+            SymbolTable currentTable = this;
+            if (this.scope != SymbolScope.METHOD) {
+
+                while (currentTable.scope != SymbolScope.METHOD) {
+                    currentTable = currentTable.parent;
+                }
+            }
+            MethodSymbol methodTable = (MethodSymbol) currentTable.parent.getValByName(currentTable.name);
+
+            for (MethodParamSymbol parameterSymbol : methodTable.getParamTypes()){
+                if (parameterSymbol != newValue && parameterSymbol.getName().equals(newValue.getName())){
+                    throw new DuplicateDeclarationException(
+                            "Error104: in line " + newValue.getLine() + ":" + newValue.getCol() +
+                                    ", parameter " + newValue.getName() + " has been defined already");
                 }
             }
         }
@@ -192,7 +214,7 @@ public class SymbolTable {
 
     public Symbol getValByName(String name) {
         for (Symbol symbol : val.values()) {
-            if (symbol.getName().equals(name)) {
+            if (symbol.getName().equalsIgnoreCase(name)) {
                 return symbol;
             }
         }

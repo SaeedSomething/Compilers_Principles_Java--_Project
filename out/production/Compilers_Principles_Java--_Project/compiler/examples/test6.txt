@@ -45,7 +45,7 @@ class Main {
 // Second Class: Circle
 class Circle extends Shape {
     int radius;
-
+    int chos;
 
 
     // Constructor for Circle
@@ -57,7 +57,7 @@ class Circle extends Shape {
 
     // Overriding area method for circle
     @Override
-    public void area() {
+    public int area() {
         int radius = 3;
         int gooz;
         gooz =3;
@@ -79,6 +79,7 @@ abstract class Shape {
 // A utility class: Calculator
 class Circle1 {
     // Method to add two numbers
+
     private int add(int a, int b) {
         return a + b;
     }
@@ -86,11 +87,11 @@ class Circle1 {
     // Method to multiply two numbers
     public int multiply(int a, int b) {
         if(a<b){
-            //a.b();
+            // a.b();
         }else{
-            //b.a();
+            // b.a();
         }
-        return (a * b);
+        return a * b;
     }
 }
 
